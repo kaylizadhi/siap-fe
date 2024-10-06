@@ -18,15 +18,17 @@ const Sidebar = () => {
             <nav className={styles.nav}>
                 <ul>
                     <li>
-                        <SidebarButtons
-                            buttonText="Dashboard"
-                            svgIcon={
-                                <svg className="w-4 h-4 text-primary-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2l7 7h-4v7h-6V9H5l7-7z" />
-                                </svg>
-                            }
-                            isActive={true} // Home is active
-                        />
+                        <Link href="/">
+                            <SidebarButtons
+                                buttonText="Dashboard"
+                                svgIcon={
+                                    <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l7 7h-4v7h-6V9H5l7-7z" />
+                                    </svg>
+                                }
+                                isActive={false} // Home is active
+                            />
+                        </Link>
                     </li>
                     <li>
                         <SidebarButtons
@@ -95,15 +97,17 @@ const Sidebar = () => {
                         />
                     </li>
                     <li>
-                        <SidebarButtons
-                            buttonText="Daftar Klien"
-                            svgIcon={
-                                <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2l7 7h-4v7h-6V9H5l7-7z" />
-                                </svg>
-                            }
-                            isActive={false} // Home is active
-                        />
+                        <Link href="/daftar-klien">
+                            <SidebarButtons
+                                buttonText="Daftar Klien"
+                                svgIcon={
+                                    <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l7 7h-4v7h-6V9H5l7-7z" />
+                                    </svg>
+                                }
+                                isActive={false} // Home is active
+                            />
+                        </Link>
                     </li>
                     <li>
                         <SidebarButtons
