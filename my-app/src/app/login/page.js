@@ -10,6 +10,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false); // State for login success
     const [showNotification, setShowNotification] = useState(false);
@@ -24,6 +25,8 @@ export default function Login() {
           setRememberMe(true); // Set the checkbox to true
         }
       }, []);
+
+    
 
     const handleLupaPassword = () => router.push('/forgot-password');
   
@@ -127,7 +130,7 @@ export default function Login() {
             onChange={(e) => setRememberMe(e.target.checked)}
              /> Ingat Saya
           </label>
-          <a href="forgot-password" onClick={handleLupaPassword}>Lupa Password?</a>
+          <a onClick={handleLupaPassword} style={{ cursor: 'pointer' }}>Lupa Password?</a>
         </div>
 
         <button type="submit" className="login-btn">Login</button>
