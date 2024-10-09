@@ -1,27 +1,104 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Import Caudex Font */
+@import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Caudex', serif;
+  background-color: white; /* Sesuaikan dengan latar putih yang diminta */
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #A62626; /* Sesuaikan dengan warna merah utama */
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+label {
+  font-weight: 700;
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  color: #4c2323; /* Warna teks lebih gelap */
+}
+
+input, select {
+  width: calc(100% - 28px); /* Lebar penuh dengan margin dalam */
+  padding: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Caudex', serif;
+}
+
+select {
+  appearance: none;
+  background-color: white;
+}
+
+input[type="password"] {
+  margin-bottom: 8px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+p {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 32px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #A62626;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+button[type="submit"]:hover {
+  background-color: #6d3030;
+}
+
+button[type="button"] {
+  background-color: white;
+  color: #A62626;
+  border: 1px solid #A62626;
+}
+
+button[type="button"]:hover {
+  background-color: #f2e2e2;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #A62626;
+  margin-top: 2rem;
 }
