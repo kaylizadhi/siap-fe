@@ -15,34 +15,53 @@ export default function ForgotPassword() {
   const [step, setStep] = useState(1);  // To track steps in the form
   const [error, setError] = useState('');
 
-  // Dummy function to simulate fetching the security question for the username
-  const handleGetSecurityQuestion = () => {
-    // Dummy simulation - replace this with real API call later
-    if (username === 'testuser') {
-      setSecurityQuestion('What is your favorite color?');
-      setStep(2);  // Proceed to next step
-    } else {
-      setError('User not found');
+  // Fetch the security question for the username from the backend
+  const handleGetSecurityQuestion = async () => {
+    try {
+      const res = await fetch('http://localhost:8000/api/get-security-question/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),  // Ensure this is correct
+      });
+  
+      const data = await res.json();
+      if (res.ok) {
+        setSecurityQuestion(data.security_question);  // Proceed to the next step
+        setStep(2);
+      } else {
+        setError(data.error || 'User not found');
+      }
+    } catch (error) {
+      setError('Unable to fetch security question');
     }
   };
+  // Verify the answer and reset the password
+  const handleVerifyAnswer = async () => {
+    try {
+      const res = await fetch('http://localhost:8000/api/verify-security-answer/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          security_answer: securityAnswer,
+          new_password: newPassword
+        })
+      });
 
-  // Dummy function to simulate verifying the security answer and resetting the password
-  const handleVerifyAnswer = () => {
-    // Dummy simulation - replace this with real API call later
-    if (securityAnswer.toLowerCase() === 'blue') {
-      alert('Password reset successful!');  // Simulate success
+      if (!res.ok) {
+        const errorData = await res.json();
+        setError(errorData.error || 'Incorrect security answer');
+        return;
+      }
 
-      // Redirect the user back to the login page
-      router.push('/login');
-
-      setStep(1);  // Reset back to step 1
-      setUsername('');
-      setSecurityQuestion('');
-      setSecurityAnswer('');
-      setNewPassword('');
-      setError('');
-    } else {
-      setError('Incorrect answer');
+      alert('Password reset successful!');
+      router.push('/login');  // Redirect to login after success
+    } catch (err) {
+      setError('Failed to reset password');
     }
   };
 
@@ -69,7 +88,7 @@ export default function ForgotPassword() {
       {/* Step 2: Answer Security Question and Reset Password */}
       {step === 2 && (
         <div>
-          <h3>Answer Security Question</h3>
+          <h3>Answer Security Question  {securityQuestion}</h3>
           <p>{securityQuestion}</p>
           <input
             type="text"

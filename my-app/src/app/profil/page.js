@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import styles from '../../../styles/profil.module.css';  // Import CSS styles
@@ -10,14 +12,17 @@ export default function Profil() {
   const [isNameEditable, setIsNameEditable] = useState(false);
   const [isUsernameEditable, setIsUsernameEditable] = useState(false);
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState(''); // Use separate fields for first and last names
+  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState('');  // Full name input state
   const [username, setUsername] = useState('');
   const [error, setError] = useState(null);  // Error handling for fetching profile
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+  
   const toggleEmailEditable = () => setIsEmailEditable(!isEmailEditable);
   const toggleNameEditable = () => setIsNameEditable(!isNameEditable);
   const toggleUsernameEditable = () => setIsUsernameEditable(!isUsernameEditable);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
   const toggleNewPasswordVisibility = () => setIsNewPasswordVisible(!isNewPasswordVisible);
 
@@ -39,17 +44,19 @@ export default function Profil() {
             },
           });
 
-        if (!res.ok) {
-          throw new Error('Failed to fetch profile');
-        }
+          if (!res.ok) {
+            throw new Error('Failed to fetch profile');
+          }
 
-        const data = await res.json();
-        setEmail(data.email);
-        setName(`${data.first_name} ${data.last_name}`);
-        setUsername(data.username);
-      } catch (error) {
-        setError('Unable to fetch user data');
-      }
+          const data = await res.json();
+          setEmail(data.email);
+          setFirstName(data.first_name); // Separate first and last name
+          setLastName(data.last_name);
+          setUsername(data.username);
+          setFullName(`${data.first_name || ''} ${data.last_name || ''}`.trim());
+        } catch (error) {
+          setError('Unable to fetch user data');
+        }
     };
 
     fetchProfile();
@@ -61,6 +68,39 @@ export default function Profil() {
   };
 
   const handleCancel = () => router.push('/dashboard');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();  // Prevent page reload on form submission
+    const names = fullName.split(' ');
+    const firstName = names[0] || '';  // First part as firstName
+    const lastName = names.slice(1).join(' ') || '';  // Remaining as lastName
+
+    const token = localStorage.getItem('authToken');
+
+    try {
+      const res = await fetch('http://localhost:8000/api/profil/', {
+        method: 'PATCH',  // Use PATCH to update the profile
+        headers: {
+          'Authorization': `Token ${token}`,  // Include token in headers
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          username: username,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to update profile');
+      }
+
+      alert('Profile updated successfully');
+    } catch (error) {
+      alert('Failed to update profile');
+    }
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -108,8 +148,8 @@ export default function Profil() {
         </aside>
 
         <main className={styles.main}>
-          <h1 className={styles.title}>Profil {name}</h1>
-          <form className={styles.form}>
+          <h1 className={styles.title}>Profil {firstName}</h1>
+          <form className={styles.form} onSubmit={handleSubmit}>
             {/* Email field */}
             <div className={styles.fieldGroup}>
               <label>Email</label>
@@ -128,13 +168,13 @@ export default function Profil() {
             {/* Name field */}
             <div className={styles.fieldGroup}>
               <label>Nama</label>
-              <input
-                type="text"
-                value={name}  // Dynamically fetched name
-                onChange={(e) => setName(e.target.value)}  // Update state on change
-                disabled={!isNameEditable}  // Disable if not editable
-                className={isNameEditable ? '' : styles.disabledInput}
-              />
+                <input
+                        type="text"
+                        value={fullName}  // Use full name state
+                        onChange={(e) => setFullName(e.target.value)}  // Update full name as user types
+                        disabled={!isNameEditable}  // Disable if not editable
+                        className={isNameEditable ? '' : styles.disabledInput}  // Apply styles
+                    />
               <span className={styles.icon} onClick={toggleNameEditable}>
                 <img src="/images/Edit.svg" alt="Edit" />
               </span>
@@ -187,3 +227,4 @@ export default function Profil() {
     </div>
   );
 }
+
