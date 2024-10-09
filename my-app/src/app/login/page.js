@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -23,6 +24,8 @@ export default function Login() {
           setRememberMe(true); // Set the checkbox to true
         }
       }, []);
+
+    const handleLupaPassword = () => router.push('/forgot-password');
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -124,7 +127,7 @@ export default function Login() {
             onChange={(e) => setRememberMe(e.target.checked)}
              /> Ingat Saya
           </label>
-          <a href="#">Lupa Password?</a>
+          <a href="forgot-password" onClick={handleLupaPassword}>Lupa Password?</a>
         </div>
 
         <button type="submit" className="login-btn">Login</button>

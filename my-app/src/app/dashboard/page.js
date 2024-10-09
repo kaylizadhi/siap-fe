@@ -42,9 +42,9 @@ export default function Dashboard() {
   );
 }
 
-// Example function to check if a user is logged in
+
 function checkAuth() {
     const token = localStorage.getItem('authToken');
-    // Optionally: send this token to the backend to validate if the session is valid
+
     return token !== null;
 }

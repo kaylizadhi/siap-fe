@@ -1,72 +1,102 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from '../../../styles/forgot-password.module.css';
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-  const [csrfToken, setCsrfToken] = useState('');
+  const router = useRouter();  // Import the router for navigation
 
-  // Fetch CSRF token from Django backend
-  const fetchCsrfToken = async () => {
-    const res = await fetch('http://localhost:8000/csrf/', {
-      method: 'GET',
-      credentials: 'include', // Include cookies in the request
-    });
-    const data = await res.json();
-    setCsrfToken(data.csrfToken);
+  // State management
+  const [username, setUsername] = useState('');
+  const [securityQuestion, setSecurityQuestion] = useState('');
+  const [securityAnswer, setSecurityAnswer] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [step, setStep] = useState(1);  // To track steps in the form
+  const [error, setError] = useState('');
+
+  // Dummy function to simulate fetching the security question for the username
+  const handleGetSecurityQuestion = () => {
+    // Dummy simulation - replace this with real API call later
+    if (username === 'testuser') {
+      setSecurityQuestion('What is your favorite color?');
+      setStep(2);  // Proceed to next step
+    } else {
+      setError('User not found');
+    }
   };
 
-  useEffect(() => {
-    // Fetch CSRF token when the component mounts
-    fetchCsrfToken();
-  }, []);
+  // Dummy function to simulate verifying the security answer and resetting the password
+  const handleVerifyAnswer = () => {
+    // Dummy simulation - replace this with real API call later
+    if (securityAnswer.toLowerCase() === 'blue') {
+      alert('Password reset successful!');  // Simulate success
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    setError('');
+      // Redirect the user back to the login page
+      router.push('/login');
 
-    try {
-      const res = await fetch('http://localhost:8000/password_reset/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken, // Include the CSRF token in the headers
-        },
-        credentials: 'include', // Include cookies in the request
-        body: JSON.stringify({ email }),
-      });
-
-      if (res.ok) {
-        setMessage('Password reset email sent! Check your inbox.');
-      } else {
-        setError('Something went wrong. Please try again.');
-      }
-    } catch (err) {
-      setError('An unexpected error occurred.');
+      setStep(1);  // Reset back to step 1
+      setUsername('');
+      setSecurityQuestion('');
+      setSecurityAnswer('');
+      setNewPassword('');
+      setError('');
+    } else {
+      setError('Incorrect answer');
     }
   };
 
   return (
-    <div className="forgot-password-container">
-      <h2>Forgot Password</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Enter your email address:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-        />
-        <button type="submit">Send Password Reset Link</button>
-      </form>
+    <div className={styles.forgotPasswordContainer}>
+      <h2 className={styles.heading}>Forgot Password</h2>
 
-      {message && <p className="success">{message}</p>}
-      {error && <p className="error">{error}</p>}
+      {/* Step 1: Get Username */}
+      {step === 1 && (
+        <div>
+          <h3>Username</h3>
+          <input
+            type="text"
+            className={styles.Input}
+            placeholder="Masukkan username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <button onClick={handleGetSecurityQuestion} className={styles.Button}>Get Security Question</button>
+        </div>
+      )}
+
+      {/* Step 2: Answer Security Question and Reset Password */}
+      {step === 2 && (
+        <div>
+          <h3>Answer Security Question</h3>
+          <p>{securityQuestion}</p>
+          <input
+            type="text"
+            className={styles.Input}
+            placeholder="Masukkan jawaban"
+            value={securityAnswer}
+            onChange={(e) => setSecurityAnswer(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            className={styles.Input}
+            placeholder="Masukkan password baru"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+          <button onClick={handleVerifyAnswer} className={styles.Button}>Reset Password</button>
+        </div>
+      )}
+
+      {/* Error message display */}
+      {error && <p className={styles.error}>{error}</p>}
+
+      <footer className={styles.footer}>
+        <p>@2024 optimasys | Contact optimasys.work@gmail.com</p>
+      </footer>
     </div>
   );
 }

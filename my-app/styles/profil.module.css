@@ -1,0 +1,172 @@
+
+
+.containerbackground {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Caudex', serif;
+    background-color:#FFFF;
+    width: 100%;
+    justify-content: center;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Caudex', serif;
+  background-color:#FFFF;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #fdfdfd;
+  border-right: 1px solid #e3e3e3;
+  padding: 20px;
+}
+
+.logo img {
+  max-width: 100%;
+  padding-bottom: 20px;
+  padding-top: 30px;
+}
+
+.nav {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;  /* Align icon and text vertically */
+  margin-bottom: 15px;
+  color: #4c2323;
+  text-decoration: none;
+  font-size: 18px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.nav a img {
+  margin-right: 10px;   /* Add space between icon and text */
+  width: 24px;          /* Set the width of the icon */
+  height: 24px;         /* Set the height of the icon */
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+.nav a.active {
+  background-color: #f7d9d9;
+  padding: 10px;
+  border-radius: 4px;
+  color: #A62626;
+}
+
+.logout {
+  display: flex;
+  margin-top: 30px;
+  color: #A62626;
+  font-size: 18px;
+  text-decoration: none;
+  padding-left: 10px;
+}
+
+.logout img {
+  margin-right: 10px;   /* Add space between icon and text */
+  width: 24px;          /* Set the width of the icon */
+  height: 24px;         /* Set the height of the icon */
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+.main {
+  flex: 1;
+  padding: 50px;
+}
+
+.title {
+  font-size: 36px;
+  color: #A62626;
+  margin-bottom: 40px;
+}
+
+.form {
+  width: 100%;
+  max-width: 600px;
+}
+
+.fieldGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.fieldGroup label {
+  width: 150px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.fieldGroup input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #bbc7cd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.disabledInput {
+  background-color: #f7f9fc;
+}
+
+.icon {
+  margin-left: -40px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.passwordFields {
+  display: flex;
+  justify-content: space-between;
+}
+
+.passwordFields .fieldGroup {
+  width: 48%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-left: 15px;
+}
+
+.saveButton {
+  background-color: #A62626;
+  color: white;
+  padding: 15px 30px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 32px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background-color: white;
+  color: #A62626;
+  border: 1px solid #A62626;
+  padding: 15px 30px;
+  border-radius: 32px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.disabledInput {
+  background-color: #f7f9fc;
+  color: #a0a0a0; /* You can make the text color lighter to indicate it's disabled */
+}
+
+  
