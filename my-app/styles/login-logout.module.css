@@ -1,7 +1,7 @@
 /* Import Caudex Font */
 @import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
 
-body {
+/* body {
   font-family: 'Caudex', serif;
   background: radial-gradient(circle at top left, rgba(166, 38, 38, 0.7) 5%, transparent 60%), 
               radial-gradient(circle at top right, rgba(166, 38, 38, 0.7) 5%, transparent 60%), 
@@ -15,7 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0;
-}
+} */
 
 .login-container {
   background-color: white;
@@ -45,31 +45,31 @@ body {
   text-align: left;
 }
 
-h2.login-heading {
+/* h2.login-heading {
   font-size: 1.5rem;
-  color: #4c2323; /* Darker color for the Login text */
+  color: #4c2323; 
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: left;
 }
 
 label {
-  font-weight: 700; /* Bold labels */
+  font-weight: 700; 
   display: block;
   text-align: left;
   margin-bottom: 8px;
-  color: #4c2323; /* Darker text color */
+  color: #4c2323; 
 }
 
 input {
-  width: calc(100% - 28px); /* Reduce the width of the input fields */
+  width: calc(100% - 28px); 
   padding: 12px;
   margin-bottom: 1.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
-  font-family: 'Caudex', serif; /* Ensure Caudex font is applied */
-}
+  font-family: 'Caudex', serif; 
+} */
 
 .password-container {
   position: relative;
