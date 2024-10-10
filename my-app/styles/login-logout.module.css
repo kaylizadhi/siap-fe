@@ -1,0 +1,257 @@
+/* Import Caudex Font */
+@import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
+
+/* body {
+  font-family: 'Caudex', serif;
+  background: radial-gradient(circle at top left, rgba(166, 38, 38, 0.7) 5%, transparent 60%), 
+              radial-gradient(circle at top right, rgba(166, 38, 38, 0.7) 5%, transparent 60%), 
+              radial-gradient(circle at bottom center, rgba(166, 38, 38, 0.7) 5%, transparent 60%),
+              radial-gradient(circle at center, rgba(240, 224, 224, 0.5) 40%, transparent 60%);
+              
+  background-color: #f0e2e2;
+  background-blend-mode: multiply;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+} */
+
+.login-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  width: 400px; /* Adjust width to match design */
+  text-align: center;
+}
+
+.logo-header-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 1rem; /* Space between the logo and text */
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 60px; /* Adjust size to match design */
+}
+
+.system-title {
+  font-size: 1.2rem;
+  color: #A62626; /* Primary color */
+  font-weight: 700; /* Bold */
+  text-align: left;
+}
+
+/* h2.login-heading {
+  font-size: 1.5rem;
+  color: #4c2323; 
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+label {
+  font-weight: 700; 
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  color: #4c2323; 
+}
+
+input {
+  width: calc(100% - 28px); 
+  padding: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Caudex', serif; 
+} */
+
+.password-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 45px; /* Make the width smaller to match the input */
+  height: 42px; /* Ensure it matches the height of the input */
+  background-color: #E1E8EC; /* Grey background */
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 5px; /* Rounded corners on the right side */
+  border-bottom-right-radius: 5px; /* Rounded corners on the right side */
+  cursor: pointer;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.toggle-password svg {
+  width: 16px; /* Adjust icon size */
+  height: 16px;
+  fill: #BBC7CD; /* Darker grey for the eye icon */
+}
+
+.toggle-password:hover {
+  background-color: #A62626; /* Darker hover color */
+}
+
+.toggle-password:hover svg {
+  fill: white; /* White icon on hover */
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 1.5rem;
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+.remember-forgot label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.remember-forgot a {
+  color: #A62626; /* Primary color */
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+.login-btn {
+  background-color: #A62626; /* Primary color */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 32px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.login-btn:hover {
+  background-color: #6d3030;
+}
+
+/* Notification pop-up styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  color: white;
+  font-family: 'Caudex', serif;
+  z-index: 1000;
+}
+
+.notification div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.notification p {
+  margin: 0;
+  font-weight: bold;
+  margin-right: 10px; /* Space between the text and button */
+  margin-left: 10px; /* Space between the icon and text */
+}
+
+.notification button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Success notification styles */
+.notification.success {
+  background-color: #28a745; /* Green color */
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Failure notification styles */
+.notification.failure {
+  background-color: #dc3545; /* Red color */
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-password-container {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.forgot-password-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.forgot-password-container input {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.forgot-password-container button {
+  background-color: #A62626;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.success {
+  color: green;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 12px;
+  color: #A62626; /* Red color */
+}
