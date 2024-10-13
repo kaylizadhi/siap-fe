@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // For navigation between pages
+import { useRouter } from "next/navigation";
 import { Caudex } from "next/font/google";
+import Toast from "components/Toast";
 
 const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
@@ -10,14 +11,17 @@ export default function DaftarKlien() {
   const [kliens, setKliens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedKlien, setSelectedKlien] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    // Fetch the clients from the Django API
     const fetchKliens = async () => {
       try {
-        const response = await fetch("http://localhost:8000/klien/"); // Update with your actual API URL
+        const response = await fetch("http://localhost:8000/klien/");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -33,17 +37,14 @@ export default function DaftarKlien() {
     fetchKliens();
   }, []);
 
-  // Filter clients based on search query
   const filteredKliens = kliens.filter((klien) =>
     klien.nama_klien.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Navigate to the "Tambah Klien" page
   const handleTambahKlien = () => {
-    router.push("/daftar-klien"); // Adjust this path based on your actual routing
+    router.push("/daftar-klien");
   };
 
-  // Navigation for actions
   const handleDetail = (id) => {
     router.push(`/list-klien/detail-klien/${id}`);
   };
@@ -52,23 +53,28 @@ export default function DaftarKlien() {
     router.push(`/list-klien/update/${id}`);
   };
 
-  const handleDelete = async (id) => {
-    // Delete the client
-    try {
-      const response = await fetch(
-        `http://localhost:8000/klien/${id}/delete/`,
-        {
-          method: "DELETE",
+  const handleDelete = async () => {
+    if (selectedKlien) {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/klien/${selectedKlien.id}/delete/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.ok) {
+          setKliens(kliens.filter((klien) => klien.id !== selectedKlien.id));
+          setIsModalOpen(false);
+          setToastMessage("Klien berhasil dihapus!");
+          setShowToast(true);
+        } else {
+          throw new Error("Failed to delete client");
         }
-      );
-      if (response.ok) {
-        // Remove the client from the state after successful deletion
-        setKliens(kliens.filter((klien) => klien.id !== id));
-      } else {
-        throw new Error("Failed to delete client");
+      } catch (error) {
+        console.error("Error deleting client:", error);
+        setToastMessage("Gagal menghapus klien.");
+        setShowToast(true);
       }
-    } catch (error) {
-      console.error("Error deleting client:", error);
     }
   };
 
@@ -94,20 +100,12 @@ export default function DaftarKlien() {
 
       {/* Search Bar */}
       <div className="w-full flex px-4 py-3 mb-3 rounded-md border-2 border overflow-hidden mx-auto font-[sans-serif]">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 192.904 192.904"
-          width="16px"
-          className="fill-gray-600 mr-3 rotate-90"
-        >
-          <path d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"></path>
-        </svg>
         <input
           type="text"
           placeholder="Cari Klien"
           className="w-full outline-none bg-transparent text-gray-600 text-sm"
-          value={searchQuery} // Bind input value to searchQuery state
-          onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
@@ -144,7 +142,7 @@ export default function DaftarKlien() {
                     id={`checkbox-${klien.id}`}
                     type="checkbox"
                     value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                   />
                 </div>
               </td>
@@ -188,17 +186,20 @@ export default function DaftarKlien() {
 
                 {/* Delete Action */}
                 <button
-                  onClick={() => handleDelete(klien.id)}
+                  onClick={() => {
+                    setSelectedKlien(klien);
+                    setIsModalOpen(true);
+                  }}
                   className="text-red-500 hover:text-red-700"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
+                    height="24px"
+                    viewBox="0 96 960 960"
+                    width="24px"
                     fill="currentColor"
                   >
-                    <path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z" />
+                    <path d="M261 916q-24.75 0-42.375-17.625T201 856V336h-80v-60h214v-40h290v40h214v60h-80v520q0 24.75-17.625 42.375T699 916H261Zm438-580H261v520h438V336Zm-317 440h60V456h-60v320Zm180 0h60V456h-60v320ZM261 336v520-520Z" />
                   </svg>
                 </button>
               </td>
@@ -206,6 +207,40 @@ export default function DaftarKlien() {
           ))}
         </tbody>
       </table>
+
+      {/* Delete Confirmation Modal */}
+      {isModalOpen && selectedKlien && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Confirm Delete</h2>
+            <p>
+              Are you sure you want to delete &quot;{selectedKlien.nama_klien}
+              &quot;?
+            </p>
+            <div className="flex justify-end space-x-4 mt-6">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Component */}
+      <Toast
+        message={toastMessage}
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+      />
     </div>
   );
 }
