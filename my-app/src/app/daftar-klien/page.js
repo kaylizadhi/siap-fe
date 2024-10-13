@@ -1,112 +1,121 @@
-"use client"
+"use client";
 
-import { useState } from 'react';
-import { Caudex } from 'next/font/google';
+import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { Caudex } from "next/font/google";
 
-const caudex = Caudex({ weight: '700', subsets: ['latin'] });
+const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
 export default function DaftarKlien() {
-    const [formData, setFormData] = useState({
-        nama_klien: '',
-        nama_perusahaan: '',
-        daerah: '',
-        harga_survei: ''
-    });
+  const [formData, setFormData] = useState({
+    nama_klien: "",
+    nama_perusahaan: "",
+    daerah: "",
+    harga_survei: "",
+  });
 
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const router = useRouter(); // Initialize useRouter
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('http://localhost:8000/klien/create/', {  // Ganti dengan URL API yang sesuai
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8000/klien/create/", {
+        // Ganti dengan URL API yang sesuai
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
-            const data = await response.json();
-            setSuccess('Klien berhasil ditambahkan!');
-            setError(null);
-            setFormData({
-                nama_klien: '',
-                nama_perusahaan: '',
-                daerah: '',
-                harga_survei: ''
-            });
-        } catch (error) {
-            setError('Gagal menambahkan klien.');
-            setSuccess(null);
-        }
-    };
+      const data = await response.json();
+      setSuccess("Klien berhasil ditambahkan!");
+      setError(null);
+      setFormData({
+        nama_klien: "",
+        nama_perusahaan: "",
+        daerah: "",
+        harga_survei: "",
+      });
 
-    return (
-        <div>
-            <div>
-                <h1 className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}>
-                    Daftar Klien
-                </h1>
+      // Redirect to the list-klien page after success
+      router.push("/list-klien"); // Adjust the path as needed
+    } catch (error) {
+      setError("Gagal menambahkan klien.");
+      setSuccess(null);
+    }
+  };
 
-                {success && <div className="mb-4 text-green-500">{success}</div>}
-                {error && <div className="mb-4 text-red-500">{error}</div>}
+  return (
+    <div>
+      <div>
+        <h1
+          className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}
+        >
+          Daftar Klien
+        </h1>
 
-                <form onSubmit={handleSubmit} className="mb-6">
-                    <input
-                        type="text"
-                        name="nama_klien"
-                        placeholder="Nama Klien"
-                        value={formData.nama_klien}
-                        onChange={handleChange}
-                        className="border rounded-md px-4 py-2 mb-4 w-full"
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="nama_perusahaan"
-                        placeholder="Nama Perusahaan"
-                        value={formData.nama_perusahaan}
-                        onChange={handleChange}
-                        className="border rounded-md px-4 py-2 mb-4 w-full"
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="daerah"
-                        placeholder="Daerah"
-                        value={formData.daerah}
-                        onChange={handleChange}
-                        className="border rounded-md px-4 py-2 mb-4 w-full"
-                        required
-                    />
-                    <input
-                        type="number"
-                        name="harga_survei"
-                        placeholder="Harga Survei"
-                        value={formData.harga_survei}
-                        onChange={handleChange}
-                        className="border rounded-md px-4 py-2 mb-4 w-full"
-                        required
-                    />
-                    <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-md">
-                        Tambah Klien
-                    </button>
-                </form>
+        {success && <div className="mb-4 text-green-500">{success}</div>}
+        {error && <div className="mb-4 text-red-500">{error}</div>}
 
-                <div className="w-full flex px-4 py-3 mb-3 rounded-md border-2 border overflow-hidden mx-auto font-[sans-serif]">
-                    <input type="text" placeholder="Cari Klien" className="w-full outline-none bg-transparent text-gray-600 text-sm" />
-                </div>
-                {/* <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <form onSubmit={handleSubmit} className="mb-6">
+          <input
+            type="text"
+            name="nama_klien"
+            placeholder="Nama Klien"
+            value={formData.nama_klien}
+            onChange={handleChange}
+            className="border rounded-md px-4 py-2 mb-4 w-full"
+            required
+          />
+          <input
+            type="text"
+            name="nama_perusahaan"
+            placeholder="Nama Perusahaan"
+            value={formData.nama_perusahaan}
+            onChange={handleChange}
+            className="border rounded-md px-4 py-2 mb-4 w-full"
+            required
+          />
+          <input
+            type="text"
+            name="daerah"
+            placeholder="Daerah"
+            value={formData.daerah}
+            onChange={handleChange}
+            className="border rounded-md px-4 py-2 mb-4 w-full"
+            required
+          />
+          <input
+            type="number"
+            name="harga_survei"
+            placeholder="Harga Survei"
+            value={formData.harga_survei}
+            onChange={handleChange}
+            className="border rounded-md px-4 py-2 mb-4 w-full"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white py-2 px-4 rounded-md"
+          >
+            Tambah Klien
+          </button>
+        </form>
+        {/* 
+                Uncomment below code to display a table of clients if needed
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <tbody>
                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td>
@@ -141,8 +150,9 @@ export default function DaftarKlien() {
                             </td>
                         </tr>
                     </tbody>
-                </table> */}
-            </div>
-        </div>
-    );
+                </table>
+                */}
+      </div>
+    </div>
+  );
 }
