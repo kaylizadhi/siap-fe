@@ -75,12 +75,6 @@ export default function KlienDetail({ params }) {
           </label>
           <p className="mt-1 text-lg text-gray-800">{klien.daerah}</p>
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Harga Survei:
-          </label>
-          <p className="mt-1 text-lg text-gray-800">{klien.harga_survei}</p>
-        </div>
         <div className="flex justify-between items-center mb-4">
           {/* Back Button */}
           <button
