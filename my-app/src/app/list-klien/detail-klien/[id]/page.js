@@ -1,217 +1,114 @@
-// src/app/list-klien/detail-klien/[id]/page.js
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // for navigation
+import { Caudex } from "next/font/google";
+
+const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
 export default function KlienDetail({ params }) {
-  const { id } = params; // Get the ID from the params
+  const { id } = params;
   const [klien, setKlien] = useState(null);
-  const [formData, setFormData] = useState({
-    nama_klien: "",
-    nama_perusahaan: "",
-    daerah: "",
-    harga_survei: "",
-  });
+  const router = useRouter(); // Initialize router for navigation
 
+  // Fetch client details
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/klien/${id}/`) // Update this to match your API endpoint
+      fetch(`http://localhost:8000/klien/${id}/`)
         .then((response) => response.json())
-        .then((data) => {
-          setKlien(data);
-          setFormData(data);
-        })
+        .then((data) => setKlien(data))
         .catch((error) => console.error("Error:", error));
     }
   }, [id]);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  // Handle update logic
+  const handleUpdate = () => {
+    router.push(`/list-klien/update/${id}`); // Navigate to update page
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`http://localhost:8000/klien/${id}/update/`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      alert("Data updated successfully!");
-      // Optionally, redirect or update the UI
-    }
-  };
-
-  const handleDelete = async () => {
-    const response = await fetch(`http://localhost:8000/klien/${id}/delete/`, {
+  // Handle delete logic
+  const handleDelete = () => {
+    fetch(`http://localhost:8000/klien/${id}/delete/`, {
       method: "DELETE",
-    });
-
-    if (response.ok) {
-      alert("Data deleted successfully!");
-      // Optionally, redirect or update the UI
-    }
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Client deleted successfully");
+          router.push("/list-klien"); // Redirect back to Daftar Klien after deletion
+        } else {
+          alert("Failed to delete client");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
   if (!klien) return <div className="text-center">Loading...</div>;
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">Detail Klien</h1>
-      <form onSubmit={handleUpdate}>
+    <div className="container mx-auto px-4 py-6">
+      <h1
+        className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}
+      >
+        Detail Klien
+      </h1>
+
+      <div className="bg-white shadow-lg rounded-lg p-6 max-w-lg">
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Nama Klien:
           </label>
-          <input
-            type="text"
-            name="nama_klien"
-            value={formData.nama_klien}
-            onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200"
-          />
+          <p className="mt-1 text-lg font-bold text-gray-800">
+            {klien.nama_klien}
+          </p>
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Nama Perusahaan:
           </label>
-          <input
-            type="text"
-            name="nama_perusahaan"
-            value={formData.nama_perusahaan}
-            onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200"
-          />
+          <p className="mt-1 text-lg font-semibold text-gray-800">
+            {klien.nama_perusahaan}
+          </p>
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Daerah:</label>
-          <input
-            type="text"
-            name="daerah"
-            value={formData.daerah}
-            onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200"
-          />
+          <label className="block text-sm font-medium text-gray-700">
+            Daerah:
+          </label>
+          <p className="mt-1 text-lg text-gray-800">{klien.daerah}</p>
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Harga Survei:
           </label>
-          <input
-            type="number"
-            name="harga_survei"
-            value={formData.harga_survei}
-            onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200"
-          />
+          <p className="mt-1 text-lg text-gray-800">{klien.harga_survei}</p>
         </div>
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-between items-center mb-4">
+          {/* Back Button */}
           <button
-            type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            onClick={() => router.push("/list-klien")}
           >
-            Update
+            Back
           </button>
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="px-4 py-2 bg-red-600 text-white rounded-md shadow hover:bg-red-700 transition"
-          >
-            Delete
-          </button>
+
+          <div className="flex space-x-4">
+            {/* Update Button */}
+            <button
+              onClick={handleUpdate}
+              className="bg-yellow-500 text-white px-4 py-2 rounded-lg"
+            >
+              Update
+            </button>
+
+            {/* Delete Button */}
+            <button
+              onClick={handleDelete}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg"
+            >
+              Delete
+            </button>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
-
-
-
-
-
-
-// // src/app/list-klien/detail-klien/[id]/page.js
-// "use client"
-
-// import { useState, useEffect } from 'react';
-
-// export default function KlienDetail({ params }) {
-//   const { id } = params; // Get the ID from the params
-//   const [klien, setKlien] = useState(null);
-//   const [formData, setFormData] = useState({
-//     nama_klien: '',
-//     nama_perusahaan: '',
-//     daerah: '',
-//     harga_survei: '',
-//   });
-
-//   useEffect(() => {
-//     if (id) {
-//       fetch(`http://localhost:8000/klien/${id}/`) // Update this to match your API endpoint
-//         .then(response => response.json())
-//         .then(data => {
-//           setKlien(data);
-//           setFormData(data);
-//         })
-//         .catch(error => console.error('Error:', error));
-//     }
-//   }, [id]);
-
-//   const handleChange = (e) => {
-//     setFormData({
-//       ...formData,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
-
-//   const handleUpdate = async (e) => {
-//     e.preventDefault();
-//     const response = await fetch(`http://localhost:8000/klien/${id}/update/`, {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(formData),
-//     });
-
-//     if (response.ok) {
-//       // Handle successful update (e.g., redirect or show a message)
-//     }
-//   };
-
-//   const handleDelete = async () => {
-//     const response = await fetch(`http://localhost:8000/klien/${id}/delete/`, {
-//       method: 'DELETE',
-//     });
-
-//     if (response.ok) {
-//       // Handle successful deletion (e.g., redirect or show a message)
-//     }
-//   };
-
-//   if (!klien) return <div>Loading...</div>;
-
-//   return (
-//     <div>
-//       <h1>Detail Klien</h1>
-//       <form onSubmit={handleUpdate}>
-//         <label>Nama Klien:</label>
-//         <input type="text" name="nama_klien" value={formData.nama_klien} onChange={handleChange} />
-//         <label>Nama Perusahaan:</label>
-//         <input type="text" name="nama_perusahaan" value={formData.nama_perusahaan} onChange={handleChange} />
-//         <label>Daerah:</label>
-//         <input type="text" name="daerah" value={formData.daerah} onChange={handleChange} />
-//         <label>Harga Survei:</label>
-//         <input type="number" name="harga_survei" value={formData.harga_survei} onChange={handleChange} />
-//         <button type="submit">Update</button>
-//       </form>
-//       <button onClick={handleDelete}>Delete</button>
-//     </div>
-//   );
-// }
