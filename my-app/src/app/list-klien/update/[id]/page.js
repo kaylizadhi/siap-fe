@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Caudex } from "next/font/google";
+import Toast from "components/Toast"; // Import the Toast component
 
 const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
@@ -15,7 +16,8 @@ export default function UpdateKlien({ params }) {
   });
 
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [toastMessage, setToastMessage] = useState(""); // State for toast message
+  const [showToast, setShowToast] = useState(false); // State for toast visibility
   const router = useRouter();
 
   useEffect(() => {
@@ -50,13 +52,18 @@ export default function UpdateKlien({ params }) {
         throw new Error("Network response was not ok");
       }
 
-      setSuccess("Client updated successfully");
+      setToastMessage("Klien berhasil diupdate!"); // Set success message
+      setShowToast(true); // Show toast message
+
       setError(null);
 
-      router.push("/list-klien");
+      // Redirect to the list-klien page after success
+      setTimeout(() => {
+        router.push("/list-klien");
+      }, 500); // Redirect after 500ms for toast visibility
     } catch (error) {
-      setError("Failed to update client");
-      setSuccess(null);
+      setError("Gagal mengupdate klien");
+      setToastMessage(""); // Clear toast message on error
     }
   };
 
@@ -69,7 +76,6 @@ export default function UpdateKlien({ params }) {
           Update Klien
         </h1>
 
-        {success && <div className="mb-4 text-green-500">{success}</div>}
         {error && <div className="mb-4 text-red-500">{error}</div>}
 
         <form onSubmit={handleSubmit} className="mb-6">
@@ -108,6 +114,13 @@ export default function UpdateKlien({ params }) {
           </button>
         </form>
       </div>
+
+      {/* Toast Notification */}
+      <Toast
+        message={toastMessage}
+        isVisible={showToast}
+        onClose={() => setShowToast(false)} // Hide toast after it is displayed
+      />
     </div>
   );
 }
