@@ -12,7 +12,6 @@ export default function UpdateKlien({ params }) {
     nama_klien: "",
     nama_perusahaan: "",
     daerah: "",
-    harga_survei: "",
   });
 
   const [error, setError] = useState(null);
@@ -39,7 +38,6 @@ export default function UpdateKlien({ params }) {
       const response = await fetch(
         `http://localhost:8000/klien/${id}/update/`,
         {
-          // Update endpoint URL
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -52,70 +50,64 @@ export default function UpdateKlien({ params }) {
         throw new Error("Network response was not ok");
       }
 
-      setSuccess("Klien berhasil diupdate!");
+      setSuccess("Client updated successfully");
       setError(null);
+
       router.push("/list-klien");
     } catch (error) {
-      setError("Gagal update klien.");
+      setError("Failed to update client");
       setSuccess(null);
     }
   };
 
   return (
     <div>
-      <h1
-        className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}
-      >
-        Update Klien
-      </h1>
-
-      {success && <div className="mb-4 text-green-500">{success}</div>}
-      {error && <div className="mb-4 text-red-500">{error}</div>}
-
-      <form onSubmit={handleSubmit} className="mb-6">
-        <input
-          type="text"
-          name="nama_klien"
-          placeholder="Nama Klien"
-          value={formData.nama_klien}
-          onChange={handleChange}
-          className="border rounded-md px-4 py-2 mb-4 w-full"
-          required
-        />
-        <input
-          type="text"
-          name="nama_perusahaan"
-          placeholder="Nama Perusahaan"
-          value={formData.nama_perusahaan}
-          onChange={handleChange}
-          className="border rounded-md px-4 py-2 mb-4 w-full"
-          required
-        />
-        <input
-          type="text"
-          name="daerah"
-          placeholder="Daerah"
-          value={formData.daerah}
-          onChange={handleChange}
-          className="border rounded-md px-4 py-2 mb-4 w-full"
-          required
-        />
-        <input
-          type="number"
-          name="harga_survei"
-          placeholder="Harga Survei"
-          value={formData.harga_survei}
-          onChange={handleChange}
-          className="border rounded-md px-4 py-2 mb-4 w-full"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white py-2 px-4 rounded-md"
+      <div>
+        <h1
+          className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}
         >
           Update Klien
-        </button>
-      </form>
+        </h1>
+
+        {success && <div className="mb-4 text-green-500">{success}</div>}
+        {error && <div className="mb-4 text-red-500">{error}</div>}
+
+        <form onSubmit={handleSubmit} className="mb-6">
+          <input
+            type="text"
+            name="nama_klien"
+            placeholder="Nama Klien"
+            value={formData.nama_klien}
+            onChange={handleChange}
+            className="border rounded-md px-4 py-2 mb-4 w-full"
+            required
+          />
+          <input
+            type="text"
+            name="nama_perusahaan"
+            placeholder="Nama Perusahaan"
+            value={formData.nama_perusahaan}
+            onChange={handleChange}
+            className="border rounded-md px-4 py-2 mb-4 w-full"
+            required
+          />
+          <input
+            type="text"
+            name="daerah"
+            placeholder="Daerah"
+            value={formData.daerah}
+            onChange={handleChange}
+            className="border rounded-md px-4 py-2 mb-4 w-full"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white py-2 px-4 rounded-md"
+          >
+            Update Klien
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
