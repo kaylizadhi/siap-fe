@@ -37,9 +37,15 @@ export default function DaftarKlien() {
     fetchKliens();
   }, []);
 
-  const filteredKliens = kliens.filter((klien) =>
-    klien.nama_klien.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Update filter to handle nama_klien, nama_perusahaan, and daerah
+  const filteredKliens = kliens.filter((klien) => {
+    const lowerSearchQuery = searchQuery.toLowerCase();
+    return (
+      klien.nama_klien.toLowerCase().includes(lowerSearchQuery) ||
+      klien.nama_perusahaan.toLowerCase().includes(lowerSearchQuery) ||
+      klien.daerah.toLowerCase().includes(lowerSearchQuery)
+    );
+  });
 
   const handleTambahKlien = () => {
     router.push("/daftar-klien");
@@ -171,16 +177,16 @@ export default function DaftarKlien() {
                 {/* Update Action */}
                 <button
                   onClick={() => handleUpdate(klien.id)}
-                  className="text-yellow-500 hover:text-yellow-700"
+                  className="text-green-500 hover:text-green-700"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
+                    height="24px"
+                    viewBox="0 96 960 960"
+                    width="24px"
                     fill="currentColor"
                   >
-                    <path d="M21.7 5.6l-3.3-3.3c-.8-.8-2-.8-2.8 0l-12 12v4.2c0 .5.5 1 1 1h4.2l12-12c.7-.8.7-2 0-2.9zM7.2 19H5v-2.2L14 7.8 16.2 10 7.2 19zM17 9.2L14.8 7 16.2 5.6 18.4 8 17 9.2z" />
+                    <path d="M194 921q-17 0-28.5-11.5T154 881V709q0-17 11.5-28.5T194 669h42q17 0 28.5 11.5T276 709v172q0 17-11.5 28.5T236 921h-42Zm236-1q-17 0-28.5-11.5T390 881V576q0-17 11.5-28.5T430 536h42q17 0 28.5 11.5T512 576v305q0 17-11.5 28.5T472 921h-42Zm236 0q-17 0-28.5-11.5T626 881V404q0-17 11.5-28.5T666 364h42q17 0 28.5 11.5T748 404v477q0 17-11.5 28.5T708 921h-42Zm236 0q-17 0-28.5-11.5T862 881V246q0-17 11.5-28.5T902 206h42q17 0 28.5 11.5T984 246v635q0 17-11.5 28.5T944 921h-42Z" />
                   </svg>
                 </button>
 
@@ -199,7 +205,7 @@ export default function DaftarKlien() {
                     width="24px"
                     fill="currentColor"
                   >
-                    <path d="M261 916q-24.75 0-42.375-17.625T201 856V336h-80v-60h214v-40h290v40h214v60h-80v520q0 24.75-17.625 42.375T699 916H261Zm438-580H261v520h438V336Zm-317 440h60V456h-60v320Zm180 0h60V456h-60v320ZM261 336v520-520Z" />
+                    <path d="M261 961q-34 0-56.5-23T182 881V328h-56q-17 0-28.5-11.5T86 288q0-17 11.5-28.5T126 248h194v-34q0-28 19-47t47-19h178q28 0 47 19t19 47v34h194q17 0 28.5 11.5T874 288q0 17-11.5 28.5T834 328h-56v553q0 34-23 57t-56 23H261Zm402-633H297v553h366V328Zm-255 481q0 17 11.5 28.5T447 849q17 0 28.5-11.5T487 809V529q0-17-11.5-28.5T447 489q-17 0-28.5 11.5T407 529v280Zm160 0q0 17 11.5 28.5T607 849q17 0 28.5-11.5T647 809V529q0-17-11.5-28.5T607 489q-17 0-28.5 11.5T567 529v280ZM407 248h146v-34H407v34Zm-110 80v553-553Z" />
                   </svg>
                 </button>
               </td>
@@ -208,39 +214,7 @@ export default function DaftarKlien() {
         </tbody>
       </table>
 
-      {/* Delete Confirmation Modal */}
-      {isModalOpen && selectedKlien && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Confirm Delete</h2>
-            <p>
-              Are you sure you want to delete &quot;{selectedKlien.nama_klien}
-              &quot;?
-            </p>
-            <div className="flex justify-end space-x-4 mt-6">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Toast Component */}
-      <Toast
-        message={toastMessage}
-        isVisible={showToast}
-        onClose={() => setShowToast(false)}
-      />
+      {showToast && <Toast message={toastMessage} onClose={() => setShowToast(false)} />}
     </div>
   );
 }
