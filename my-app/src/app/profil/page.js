@@ -2,7 +2,7 @@
 
 "use client";
 
-import styles from '../../../styles/profil.module.css';  // Import CSS styles
+import styles from '../../../styles/profil.module.css';  
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -12,15 +12,16 @@ export default function Profil() {
   const [isNameEditable, setIsNameEditable] = useState(false);
   const [isUsernameEditable, setIsUsernameEditable] = useState(false);
   const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState(''); // Use separate fields for first and last names
+  const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [fullName, setFullName] = useState('');  // Full name input state
+  const [fullName, setFullName] = useState(''); 
   const [username, setUsername] = useState('');
-  const [error, setError] = useState(null);  // Error handling for fetching profile
+  const [error, setError] = useState(null); 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
-  const [oldPassword, setOldPassword] = useState('');  // New state for old password
-  const [newPassword, setNewPassword] = useState('');  // New state for new password
+  const [oldPassword, setOldPassword] = useState('');  
+  const [newPassword, setNewPassword] = useState('');  
+  const [role, setRole] = useState('');
   
   const toggleEmailEditable = () => setIsEmailEditable(!isEmailEditable);
   const toggleNameEditable = () => setIsNameEditable(!isNameEditable);
@@ -30,10 +31,10 @@ export default function Profil() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-        const token = localStorage.getItem('authToken');  // Retrieve the token
+        const token = localStorage.getItem('authToken');  
 
         if (!token) {
-          router.push('/login');  // Redirect if no token is found
+          router.push('/login');  
           return;
         }
       
@@ -41,7 +42,7 @@ export default function Profil() {
           const res = await fetch('http://localhost:8000/api/profil/', {
             method: 'GET',
             headers: {
-              'Authorization': `Token ${token}`,  // Use Token-based authentication
+              'Authorization': `Token ${token}`,  
               'Content-Type': 'application/json',
             },
           });
@@ -52,10 +53,11 @@ export default function Profil() {
 
           const data = await res.json();
           setEmail(data.email);
-          setFirstName(data.first_name); // Separate first and last name
+          setFirstName(data.first_name); 
           setLastName(data.last_name);
           setUsername(data.username);
           setFullName(`${data.first_name || ''} ${data.last_name || ''}`.trim());
+          setRole(data.role);
         } catch (error) {
           setError('Unable to fetch user data');
         }
@@ -200,6 +202,7 @@ export default function Profil() {
 
         <main className={styles.main}>
           <h1 className={styles.title}>Profil {firstName}</h1>
+          <h2 className={styles.roleHeader}>{role}</h2>
           <form className={styles.form} onSubmit={handleSubmit}>
             {/* Email field */}
             <div className={styles.fieldGroup}>
