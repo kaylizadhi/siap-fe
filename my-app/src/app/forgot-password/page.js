@@ -66,56 +66,58 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className={styles.forgotPasswordContainer}>
-      <h2 className={styles.heading}>Forgot Password</h2>
+    <div className={styles.forgotPasswordBody}>
+      <div className={styles.forgotPasswordContainer}>
+        <h2 className={styles.heading}>Forgot Password</h2>
 
-      {/* Step 1: Get Username */}
-      {step === 1 && (
-        <div>
-          <h3>Username</h3>
-          <input
-            type="text"
-            className={styles.Input}
-            placeholder="Masukkan username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <button onClick={handleGetSecurityQuestion} className={styles.Button}>Get Security Question</button>
-        </div>
-      )}
+        {/* Step 1: Get Username */}
+        {step === 1 && (
+          <div>
+            <h3>Username</h3>
+            <input
+              type="text"
+              className={styles.Input}
+              placeholder="Masukkan username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <button onClick={handleGetSecurityQuestion} className={styles.Button}>Get Security Question</button>
+          </div>
+        )}
 
-      {/* Step 2: Answer Security Question and Reset Password */}
-      {step === 2 && (
-        <div>
-          <h3>Answer Security Question  {securityQuestion}</h3>
-          <p>{securityQuestion}</p>
-          <input
-            type="text"
-            className={styles.Input}
-            placeholder="Masukkan jawaban"
-            value={securityAnswer}
-            onChange={(e) => setSecurityAnswer(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            className={styles.Input}
-            placeholder="Masukkan password baru"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
-          <button onClick={handleVerifyAnswer} className={styles.Button}>Reset Password</button>
-        </div>
-      )}
+        {/* Step 2: Answer Security Question and Reset Password */}
+        {step === 2 && (
+          <div>
+            <h3>Answer Security Question</h3>
+            <p>{securityQuestion}</p>
+            <input
+              type="text"
+              className={styles.Input}
+              placeholder="Masukkan jawaban"
+              value={securityAnswer}
+              onChange={(e) => setSecurityAnswer(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              className={styles.Input}
+              placeholder="Masukkan password baru"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+            <button onClick={handleVerifyAnswer} className={styles.Button}>Reset Password</button>
+          </div>
+        )}
 
-      {/* Error message display */}
-      {error && <p className={styles.error}>{error}</p>}
+        {/* Error message display */}
+        {error && <p className={styles.error}>{error}</p>}
 
-      <footer className={styles.footer}>
-        <p>@2024 optimasys | Contact optimasys.work@gmail.com</p>
-      </footer>
+        <footer className={styles.footer}>
+          <p>@2024 optimasys | Contact optimasys.work@gmail.com</p>
+        </footer>
+      </div>
     </div>
   );
 }

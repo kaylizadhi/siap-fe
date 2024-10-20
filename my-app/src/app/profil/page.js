@@ -19,6 +19,8 @@ export default function Profil() {
   const [error, setError] = useState(null);  // Error handling for fetching profile
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');  // New state for old password
+  const [newPassword, setNewPassword] = useState('');  // New state for new password
   
   const toggleEmailEditable = () => setIsEmailEditable(!isEmailEditable);
   const toggleNameEditable = () => setIsNameEditable(!isNameEditable);
@@ -78,10 +80,11 @@ export default function Profil() {
     const token = localStorage.getItem('authToken');
 
     try {
+      // Update profile details (name, email, etc.)
       const res = await fetch('http://localhost:8000/api/profil/', {
-        method: 'PATCH',  // Use PATCH to update the profile
+        method: 'PATCH',
         headers: {
-          'Authorization': `Token ${token}`,  // Include token in headers
+          'Authorization': `Token ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -96,10 +99,58 @@ export default function Profil() {
         throw new Error('Failed to update profile');
       }
 
-      alert('Profile updated successfully');
+      // If both passwords are provided, update the password
+      if (oldPassword && newPassword) {
+        const passwordRes = await fetch('http://localhost:8000/api/change-password/', {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            old_password: oldPassword,
+            new_password: newPassword,
+          }),
+        });
+
+        if (!passwordRes.ok) {
+          const passwordError = await passwordRes.json();
+          throw new Error(passwordError.error || 'Failed to update password');
+        }
+
+        alert('Password changed successfully');
+      } else {
+        alert('Profile updated successfully');
+      }
     } catch (error) {
-      alert('Failed to update profile');
+      alert(error.message);
     }
+
+    // try {
+    //   const res = await fetch('http://localhost:8000/api/profil/', {
+    //     method: 'PATCH',  // Use PATCH to update the profile
+    //     headers: {
+    //       'Authorization': `Token ${token}`,  // Include token in headers
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       first_name: firstName,
+    //       last_name: lastName,
+    //       email: email,
+    //       username: username,
+    //     }),
+    //   });
+
+    //   if (!res.ok) {
+    //     throw new Error('Failed to update profile');
+    //   }
+
+      
+
+    //   alert('Profile updated successfully');
+    // } catch (error) {
+    //   alert('Failed to update profile');
+    // }
   };
 
   if (error) {
@@ -199,12 +250,22 @@ export default function Profil() {
             <div className={styles.passwordFields}>
               <div className={styles.fieldGroup}>
                 <label>Password Lama</label>
-                <input type="password" placeholder="********" />
+                <input
+                  type={isPasswordVisible ? "text" : "password"}
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  placeholder="********"
+                />
+                <span className={styles.icon} onClick={togglePasswordVisibility}>
+                  <img src="/images/eye-icon.png" alt="Toggle Password Visibility" />
+                </span>
               </div>
               <div className={styles.fieldGroup}>
                 <label>Password Baru</label>
                 <input
                   type={isNewPasswordVisible ? "text" : "password"}  // Toggle between password and text
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="********"
                 />
                 <span className={styles.icon} onClick={toggleNewPasswordVisibility}>
@@ -221,7 +282,7 @@ export default function Profil() {
           </form>
         </main>
       </div>
-      <div className="footer">
+      <div className={styles.footer}>
         @2024 optimasys | Contact optimasys.work@gmail.com
       </div>
     </div>
