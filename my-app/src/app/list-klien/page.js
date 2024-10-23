@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Caudex } from "next/font/google";
 import Toast from "components/Toast";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 
 const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
@@ -116,7 +117,7 @@ export default function DaftarKlien() {
       </div>
 
       {/* Clients Table */}
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead>
           <tr>
             <th className="px-6 py-3 text-xs text-gray-500 uppercase">
@@ -138,10 +139,7 @@ export default function DaftarKlien() {
         </thead>
         <tbody>
           {filteredKliens.map((klien) => (
-            <tr
-              key={klien.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-            >
+            <tr key={klien.id} className="bg-white border-b">
               <td>
                 <div className="flex items-center pl-2 py-4">
                   <input
@@ -163,15 +161,7 @@ export default function DaftarKlien() {
                   onClick={() => handleDetail(klien.id)}
                   className="text-blue-500 hover:text-blue-700"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 0 960 960"
-                    width="24px"
-                    fill="currentColor"
-                  >
-                    <path d="M480 600q71 0 135-27.5t115-78.5q18-17 33-35t29-39q13-20 13-43t-13-43q-13-20-28-39.5T730 249q-51-51-115-78.5T480 143q-71 0-135 27.5T230 249q-18 17-33 35t-29 39q-13 20-13 43t13 43q13 20 28 39.5T230 515q51 51 115 78.5T480 600Zm0-225q-38 0-64.5-26.5T389 284q0-38 26.5-64.5T480 193q38 0 64.5 26.5T571 284q0 38-26.5 64.5T480 375ZM480 720q-124 0-236-67.5T84 500q-5-7-10-13.5T64 472q5-12 10-18t10-13q68-100 180-167t236-67q124 0 236 67t180 167q5 7 10 13t10 18q-5 12-10 18t-10 13q-68 100-180 167T480 720Zm0-220Zm0 136q86 0 168-39.5T784 500q-64-91-146-130.5T480 330q-86 0-168 39.5T176 500q64 91 146 130.5T480 636Zm0-136Z" />
-                  </svg>
+                  <Eye size={20} />
                 </button>
 
                 {/* Update Action */}
@@ -179,15 +169,7 @@ export default function DaftarKlien() {
                   onClick={() => handleUpdate(klien.id)}
                   className="text-green-500 hover:text-green-700"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 96 960 960"
-                    width="24px"
-                    fill="currentColor"
-                  >
-                    <path d="M194 921q-17 0-28.5-11.5T154 881V709q0-17 11.5-28.5T194 669h42q17 0 28.5 11.5T276 709v172q0 17-11.5 28.5T236 921h-42Zm236-1q-17 0-28.5-11.5T390 881V576q0-17 11.5-28.5T430 536h42q17 0 28.5 11.5T512 576v305q0 17-11.5 28.5T472 921h-42Zm236 0q-17 0-28.5-11.5T626 881V404q0-17 11.5-28.5T666 364h42q17 0 28.5 11.5T748 404v477q0 17-11.5 28.5T708 921h-42Zm236 0q-17 0-28.5-11.5T862 881V246q0-17 11.5-28.5T902 206h42q17 0 28.5 11.5T984 246v635q0 17-11.5 28.5T944 921h-42Z" />
-                  </svg>
+                  <Pencil size={20} />
                 </button>
 
                 {/* Delete Action */}
@@ -198,15 +180,7 @@ export default function DaftarKlien() {
                   }}
                   className="text-red-500 hover:text-red-700"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 96 960 960"
-                    width="24px"
-                    fill="currentColor"
-                  >
-                    <path d="M261 961q-34 0-56.5-23T182 881V328h-56q-17 0-28.5-11.5T86 288q0-17 11.5-28.5T126 248h194v-34q0-28 19-47t47-19h178q28 0 47 19t19 47v34h194q17 0 28.5 11.5T874 288q0 17-11.5 28.5T834 328h-56v553q0 34-23 57t-56 23H261Zm402-633H297v553h366V328Zm-255 481q0 17 11.5 28.5T447 849q17 0 28.5-11.5T487 809V529q0-17-11.5-28.5T447 489q-17 0-28.5 11.5T407 529v280Zm160 0q0 17 11.5 28.5T607 849q17 0 28.5-11.5T647 809V529q0-17-11.5-28.5T607 489q-17 0-28.5 11.5T567 529v280ZM407 248h146v-34H407v34Zm-110 80v553-553Z" />
-                  </svg>
+                  <Trash2 size={20} />
                 </button>
               </td>
             </tr>
@@ -214,7 +188,9 @@ export default function DaftarKlien() {
         </tbody>
       </table>
 
-      {showToast && <Toast message={toastMessage} onClose={() => setShowToast(false)} />}
+      {showToast && (
+        <Toast message={toastMessage} onClose={() => setShowToast(false)} />
+      )}
     </div>
   );
 }
