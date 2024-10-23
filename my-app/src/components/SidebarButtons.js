@@ -14,7 +14,7 @@ const SidebarButtons = ({ buttonText, svgIcon, isActive }) => {
           : 'bg-white text-black hover:bg-primary-100 focus:ring-4 focus:outline-none focus:ring-primary-900 focus:bg-primary-100'  // Inactive styles
       } dark:bg-primary-500 dark:hover:bg-primary-500 dark:focus:ring-primary-500 ${caudex.className}`}
     >
-      <span className="me-2">
+      <span className="me-2 object-contain">
         {svgIcon}
       </span>
       {buttonText}
