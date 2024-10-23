@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Caudex } from "next/font/google";
@@ -33,12 +32,12 @@ export default function DaftarKlien() {
       } finally {
         setLoading(false);
       }
+      setShowToast(true);
     };
 
     fetchKliens();
   }, []);
 
-  // Update filter to handle nama_klien, nama_perusahaan, and daerah
   const filteredKliens = kliens.filter((klien) => {
     const lowerSearchQuery = searchQuery.toLowerCase();
     return (
@@ -74,6 +73,11 @@ export default function DaftarKlien() {
           setIsModalOpen(false);
           setToastMessage("Klien berhasil dihapus!");
           setShowToast(true);
+
+          // Automatically hide the toast after 3 seconds
+          setTimeout(() => {
+            setShowToast(false);
+          }, 3000);
         } else {
           throw new Error("Failed to delete client");
         }
@@ -81,6 +85,11 @@ export default function DaftarKlien() {
         console.error("Error deleting client:", error);
         setToastMessage("Gagal menghapus klien.");
         setShowToast(true);
+
+        // Automatically hide the toast after 3 seconds
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
       }
     }
   };
@@ -156,7 +165,6 @@ export default function DaftarKlien() {
               <td className="px-6 py-4">{klien.nama_perusahaan}</td>
               <td className="px-6 py-4">{klien.daerah}</td>
               <td className="px-6 py-4 flex space-x-4">
-                {/* Detail Action */}
                 <button
                   onClick={() => handleDetail(klien.id)}
                   className="text-blue-500 hover:text-blue-700"
@@ -164,15 +172,13 @@ export default function DaftarKlien() {
                   <Eye size={20} />
                 </button>
 
-                {/* Update Action */}
                 <button
                   onClick={() => handleUpdate(klien.id)}
-                  className="text-green-500 hover:text-green-700"
+                  className="text-yellow-500 hover:text-yellow-700"
                 >
                   <Pencil size={20} />
                 </button>
 
-                {/* Delete Action */}
                 <button
                   onClick={() => {
                     setSelectedKlien(klien);
@@ -188,8 +194,39 @@ export default function DaftarKlien() {
         </tbody>
       </table>
 
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h3 className="text-lg font-semibold mb-4">Konfirmasi Hapus</h3>
+            <p className="mb-6 text-gray-600">
+              Apakah Anda yakin ingin menghapus klien &quot;
+              {selectedKlien?.nama_klien}&quot;? Tindakan ini tidak dapat
+              dibatalkan.
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800 rounded-lg"
+              >
+                Batal
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showToast && (
-        <Toast message={toastMessage} onClose={() => setShowToast(false)} />
+        <Toast
+          message={toastMessage}
+          isVisible={showToast}
+          onClose={() => setShowToast(false)}
+        />
       )}
     </div>
   );
