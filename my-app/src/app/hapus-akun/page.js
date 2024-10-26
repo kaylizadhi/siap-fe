@@ -25,17 +25,17 @@ export default function Profil() {
     const toggleNewPasswordVisibility = () => setIsNewPasswordVisible(!isNewPasswordVisible);
 
     useEffect(() => {
-        // Check if user is authenticated, e.g., by checking for a session or token
-        const isLoggedIn = checkAuth(); // Custom function to check if user is logged in
+        // Check apabila user terotentikasi
+        const isLoggedIn = checkAuth(); // ek user udah login atau belum
 
         if (!isLoggedIn) {
-            // Redirect to login if user is not authenticated
+            // Redirect ke login kalo ga terotentikasi
             router.push('/login');
         }
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('authToken'); // Remove the token
+        localStorage.removeItem('authToken'); // hapus token
         router.push('/login');
     };
 
@@ -47,7 +47,7 @@ export default function Profil() {
     const handleCancel = () => router.push('/dashboard');
     
     const handleDeleteAccount = () => {
-        // Handle account deletion logic here
+        // Handle logic penghapusan akun
         alert("Akun Anda telah dihapus.");
         router.push('/login');
     };
@@ -141,7 +141,7 @@ export default function Profil() {
                                 <div className={styles.fieldGroup}>
                                 <label>Password Baru</label>
                                 <input 
-                                    type={isNewPasswordVisible ? "text" : "password"}  // Toggle between password and text
+                                    type={isNewPasswordVisible ? "text" : "password"}  // Toggle antara password dan text
                                     placeholder="********" 
                                 />
                                 <span className={styles.icon} onClick={toggleNewPasswordVisibility}>
