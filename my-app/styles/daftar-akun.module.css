@@ -1,0 +1,80 @@
+.container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    font-size: 2em;
+    color: #800000;
+}
+
+.addButton {
+    background-color: #800000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    float: right;
+    cursor: pointer;
+}
+
+.searchContainer {
+    margin-bottom: 20px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.icon {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.editButton,
+.deleteButton,
+.moreButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination button {
+    background: none;
+    border: none;
+    font-size: 1em;
+    color: #800000;
+    cursor: pointer;
+}

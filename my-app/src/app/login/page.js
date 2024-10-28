@@ -10,7 +10,6 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-    const [userInfo, setUserInfo] = useState(null);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false); // State for login success
     const [showNotification, setShowNotification] = useState(false);
