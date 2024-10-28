@@ -7,28 +7,39 @@ export default function DaftarAkun() {
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const accountsPerPage = 10;
+    const [accounts, setAccounts] = useState(
+        Array(10).fill({
+            username: "JaneDoe123",
+            name: "Jane Doe",
+            email: "janedoe@gmail.com",
+            roles: "Eksekutif"
+        })
+    );
+    const [deletingIndex, setDeletingIndex] = useState(null);
 
-    // Sample client data
-    const accounts = Array(10).fill({
-        username: "JaneDoe123",
-        name: "Jane Doe",
-        email: "janedoe@gmail.com",
-        roles: "Eksekutif"
-    });
-
-    // Filtered clients based on search query
     const filteredAccounts = accounts.filter(account =>
         account.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Paginated clients
     const indexOfLastAccount = currentPage * accountsPerPage;
     const indexOfFirstAccount = indexOfLastAccount - accountsPerPage;
     const currentAccounts = filteredAccounts.slice(indexOfFirstAccount, indexOfLastAccount);
 
+    const totalPages = Math.ceil(filteredAccounts.length / accountsPerPage);
+
     const handleSearch = (e) => {
         setSearchQuery(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
+    };
+
+    const handleDelete = (index) => {
+        const accountIndex = index + indexOfFirstAccount; // Adjust index for pagination
+        setDeletingIndex(accountIndex); // Set the deleting index to trigger animation
+        setTimeout(() => {
+            const updatedAccounts = accounts.filter((_, i) => i !== accountIndex);
+            setAccounts(updatedAccounts);
+            setDeletingIndex(null); // Reset the deleting index after deletion
+        }, 500); // Match this with the animation duration
     };
 
     const goToPreviousPage = () => {
@@ -36,7 +47,7 @@ export default function DaftarAkun() {
     };
 
     const goToNextPage = () => {
-        if (currentPage < Math.ceil(filteredAccounts.length / accountsPerPage)) {
+        if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
     };
@@ -67,13 +78,21 @@ export default function DaftarAkun() {
                 </thead>
                 <tbody>
                     {currentAccounts.map((account, index) => (
-                        <tr key={index}>
+                        <tr
+                            key={index}
+                            className={index + indexOfFirstAccount === deletingIndex ? styles.fadeOut : ""}
+                        >
                             <td><img src="/images/Profile.svg" alt="User Icon" className={styles.icon} /> {account.username}</td>
                             <td>{account.name}</td>
                             <td>{account.email}</td>
                             <td>{account.roles}</td>
                             <td className={styles.actions}>
-                                <button className={styles.deleteButton}><img src="/images/Delete.svg" alt="Delete" /></button>
+                                <button 
+                                    className={styles.deleteButton} 
+                                    onClick={() => handleDelete(index)}
+                                >
+                                    <img src="/images/Delete.svg" alt="Delete" />
+                                </button>
                             </td>
                         </tr>
                     ))}
@@ -81,12 +100,14 @@ export default function DaftarAkun() {
             </table>
 
             <div className={styles.pagination}>
-                <button onClick={goToPreviousPage} disabled={currentPage === 1}>
+                {/* <button onClick={goToPreviousPage} disabled={currentPage === 1}>
                     &lt; Sebelumnya
-                </button> 
-                <button onClick={goToNextPage} disabled={currentPage === Math.ceil(filteredAccounts.length / accountsPerPage)}>
-                    Selanjutnya &gt;
-                </button>
+                </button>  */}
+                {currentPage < totalPages && (
+                    <button onClick={goToNextPage}>
+                        Selanjutnya &gt;
+                    </button>
+                )}
             </div>
         </div>
     );
