@@ -7,7 +7,7 @@
     font-family: 'Caudex', serif;
     background-color:#FFFF;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -30,6 +30,7 @@
   background-color: #fdfdfd;
   border-right: 1px solid #e3e3e3;
   padding: 20px;
+  margin-right: 200px;
 }
 
 .logo img {
@@ -69,6 +70,7 @@
   padding: 10px;
   border-radius: 4px;
   color: #A62626;
+  font-weight: bold;
 }
 
 .logout {
@@ -88,9 +90,9 @@
   margin-left: 0px;
 }
 
-.main {
-  flex: 1;
-  padding: 50px;
+.content {
+  width: 68%;
+  padding: 40px;
 }
 
 .title {
@@ -212,7 +214,7 @@
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
   font-size: 12px;

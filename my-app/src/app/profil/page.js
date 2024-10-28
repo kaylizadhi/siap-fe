@@ -58,6 +58,8 @@ export default function Profil() {
           setUsername(data.username);
           setFullName(`${data.first_name || ''} ${data.last_name || ''}`.trim());
           setRole(data.role);
+
+          
         } catch (error) {
           setError('Unable to fetch user data');
         }
@@ -128,31 +130,7 @@ export default function Profil() {
       alert(error.message);
     }
 
-    // try {
-    //   const res = await fetch('http://localhost:8000/api/profil/', {
-    //     method: 'PATCH',  // Use PATCH to update the profile
-    //     headers: {
-    //       'Authorization': `Token ${token}`,  // Include token in headers
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       first_name: firstName,
-    //       last_name: lastName,
-    //       email: email,
-    //       username: username,
-    //     }),
-    //   });
-
-    //   if (!res.ok) {
-    //     throw new Error('Failed to update profile');
-    //   }
-
-      
-
-    //   alert('Profile updated successfully');
-    // } catch (error) {
-    //   alert('Failed to update profile');
-    // }
+    
   };
 
   if (error) {
@@ -171,12 +149,12 @@ export default function Profil() {
               <img src="/images/Home.svg" alt="Dashboard Icon" className={styles.icon} />Dashboard
             </a>
             <a href="/profil" className={styles.active}>
-              <img src="/images/Profile.svg" alt="Profile Icon" className={styles.active} />Profil
+              <img src="/images/ProfileRed.svg" alt="Profile Icon" className={styles.active} />Profil
             </a>
             <a href="/create-account">
               <img src="/images/Add.svg" alt="Create Icon" className={styles.icon} />Buat Akun
             </a>
-            <a href="/buat-documents">
+            <a href="/generator-dokumen/invoice-final">
               <img src="/images/Create.svg" alt="Buat Dokumen Icon" className={styles.icon} />Buat Dokumen
             </a>
             <a href="/documents">
@@ -200,7 +178,7 @@ export default function Profil() {
           </a>
         </aside>
 
-        <main className={styles.main}>
+        <div className={styles.content}>
           <h1 className={styles.title}>Profil {firstName}</h1>
           <h2 className={styles.roleHeader}>{role}</h2>
           <form className={styles.form} onSubmit={handleSubmit}>
@@ -283,7 +261,7 @@ export default function Profil() {
               <button type="button" className={styles.cancelButton} onClick={handleCancel}>Batal</button>
             </div>
           </form>
-        </main>
+        </div>
       </div>
       <div className={styles.footer}>
         @2024 optimasys | Contact optimasys.work@gmail.com
