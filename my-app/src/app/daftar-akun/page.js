@@ -45,8 +45,6 @@ export default function DaftarAkun() {
         <div className={styles.container}>
             <h1 className={styles.title}>Daftar Akun</h1>
 
-            <button className={styles.addButton}>+ Buat Akun</button>
-
             <div className={styles.searchContainer}>
                 <input
                     type="text"
@@ -85,7 +83,7 @@ export default function DaftarAkun() {
             <div className={styles.pagination}>
                 <button onClick={goToPreviousPage} disabled={currentPage === 1}>
                     &lt; Sebelumnya
-                </button>
+                </button> 
                 <button onClick={goToNextPage} disabled={currentPage === Math.ceil(filteredAccounts.length / accountsPerPage)}>
                     Selanjutnya &gt;
                 </button>

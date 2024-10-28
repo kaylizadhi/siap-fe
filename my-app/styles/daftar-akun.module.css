@@ -1,6 +1,7 @@
 .container {
     padding: 20px;
-    font-family: Arial, sans-serif;
+    font-family: 'Caudex', serif;
+    
 }
 
 .title {
@@ -23,12 +24,21 @@
     margin-bottom: 20px;
 }
 
+
 .searchInput {
     width: 100%;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ddd;
+    font-family: 'Caudex', serif; /* Apply Caudex font to the input text */
 }
+
+.searchInput::placeholder {
+    font-family: 'Caudex', serif; /* Use the Caudex font for the placeholder */
+    color: #999; /* Optional: Set a color for the placeholder */
+    opacity: 1; /* Ensure full opacity */
+}
+
 
 .table {
     width: 100%;
@@ -69,12 +79,22 @@
 .pagination {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px; /* Add some margin on top for spacing */
 }
 
 .pagination button {
-    background: none;
-    border: none;
-    font-size: 1em;
-    color: #800000;
-    cursor: pointer;
+    font-family: 'Caudex', serif; /* Use the Caudex font */
+    color: #800000; /* White text for visibility */
+    border: none; /* No border */
+    padding: 10px 15px; /* Adjust padding for better appearance */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
+
+.pagination button:hover {
+    background-color: #990000; /* Darker shade on hover */
+}
+
+
+
