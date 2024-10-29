@@ -74,7 +74,7 @@ export default function DaftarKlien() {
           <input
             type="text"
             name="nama_klien"
-            placeholder="Nama Klien"
+            placeholder="Masukkan nama klien"
             value={formData.nama_klien}
             onChange={handleChange}
             className="border rounded-md px-4 py-2 mb-4 w-full"
@@ -83,7 +83,7 @@ export default function DaftarKlien() {
           <input
             type="text"
             name="nama_perusahaan"
-            placeholder="Nama Perusahaan"
+            placeholder="Masukkan nama perusahaan"
             value={formData.nama_perusahaan}
             onChange={handleChange}
             className="border rounded-md px-4 py-2 mb-4 w-full"
@@ -92,7 +92,7 @@ export default function DaftarKlien() {
           <input
             type="text"
             name="daerah"
-            placeholder="Daerah"
+            placeholder="Masukkan daerah"
             value={formData.daerah}
             onChange={handleChange}
             className="border rounded-md px-4 py-2 mb-4 w-full"
@@ -100,10 +100,17 @@ export default function DaftarKlien() {
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white py-2 px-4 rounded-md"
+            className="bg-red-600 text-white py-2 px-4 rounded-md"
           >
-            Tambah Klien
+            Simpan
           </button>
+          <button
+              type="button"
+              onClick={() => router.push("/list-klien")}
+              className="border border-red-600 text-red-600 py-2 px-6 rounded-md"
+            >
+              Batal
+            </button>
         </form>
       </div>
 
