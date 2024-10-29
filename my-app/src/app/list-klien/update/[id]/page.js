@@ -110,7 +110,7 @@ export default function UpdateKlien({ params }) {
             type="submit"
             className="bg-blue-600 text-white py-2 px-4 rounded-md"
           >
-            Update Klien
+            Update
           </button>
         </form>
       </div>

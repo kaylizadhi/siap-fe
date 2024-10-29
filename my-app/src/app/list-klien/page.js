@@ -129,19 +129,19 @@ export default function DaftarKlien() {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead>
           <tr>
-            <th className="px-6 py-3 text-xs text-gray-500 uppercase">
+            <th className="px-6 py-3 text-xs text-gray-500">
               Select
             </th>
-            <th className="px-6 py-3 text-xs text-gray-500 uppercase">
+            <th className="px-6 py-3 text-xs text-gray-500">
               Nama Klien
             </th>
-            <th className="px-6 py-3 text-xs text-gray-500 uppercase">
+            <th className="px-6 py-3 text-xs text-gray-500">
               Nama Perusahaan
             </th>
-            <th className="px-6 py-3 text-xs text-gray-500 uppercase">
+            <th className="px-6 py-3 text-xs text-gray-500">
               Daerah
             </th>
-            <th className="px-6 py-3 text-xs text-gray-500 uppercase">
+            <th className="px-6 py-3 text-xs text-gray-500">
               Action
             </th>
           </tr>
@@ -200,8 +200,7 @@ export default function DaftarKlien() {
             <h3 className="text-lg font-semibold mb-4">Konfirmasi Hapus</h3>
             <p className="mb-6 text-gray-600">
               Apakah Anda yakin ingin menghapus klien &quot;
-              {selectedKlien?.nama_klien}&quot;? Tindakan ini tidak dapat
-              dibatalkan.
+              {selectedKlien?.nama_klien}&quot;?
             </p>
             <div className="flex justify-end gap-4">
               <button
