@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Caudex } from "next/font/google";
-import Toast from "components/Toast";
+import { toast } from "react-toastify";
 import { Eye, Pencil, Trash2 } from "lucide-react";
+import Button from "components/Button"; // Import the Button component
 
 const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
@@ -14,8 +15,6 @@ export default function DaftarKlien() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedKlien, setSelectedKlien] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -32,7 +31,6 @@ export default function DaftarKlien() {
       } finally {
         setLoading(false);
       }
-      setShowToast(true);
     };
 
     fetchKliens();
@@ -48,7 +46,7 @@ export default function DaftarKlien() {
   });
 
   const handleTambahKlien = () => {
-    router.push("/daftar-klien");
+    router.push("/list-klien/tambah");
   };
 
   const handleDetail = (id) => {
@@ -71,161 +69,114 @@ export default function DaftarKlien() {
         if (response.ok) {
           setKliens(kliens.filter((klien) => klien.id !== selectedKlien.id));
           setIsModalOpen(false);
-          setToastMessage("Klien berhasil dihapus!");
-          setShowToast(true);
-
-          // Automatically hide the toast after 3 seconds
-          setTimeout(() => {
-            setShowToast(false);
-          }, 3000);
+          toast.success("Klien berhasil dihapus!"); // Show success toast
         } else {
           throw new Error("Failed to delete client");
         }
       } catch (error) {
         console.error("Error deleting client:", error);
-        setToastMessage("Gagal menghapus klien.");
-        setShowToast(true);
-
-        // Automatically hide the toast after 3 seconds
-        setTimeout(() => {
-          setShowToast(false);
-        }, 3000);
+        toast.error("Gagal menghapus klien."); // Show error toast
       }
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className={`${caudex.className}`}>Loading...</p>;
+  if (error) return <p className={`${caudex.className}`}>Error: {error}</p>;
 
   return (
-    <div>
-      {/* Daftar Klien Heading and Tambah Klien Button */}
+    <div className={`${caudex.className}`}>
       <div className="flex justify-between items-center mb-6">
-        <h1
-          className={`text-4xl font-bold text-primary-900 ${caudex.className}`}
-        >
-          Daftar Klien
-        </h1>
-        <button
+        <h1 className={`text-4xl font-bold text-primary-900`}>Daftar Klien</h1>
+        <Button
           onClick={handleTambahKlien}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg"
+          variant="primary"
+          className="flex items-center"
         >
-          Tambah Klien
-        </button>
+          <span className="text-2xl mr-2">+</span>
+          <span className="text-sm">Tambah Klien</span>
+        </Button>
       </div>
 
-      {/* Search Bar */}
-      <div className="w-full flex px-4 py-3 mb-3 rounded-md border-2 border overflow-hidden mx-auto font-[sans-serif]">
+      <div className="w-full flex px-6 py-3 mb-6 rounded-full border-2 border overflow-hidden mx-auto font-[sans-serif]">
         <input
           type="text"
           placeholder="Cari Klien"
-          className="w-full outline-none bg-transparent text-gray-600 text-sm"
+          className={`w-full outline-none bg-transparent text-gray-600 text-sm ${caudex.className}`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      {/* Clients Table */}
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 text-xs text-gray-500">
-              Select
-            </th>
-            <th className="px-6 py-3 text-xs text-gray-500">
-              Nama Klien
-            </th>
-            <th className="px-6 py-3 text-xs text-gray-500">
-              Nama Perusahaan
-            </th>
-            <th className="px-6 py-3 text-xs text-gray-500">
-              Daerah
-            </th>
-            <th className="px-6 py-3 text-xs text-gray-500">
-              Action
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredKliens.map((klien) => (
-            <tr key={klien.id} className="bg-white border-b">
-              <td>
-                <div className="flex items-center pl-2 py-4">
-                  <input
-                    id={`checkbox-${klien.id}`}
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                </div>
-              </td>
-              <td className="px-6 py-4">
-                <p className="font-bold text-gray-700">{klien.nama_klien}</p>
-              </td>
-              <td className="px-6 py-4">{klien.nama_perusahaan}</td>
-              <td className="px-6 py-4">{klien.daerah}</td>
-              <td className="px-6 py-4 flex space-x-4">
+      {/* Headers */}
+      <div className="grid grid-cols-4 gap-4 px-8 py-3 text-xs text-gray-500 uppercase font-medium">
+        <div>Nama Klien</div>
+        <div>Nama Perusahaan</div>
+        <div>Daerah</div>
+        <div>Action</div>
+      </div>
+
+      {/* Rows */}
+      <div className="space-y-3">
+        {filteredKliens.map((klien) => (
+          <div
+            key={klien.id}
+            className="grid grid-cols-4 gap-4 px-8 py-3 bg-white rounded-full border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200"
+          >
+            <div>
+              <p className="font-bold text-gray-700">{klien.nama_klien}</p>
+            </div>
+            <div className="text-gray-500">{klien.nama_perusahaan}</div>
+            <div className="text-gray-500">{klien.daerah}</div>
+            <div>
+              <div className="flex space-x-6">
                 <button
                   onClick={() => handleDetail(klien.id)}
-                  className="text-blue-500 hover:text-blue-700"
+                  className="text-gray-800 hover:text-gray-600 transition-colors"
                 >
                   <Eye size={20} />
                 </button>
-
                 <button
                   onClick={() => handleUpdate(klien.id)}
-                  className="text-yellow-500 hover:text-yellow-700"
+                  className="text-gray-800 hover:text-gray-600 transition-colors"
                 >
                   <Pencil size={20} />
                 </button>
-
                 <button
                   onClick={() => {
                     setSelectedKlien(klien);
                     setIsModalOpen(true);
                   }}
-                  className="text-red-500 hover:text-red-700"
+                  className="text-gray-800 hover:text-gray-600 transition-colors"
                 >
                   <Trash2 size={20} />
                 </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+          <div className="bg-white p-8 rounded-2xl shadow-lg max-w-sm w-full">
             <h3 className="text-lg font-semibold mb-4">Konfirmasi Hapus</h3>
             <p className="mb-6 text-gray-600">
               Apakah Anda yakin ingin menghapus klien &quot;
               {selectedKlien?.nama_klien}&quot;?
             </p>
             <div className="flex justify-end gap-4">
-              <button
+              <Button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800 rounded-lg"
+                variant="modalCancel"
               >
                 Batal
-              </button>
-              <button
-                onClick={handleDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
+              </Button>
+              <Button onClick={handleDelete} variant="modalDelete">
                 Hapus
-              </button>
+              </Button>
             </div>
           </div>
         </div>
-      )}
-
-      {showToast && (
-        <Toast
-          message={toastMessage}
-          isVisible={showToast}
-          onClose={() => setShowToast(false)}
-        />
       )}
     </div>
   );

@@ -1,16 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { Caudex } from "next/font/google";
-import { toast } from "react-toastify"; // Import toast and ToastContainer from react-toastify
+import { toast } from "react-toastify"; // Import toast from react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 import Button from "components/Button"; // Import the Button component
 
 const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
-export default function UpdateKlien({ params }) {
-  const { id } = params;
+export default function DaftarKlien() {
   const [formData, setFormData] = useState({
     nama_klien: "",
     nama_perusahaan: "",
@@ -20,15 +19,6 @@ export default function UpdateKlien({ params }) {
   const [error, setError] = useState(null);
   const router = useRouter(); // Initialize useRouter
 
-  useEffect(() => {
-    if (id) {
-      fetch(`http://localhost:8000/klien/${id}/`)
-        .then((response) => response.json())
-        .then((data) => setFormData(data))
-        .catch((error) => console.error("Error:", error));
-    }
-  }, [id]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -37,25 +27,20 @@ export default function UpdateKlien({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:8000/klien/${id}/update/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("http://localhost:8000/klien/create/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
-      toast.success("Klien berhasil diupdate!"); // Show success toast
+      toast.success("Klien berhasil ditambahkan!"); // Show success toast
       setError(null);
-
-      // Reset form data after successful update
       setFormData({
         nama_klien: "",
         nama_perusahaan: "",
@@ -67,8 +52,8 @@ export default function UpdateKlien({ params }) {
         router.push("/list-klien");
       }, 500); // Redirect after 500ms for toast visibility
     } catch (error) {
-      setError("Gagal mengupdate klien.");
-      toast.error("Gagal mengupdate klien."); // Show error toast
+      setError("Gagal menambahkan klien.");
+      toast.error("Gagal menambahkan klien."); // Show error toast
     }
   };
 
@@ -83,8 +68,10 @@ export default function UpdateKlien({ params }) {
 
   return (
     <div className={`p-6 ${caudex.className}`}>
-      <h1 className="text-4xl font-bold mb-6 text-primary-900">Update Klien</h1>
+      <h1 className="text-4xl font-bold mb-6 text-primary-900">Daftar Klien</h1>
+
       {error && <p className="text-red-500 mb-4">{error}</p>}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col w-1/2 mb-4">
           <label className="mb-1 font-semibold" htmlFor="nama_klien">
