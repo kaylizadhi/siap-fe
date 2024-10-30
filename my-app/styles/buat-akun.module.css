@@ -66,14 +66,16 @@ h2.loginHeading {
 }
 
 .input {
-  width: calc(100% - 28px); 
-  padding: 12px;
-  margin-bottom: 1.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  font-family: 'Caudex', serif; 
-}
+    width: 100%; /* Ensures consistent width for all inputs and select elements */
+    padding: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Caudex', serif; 
+    box-sizing: border-box; /* Ensures padding doesn’t affect width */
+  }
+  
 
 .passwordContainer {
   position: relative;
