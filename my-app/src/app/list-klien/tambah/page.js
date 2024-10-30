@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { Caudex } from "next/font/google";
-import Toast from "components/Toast"; // Import the Toast component
+import { toast } from "react-toastify"; // Import toast from react-toastify
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import Button from "components/Button"; // Import the Button component
 
 const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
@@ -15,8 +17,6 @@ export default function DaftarKlien() {
   });
 
   const [error, setError] = useState(null);
-  const [toastMessage, setToastMessage] = useState(""); // State for toast message
-  const [showToast, setShowToast] = useState(false); // State for toast visibility
   const router = useRouter(); // Initialize useRouter
 
   const handleChange = (e) => {
@@ -39,9 +39,7 @@ export default function DaftarKlien() {
         throw new Error("Network response was not ok");
       }
 
-      setToastMessage("Klien berhasil ditambahkan!"); // Set success message
-      setShowToast(true); // Show toast message
-
+      toast.success("Klien berhasil ditambahkan!"); // Show success toast
       setError(null);
       setFormData({
         nama_klien: "",
@@ -55,71 +53,83 @@ export default function DaftarKlien() {
       }, 500); // Redirect after 500ms for toast visibility
     } catch (error) {
       setError("Gagal menambahkan klien.");
-      setToastMessage(""); // Clear toast message on error
+      toast.error("Gagal menambahkan klien."); // Show error toast
     }
   };
 
+  const handleCancel = () => {
+    setFormData({
+      nama_klien: "",
+      nama_perusahaan: "",
+      daerah: "",
+    });
+    router.push("/list-klien"); // Redirect to the list-klien page on cancel
+  };
+
   return (
-    <div>
-      <div>
-        <h1
-          className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}
-        >
-          Daftar Klien
-        </h1>
+    <div className={`p-6 ${caudex.className}`}>
+      <h1 className="text-4xl font-bold mb-6 text-primary-900">Daftar Klien</h1>
 
-        {error && <div className="mb-4 text-red-500">{error}</div>}
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="mb-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold" htmlFor="nama_klien">
+            Nama Klien
+          </label>
           <input
             type="text"
+            id="nama_klien"
             name="nama_klien"
             placeholder="Masukkan nama klien"
+            className="border rounded-md p-2"
             value={formData.nama_klien}
             onChange={handleChange}
-            className="border rounded-md px-4 py-2 mb-4 w-full"
             required
           />
+        </div>
+
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold" htmlFor="nama_perusahaan">
+            Nama Perusahaan
+          </label>
           <input
             type="text"
+            id="nama_perusahaan"
             name="nama_perusahaan"
             placeholder="Masukkan nama perusahaan"
+            className="border rounded-md p-2"
             value={formData.nama_perusahaan}
             onChange={handleChange}
-            className="border rounded-md px-4 py-2 mb-4 w-full"
             required
           />
+        </div>
+
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold" htmlFor="daerah">
+            Daerah
+          </label>
           <input
             type="text"
+            id="daerah"
             name="daerah"
             placeholder="Masukkan daerah"
+            className="border rounded-md p-2"
             value={formData.daerah}
             onChange={handleChange}
-            className="border rounded-md px-4 py-2 mb-4 w-full"
             required
           />
-          <button
-            type="submit"
-            className="bg-red-600 text-white py-2 px-4 rounded-md"
-          >
-            Simpan
-          </button>
-          <button
-              type="button"
-              onClick={() => router.push("/list-klien")}
-              className="border border-red-600 text-red-600 py-2 px-6 rounded-md"
-            >
-              Batal
-            </button>
-        </form>
-      </div>
+        </div>
 
-      {/* Toast Notification */}
-      <Toast
-        message={toastMessage}
-        isVisible={showToast}
-        onClose={() => setShowToast(false)} // Hide toast after it is displayed
-      />
+        <div className="flex flex-col w-1/2 mt-6">
+          <Button className="mb-4" type="submit" variant="primary">
+            Simpan
+          </Button>
+          <Button onClick={handleCancel} variant="secondary">
+            Batal
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }
