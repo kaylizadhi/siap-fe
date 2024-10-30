@@ -92,7 +92,7 @@ export default function DaftarKlien() {
           variant="primary"
           className="flex items-center"
         >
-          <span className="text-2xl mr-2">+</span>
+          <span className="text-3xl mr-2">+</span>
           <span className="text-sm">Tambah Klien</span>
         </Button>
       </div>

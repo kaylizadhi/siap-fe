@@ -42,7 +42,7 @@ const Sidebar = () => {
                     <svg
                       width="24"
                       height="24"
-                      viewBox="0 0 24 24"
+                      viewBox="0 0 28 28"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -71,7 +71,7 @@ const Sidebar = () => {
                   <svg
                     width="24"
                     height="24"
-                    viewBox="0 0 26 27"
+                    viewBox="0 0 28 28"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -126,7 +126,7 @@ const Sidebar = () => {
                   <svg
                     width="24"
                     height="24"
-                    viewBox="0 0 24 25"
+                    viewBox="0 0 28 28"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -200,7 +200,7 @@ const Sidebar = () => {
                   <svg
                     width="24"
                     height="24"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 28 28"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -264,8 +264,8 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                 >
                   <svg
-                    width="28"
-                    height="28"
+                    width="24"
+                    height="24"
                     viewBox="0 0 28 28"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -296,9 +296,9 @@ const Sidebar = () => {
                     viewBox="0 0 24 24"
                   >
                     <svg
-                      width="27"
-                      height="26"
-                      viewBox="0 0 27 26"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 28 28"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -326,8 +326,8 @@ const Sidebar = () => {
                 >
                   <svg
                     width="24"
-                    height="25"
-                    viewBox="0 0 24 25"
+                    height="24"
+                    viewBox="0 0 28 28"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
