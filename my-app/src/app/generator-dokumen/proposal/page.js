@@ -8,7 +8,37 @@ import styles from '../../../../styles/generator-dokumen.module.css';
 const Proposal = () => {
   const router = useRouter();
   const [docType, setDocType] = useState(''); // State to track selected document type
-  const [slideImage, setSlideImage] = useState(null); // State to hold the image URL
+  const [isVisible, setIsVisible] = useState(false);
+  const [file, setFile] = useState(null);
+
+  const handleUploadClick = () => {
+    setIsVisible(!isVisible); // Toggle visibility
+  };
+
+  const handleFileChange = (event) => {
+    const uploadedFile = event.target.files[0];
+    if (uploadedFile && uploadedFile.name.endsWith('.ppt')) {
+      setFile(uploadedFile);
+    } else {
+      alert("Only .ppt files are allowed.");
+    }
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files[0];
+    if (droppedFile && droppedFile.name.endsWith('.ppt')) {
+      setFile(droppedFile);
+    } else {
+      alert("Only .ppt files are allowed.");
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -213,14 +243,44 @@ const Proposal = () => {
             <div className={styles.subtitle}>
                 Template Proposal Survey
             </div>
+
+            <img 
+                src="/images/proposal_preview.png"  
+                alt="Template Preview" 
+                className={styles.image}  
+            />
             
 
             {/* Export Button */}
             <div className={styles.buttonGroup}>
-                <button type="button" className={styles.uploadButton}>Upload Template Baru</button>
+                <button type="button" onClick={handleUploadClick} className={styles.uploadButton}>Upload Template Baru</button>
                 <button type="button" className={styles.exportButton} onClick={handleExport}>
                 <img src="/images/AddItem.svg" alt="Export Icon" />Export
                 </button>
+            </div>
+            <div>
+              {isVisible && (
+                <div
+                  className={styles.uploadContainer}
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                >
+                  <label className={styles.fileInputLabel} htmlFor="fileInput">
+                    <img src="/images/upload_icon.svg" alt="Upload Icon" className={styles.uploadIcon} />
+                    <p>Unggah Dokumen</p>
+                    <p className={styles.uploadSubtitle}>Ukuran maksimal:</p>
+                    <p className={styles.uploadSubtitle}>Format file: .ppt</p>
+                  </label>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept=".ppt"
+                    onChange={handleFileChange}
+                    className={styles.fileInput}
+                  />
+                  {file && <p>Selected file: {file.name}</p>}
+                </div>
+              )}
             </div>
 
             
