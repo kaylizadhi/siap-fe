@@ -1,4 +1,5 @@
-
+/* Import Caudex Font */
+@import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
 
 .containerbackground {
     display: flex;
@@ -6,7 +7,8 @@
     font-family: 'Caudex', serif;
     background-color:#FFFF;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .container {
@@ -16,11 +18,19 @@
   background-color:#FFFF;
 }
 
+.roleHeader {
+  font-size: 24px;
+  color: #A62626;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
 .sidebar {
   width: 250px;
   background-color: #fdfdfd;
   border-right: 1px solid #e3e3e3;
   padding: 20px;
+  margin-right: 200px;
 }
 
 .logo img {
@@ -38,7 +48,7 @@
 
 .nav a {
   display: flex;
-  align-items: center;  /* Align icon and text vertically */
+  align-items: center;  
   margin-bottom: 15px;
   color: #4c2323;
   text-decoration: none;
@@ -48,9 +58,9 @@
 }
 
 .nav a img {
-  margin-right: 10px;   /* Add space between icon and text */
-  width: 24px;          /* Set the width of the icon */
-  height: 24px;         /* Set the height of the icon */
+  margin-right: 10px;   
+  width: 24px;          
+  height: 24px;         
   margin-bottom: 0px;
   margin-left: 0px;
 }
@@ -60,6 +70,7 @@
   padding: 10px;
   border-radius: 4px;
   color: #A62626;
+  font-weight: bold;
 }
 
 .logout {
@@ -72,22 +83,22 @@
 }
 
 .logout img {
-  margin-right: 10px;   /* Add space between icon and text */
-  width: 24px;          /* Set the width of the icon */
-  height: 24px;         /* Set the height of the icon */
+  margin-right: 10px;   
+  width: 24px;          
+  height: 24px;         
   margin-bottom: 0px;
   margin-left: 0px;
 }
 
-.main {
-  flex: 1;
-  padding: 50px;
+.content {
+  width: 68%;
+  padding: 40px;
 }
 
 .title {
   font-size: 36px;
   color: #A62626;
-  margin-bottom: 40px;
+  margin-bottom: 0px;
 }
 
 .form {
@@ -96,15 +107,19 @@
 }
 
 .fieldGroup {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   margin-bottom: 20px;
+  margin-right: 0px;
+  padding-right: 10px;
+  width: 1000px;
+  
 }
 
 .fieldGroup label {
   width: 150px;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: block;
 }
 
@@ -114,6 +129,9 @@
   border: 1px solid #bbc7cd;
   border-radius: 8px;
   font-size: 16px;
+  font-family: 'Caudex';
+  width: 500px;
+  align-items: center;
 }
 
 .disabledInput {
@@ -123,27 +141,52 @@
 .icon {
   margin-left: -40px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
+
+
 
 .passwordFields {
   display: flex;
   justify-content: space-between;
+  /* padding-top: 5px; */
+}
+
+.passwordFields input {
+  flex: 1;
+  padding: 10px;
+  height: 20px;
+  border: 1px solid #bbc7cd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Caudex';
+  width: 200px;
+}
+
+.passwordFields label {
+  margin-right: 10px;
+  margin-bottom: 0px;
+  font-size: 16px;
+  color: #4c2323;
 }
 
 .passwordFields .fieldGroup {
-  width: 48%;
+  width: 55%;
+
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 30px;
-  margin-left: 15px;
+  margin-top: 10px;
+  margin-left: 0px;
+  font-family: 'Caudex';
+  width: 525px;
 }
 
 .saveButton {
+  font-family: 'Caudex';
   background-color: #A62626;
   color: white;
   padding: 15px 30px;
@@ -162,11 +205,21 @@
   border-radius: 32px;
   font-size: 16px;
   cursor: pointer;
+  font-family: 'Caudex';
 }
 
 .disabledInput {
   background-color: #f7f9fc;
-  color: #a0a0a0; /* You can make the text color lighter to indicate it's disabled */
+  color: #a0a0a0; 
 }
+
+.footer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 12px;
+  color: #A62626; 
+}
+
 
   

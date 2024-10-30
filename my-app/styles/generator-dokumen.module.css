@@ -1,0 +1,377 @@
+/* .container {
+display: flex;
+background-color: #fdfdfd;
+} */
+
+/* Import Caudex Font */
+@import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
+
+.containerbackground {
+display: flex;
+min-height: 100vh;
+font-family: 'Caudex', serif;
+background-color:#FFFF;
+width: 100%;
+justify-content: space-between;
+align-items: center;
+}
+
+.container {
+display: flex;
+min-height: 100vh;
+font-family: 'Caudex', serif;
+background-color:#FFFF;
+}
+
+.sidebar {
+width: 250px;
+background-color: #fdfdfd;
+border-right: 1px solid #e3e3e3;
+padding: 20px;
+margin-right: 100px;
+}
+
+.logo img {
+max-width: 100%;
+padding-bottom: 20px;
+padding-top: 30px;
+}
+
+.icon {
+margin-right: 8px;
+}
+
+.nav {
+margin-top: 30px;
+display: flex;
+flex-direction: column;
+height: 500px;
+}
+
+.nav a {
+display: flex;
+align-items: center;  
+margin-bottom: 15px;
+color: #4c2323;
+text-decoration: none;
+font-size: 18px;
+padding-left: 10px;
+padding-bottom: 10px;
+}
+
+.nav a img {
+margin-right: 10px;   
+width: 24px;          
+height: 24px;         
+margin-bottom: 0px;
+margin-left: 0px;
+}
+
+.nav a.active {
+background-color: #f7d9d9;
+padding: 10px;
+border-radius: 4px;
+color: #A62626;
+}
+
+.logout {
+display: flex;
+margin-top: 30px;
+color: #A62626;
+font-size: 18px;
+text-decoration: none;
+padding-left: 10px;
+}
+
+.logout img {
+margin-right: 10px;   
+width: 24px;          
+height: 24px;         
+margin-bottom: 0px;
+margin-left: 0px;
+}
+
+.nav a.active {
+color: #b22222;
+font-weight: bold;
+}
+
+.content {
+width: 80%;
+padding: 40px;
+}
+
+.title {
+    font-size: 36px;
+    color: #A62626;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 24px;
+  color: #A62626;
+  margin-bottom: 10px;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form {
+    display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.docType,
+.exportSection {
+margin-bottom: 20px;
+}
+
+
+
+.radioGroup input {
+margin-right: 8px;
+cursor: pointer;
+}
+
+.radioGroup label {
+margin-right: 16px;
+cursor: pointer;
+}
+
+.inputGroup {
+margin-bottom: 20px;
+display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputGroup label {
+    font-weight: bold;
+    flex: 0 0 150px; /* Fixed width for labels */
+  margin-right: 10px;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+width: 100%;
+padding: 10px;
+border: 1px solid #A62626;
+border-radius: 8px;
+font-family: 'Caudex';
+}
+
+.inputRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-family: 'Caudex';
+    font-weight: bold;
+    align-items: center;
+  }
+  
+  /* Container for the Nominal input field */
+  .nominalContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Takes available space */
+    margin-right: 20px; /* Space between nominal and percentage */
+    font-family: 'Caudex';
+  }
+  
+  /* Container for the Paid Percentage input field */
+  .percentageContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    width: 100px;
+  }
+
+.nominalInput {
+display: flex;
+align-items: center;
+width: 100%;
+
+}
+
+.nominalInput span {
+padding: 10px;
+/* background-color: #f1f1f1; */
+border: 1px solid #A62626;
+border-right: none;
+border-radius: 8px 0 0 8px;
+height: 17px;
+}
+
+.nominalInput input {
+border-left: none;
+padding: 10px;
+  border: 1px solid #b22222;
+  border-radius: 0 8px 8px 0;
+  font-family: 'Caudex';
+  width: 500px;
+}
+
+.percentageInput {
+    display: flex;
+    align-items: center;
+}
+
+.percentageInput input {
+    padding: 10px;
+    border: 1px solid #b22222;
+    border-radius: 8px 0 0 8px;
+    /* border-right: none; */
+    /* margin-right: 0; */
+    font-family: 'Caudex';
+    width:138px;
+  }
+
+.percentageInput span {
+    padding: 10px;
+    /* background-color: #f1f1f1; */
+    border: 1px solid #A62626;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    height: 17px;
+    font-weight: bold;
+    
+}
+
+.datePicker {
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.datePicker input[type="date"] {
+    font-family: 'Caudex', serif;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #A62626;
+    width: 100%; /* Adjust width as needed */
+  }
+
+.datePicker label {
+    flex: 0 0 150px; /* Fixed width for labels */
+  margin-right: 10px;
+    font-weight: bold;
+}
+
+.buttonGroup {
+display: flex;
+justify-content: space-evenly;
+margin-top: 20px;
+}
+
+
+.submitButton {
+display: inline-flex; /* Use flexbox for alignment */
+align-items: center;  /* Align the image and text vertically */
+justify-content: center;
+font-family: 'Caudex';
+background-color: #A62626;
+color: white;
+padding: 15px 30px;
+margin-bottom: 20px;
+border: none;
+border-radius: 32px;
+font-size: 16px;
+cursor: pointer;
+width:400px;
+}
+
+.cancelButton {
+background-color: white;
+width:300px;
+color: #A62626;
+border: 1px solid #A62626;
+padding: 15px 30px;
+border-radius: 32px;
+font-size: 16px;
+margin-bottom: 20px;
+cursor: pointer;
+font-family: 'Caudex';
+}
+
+.exportSection {
+text-align: right;
+}
+
+.exportButton {
+display: inline-flex; /* Use flexbox for alignment */
+align-items: center;  /* Align the image and text vertically */
+justify-content: center;
+font-family: 'Caudex';
+background-color: #A62626;
+color: white;
+padding: 15px 30px;
+margin-bottom: 20px;
+border: none;
+border-radius: 32px;
+font-size: 16px;
+cursor: pointer;
+width:300px;
+}
+
+.uploadButton {
+  background-color: white;
+  width:300px;
+  color: #A62626;
+  border: 1px solid #A62626;
+  padding: 15px 30px;
+  border-radius: 32px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-family: 'Caudex';
+  }
+
+.exportButton img {
+margin-right: 8px;
+}
+
+.image {
+  width: 700px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 12px;
+    color: #A62626; 
+}
+
+.uploadContainer {
+  border: 2px dashed #cccccc;
+  border-radius: 12px;
+  width: 300px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  margin-left: 200px;
+}
+
+.uploadSubtitle  {
+  font-size: 14px;
+  color:darkgrey;
+}
+
+.fileInputLabel {
+  text-align: center;
+  cursor: pointer;
+}
+
+.fileInput {
+  display: none; /* Hide the default file input */
+}
+  
