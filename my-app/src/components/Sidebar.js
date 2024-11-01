@@ -53,7 +53,7 @@ const Sidebar = () => {
                     </svg>
                   </svg>
                 }
-                route="/"
+                route="/dashboard"
               />
             </Link>
           </li>
@@ -93,24 +93,26 @@ const Sidebar = () => {
             />
           </li>
           <li>
-            <SidebarButtons
-              buttonText="Buat Akun"
-              svgIcon={
-                <svg
-                  className="w-4 h-4 text-black"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M24 13.9661H13.7143V24.2518H10.2857V13.9661H0V10.5375H10.2857V0.251831H13.7143V10.5375H24V13.9661Z"
-                    fill="#1C1C1C"
-                  />
-                </svg>
-              }
-              route="/anjay"
-            />
+            <Link href="/buat-akun">
+              <SidebarButtons
+                buttonText="Buat Akun"
+                svgIcon={
+                  <svg
+                    className="w-4 h-4 text-black"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M24 13.9661H13.7143V24.2518H10.2857V13.9661H0V10.5375H10.2857V0.251831H13.7143V10.5375H24V13.9661Z"
+                      fill="#1C1C1C"
+                    />
+                  </svg>
+                }
+                route="/buat-akun"
+              />
+            </Link>
           </li>
           <li>
             <SidebarButtons
