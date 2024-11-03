@@ -4,57 +4,94 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Caudex } from "next/font/google";
+import { useRouter } from "next/navigation";
+import StatusBox from "components/StatusBox";
 
 const caudex = Caudex({ weight: "700", subsets: ["latin"] });
 
-const StatusBox = ({ status, onStatusChange, fieldKey, label, isLoading }) => {
-  const statusColors = {
-    NOT_STARTED: "bg-gray-200",
-    IN_PROGRESS: "bg-yellow-200",
-    FINISHED: "bg-green-200",
-    DELAYED: "bg-red-200",
-  };
-
-  return (
-    <div className="w-full text-xs mb-2">
-      <div className="text-xs font-medium mb-1">{label}</div>
-      <div
-        className={`border rounded-md p-2 ${statusColors[status]} ${
-          isLoading ? "opacity-50" : ""
-        }`}
-      >
-        <select
-          value={status}
-          onChange={(e) => onStatusChange(fieldKey, e.target.value)}
-          disabled={isLoading}
-          className="w-full bg-transparent border-none focus:ring-0 cursor-pointer text-xs"
-        >
-          <option value="NOT_STARTED">Not Started</option>
-          <option value="IN_PROGRESS">In Progress</option>
-          <option value="FINISHED">Finished</option>
-          <option value="DELAYED">Delayed</option>
-        </select>
-      </div>
-    </div>
-  );
-};
-
 export default function SurveyTrackerDetail({ params }) {
   const { id } = params;
+  const router = useRouter();
   const [surveyData, setSurveyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [updatingField, setUpdatingField] = useState(null);
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
+    const verifyUser = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
+      try {
+        // Check role for Administrasi
+        const adminResponse = await fetch(
+          "http://localhost:8000/accounts/check_role_administrasi/",
+          {
+            headers: { Authorization: `Token ${token}` },
+          }
+        );
+
+        if (adminResponse.ok) {
+          const data = await adminResponse.json();
+          setUserRole("Administrasi");
+          return;
+        }
+
+        // If not Administrasi, check for Logistik
+        const logistikResponse = await fetch(
+          "http://localhost:8000/accounts/check_role_logistik/",
+          {
+            headers: { Authorization: `Token ${token}` },
+          }
+        );
+
+        if (logistikResponse.ok) {
+          const data = await logistikResponse.json();
+          setUserRole("Logistik");
+          return;
+        }
+
+        // If not Logistik, check for Pengendali Mutu
+        const mutuResponse = await fetch(
+          "http://localhost:8000/accounts/check_role_pengendalimutu/",
+          {
+            headers: { Authorization: `Token ${token}` },
+          }
+        );
+
+        if (mutuResponse.ok) {
+          const data = await mutuResponse.json();
+          setUserRole("Pengendali Mutu");
+          return;
+        }
+
+        // If none of the roles match, redirect to login
+        router.push("/login");
+      } catch (error) {
+        console.error("Failed to verify role:", error);
+        router.push("/login");
+      }
+    };
+
+    verifyUser();
     if (id) {
       fetchSurveyData();
     }
-  }, [id]);
+  }, [id, router]);
 
   const fetchSurveyData = async () => {
+    const token = localStorage.getItem("authToken");
     try {
       const response = await fetch(
-        `http://localhost:8000/survey-status/${id}/`
+        `http://localhost:8000/survei-status/${id}/`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
       );
       if (!response.ok) throw new Error("Failed to fetch survey data");
       const data = await response.json();
@@ -77,33 +114,40 @@ export default function SurveyTrackerDetail({ params }) {
   };
 
   const handleStatusChange = async (field, newStatus) => {
+    const token = localStorage.getItem("authToken");
     setUpdatingField(field);
+
+    // Determine which endpoint to use based on the field and user role
+    let endpoint;
+    if (userRole === "Administrasi") {
+      endpoint = `http://localhost:8000/survei-status/${id}/administrasi/`;
+    } else if (userRole === "Logistik") {
+      endpoint = `http://localhost:8000/survei-status/${id}/logistik/`;
+    } else if (userRole === "Pengendali Mutu") {
+      endpoint = `http://localhost:8000/survei-status/${id}/pengendali-mutu/`;
+    } else {
+      toast.error("Unauthorized to make changes");
+      return;
+    }
+
     try {
-      const response = await fetch(
-        `http://localhost:8000/survey-status/${id}/update/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ [field]: newStatus }),
-        }
-      );
+      const response = await fetch(endpoint, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({ [field]: newStatus }),
+      });
 
       if (!response.ok) {
-        // Extract error text from the raw response
-        const errorText = await response.text();
-
-        // Find the error message inside the string using regex
-        const errorMessageMatch = errorText.match(/'__all__': \['(.+?)'\]/);
-        const errorMessage = errorMessageMatch
-          ? errorMessageMatch[1]
-          : "Failed to update status";
-
+        const errorData = await response.json();
+        // Handle the specific error format {"__all__": ["error message"]}
+        const errorMessage =
+          errorData.__all__?.[0] || "Failed to update status";
         throw new Error(errorMessage);
       }
 
-      // Update status in the local state
       setSurveyData((prev) => ({
         ...prev,
         status: {
@@ -114,14 +158,33 @@ export default function SurveyTrackerDetail({ params }) {
 
       toast.success("Status updated successfully");
     } catch (error) {
-      // Display the manipulated error message or fallback message
       toast.error(
         error.message || "Failed to update status. Please try again."
       );
-      fetchSurveyData(); // Revert the state if update fails
+      fetchSurveyData();
     } finally {
       setUpdatingField(null);
     }
+  };
+
+  const isFieldEditable = (fieldCategory) => {
+    const roleMapping = {
+      Administrasi: [
+        "buat_kontrak",
+        "buat_invoice",
+        "pembayaran_lunas",
+        "pembuatan_kwitansi",
+      ],
+      Logistik: ["terima_request_souvenir", "ambil_souvenir"],
+      "Pengendali Mutu": [
+        "terima_info_survei",
+        "lakukan_survei",
+        "pantau_responden",
+        "pantau_data_cleaning",
+      ],
+    };
+
+    return roleMapping[userRole]?.includes(fieldCategory) || false;
   };
 
   if (loading || !surveyData) {
@@ -165,6 +228,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="buat_kontrak"
             isLoading={updatingField === "buat_kontrak"}
+            isEditable={isFieldEditable("buat_kontrak")}
           />
           <StatusBox
             label="Buat Invoice"
@@ -172,6 +236,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="buat_invoice"
             isLoading={updatingField === "buat_invoice"}
+            isEditable={isFieldEditable("buat_invoice")}
           />
           <StatusBox
             label="Pembayaran Lunas"
@@ -179,6 +244,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="pembayaran_lunas"
             isLoading={updatingField === "pembayaran_lunas"}
+            isEditable={isFieldEditable("pembayaran_lunas")}
           />
           <StatusBox
             label="Pembuatan Kwitansi"
@@ -186,6 +252,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="pembuatan_kwitansi"
             isLoading={updatingField === "pembuatan_kwitansi"}
+            isEditable={isFieldEditable("pembuatan_kwitansi")}
           />
         </div>
 
@@ -198,6 +265,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="terima_request_souvenir"
             isLoading={updatingField === "terima_request_souvenir"}
+            isEditable={isFieldEditable("terima_request_souvenir")}
           />
           <StatusBox
             label="Mengambil souvenir"
@@ -205,6 +273,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="ambil_souvenir"
             isLoading={updatingField === "ambil_souvenir"}
+            isEditable={isFieldEditable("ambil_souvenir")}
           />
         </div>
 
@@ -217,6 +286,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="terima_info_survei"
             isLoading={updatingField === "terima_info_survei"}
+            isEditable={isFieldEditable("terima_info_survei")}
           />
           <StatusBox
             label="Melakukan survei"
@@ -224,6 +294,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="lakukan_survei"
             isLoading={updatingField === "lakukan_survei"}
+            isEditable={isFieldEditable("lakukan_survei")}
           />
           <StatusBox
             label="Memantau responden yang sedang mengisi survei"
@@ -231,6 +302,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="pantau_responden"
             isLoading={updatingField === "pantau_responden"}
+            isEditable={isFieldEditable("pantau_responden")}
           />
           <StatusBox
             label="Memantau banyaknya data yang dilakukan data cleaning"
@@ -238,6 +310,7 @@ export default function SurveyTrackerDetail({ params }) {
             onStatusChange={handleStatusChange}
             fieldKey="pantau_data_cleaning"
             isLoading={updatingField === "pantau_data_cleaning"}
+            isEditable={isFieldEditable("pantau_data_cleaning")}
           />
         </div>
       </div>

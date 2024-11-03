@@ -28,7 +28,7 @@ const Sidebar = () => {
       <nav className={styles.nav}>
         <ul>
           <li>
-            <Link href="/">
+            <Link href="/dashboard">
               <SidebarButtons
                 buttonText="Dashboard"
                 svgIcon={
@@ -255,35 +255,37 @@ const Sidebar = () => {
             />
           </li>
           <li>
-            <SidebarButtons
-              buttonText="Tracker Status Survei"
-              svgIcon={
-                <svg
-                  className="w-4 h-4 text-black"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
+            <Link href="/tracker-survei">
+              <SidebarButtons
+                buttonText="Tracker Status Survei"
+                svgIcon={
                   <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 28 28"
-                    fill="none"
+                    className="w-4 h-4 text-black"
+                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <path
-                      d="M14 6.25183V2.25183M14 26.2518V23.5852M23.3333 14.2518H26M2 14.2518H6M21.5427 6.70916L22.4853 5.7665M5.51467 22.7372L7.4 20.8518M20.6 20.8518L22.4853 22.7372M5.51467 5.7665L8.34267 8.5945"
-                      stroke="#1C1C1C"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 28 28"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M14 6.25183V2.25183M14 26.2518V23.5852M23.3333 14.2518H26M2 14.2518H6M21.5427 6.70916L22.4853 5.7665M5.51467 22.7372L7.4 20.8518M20.6 20.8518L22.4853 22.7372M5.51467 5.7665L8.34267 8.5945"
+                        stroke="#1C1C1C"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
                   </svg>
-                </svg>
-              }
-              route="/anjay"
-            />
+                }
+                route="/tracker-survei"
+              />
+            </Link>
           </li>
           <li>
             <Link href="/list-klien">
