@@ -115,6 +115,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
+            <Link href="generator-dokumen/proposal"></Link>
             <SidebarButtons
               buttonText="Buat Dokumen"
               svgIcon={
@@ -161,7 +162,7 @@ const Sidebar = () => {
                   </svg>
                 </svg>
               }
-              route="/anjay"
+              route="/generator-dokumen"
             />
           </li>
           <li>
