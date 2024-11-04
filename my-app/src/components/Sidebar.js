@@ -115,55 +115,56 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link href="generator-dokumen/proposal"></Link>
-            <SidebarButtons
-              buttonText="Buat Dokumen"
-              svgIcon={
-                <svg
-                  className="w-4 h-4 text-black"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
+            <Link href="/generator-dokumen/proposal">
+              <SidebarButtons
+                buttonText="Buat Dokumen"
+                svgIcon={
                   <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 28 28"
-                    fill="none"
+                    className="w-4 h-4 text-black"
+                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <g clip-path="url(#clip0_243_369)">
-                      <path
-                        d="M12.3217 1.07355H4.10743C3.67172 1.07355 3.25385 1.24663 2.94576 1.55473C2.63766 1.86282 2.46457 2.28069 2.46457 2.7164V17.5021L0.821716 22.4307L7.39315 20.7878H20.536C20.9717 20.7878 21.3896 20.6147 21.6977 20.3067C22.0058 19.9986 22.1789 19.5807 22.1789 19.145V10.9307"
-                        stroke="#1C1C1C"
-                        stroke-width="1.64286"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M13.7391 13.6194L8.81049 14.5066L9.63191 9.51226L17.4026 1.77441C17.5554 1.62042 17.7371 1.4982 17.9373 1.4148C18.1375 1.33139 18.3522 1.28845 18.5691 1.28845C18.7859 1.28845 19.0007 1.33139 19.2009 1.4148C19.4011 1.4982 19.5828 1.62042 19.7355 1.77441L21.4769 3.51584C21.6309 3.66856 21.7531 3.85026 21.8365 4.05046C21.9199 4.25066 21.9629 4.46539 21.9629 4.68226C21.9629 4.89914 21.9199 5.11387 21.8365 5.31407C21.7531 5.51427 21.6309 5.69597 21.4769 5.84869L13.7391 13.6194Z"
-                        stroke="#1C1C1C"
-                        stroke-width="1.64286"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_243_369">
-                        <rect
-                          width="23"
-                          height="23"
-                          fill="white"
-                          transform="translate(0 0.251831)"
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 28 28"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_243_369)">
+                        <path
+                          d="M12.3217 1.07355H4.10743C3.67172 1.07355 3.25385 1.24663 2.94576 1.55473C2.63766 1.86282 2.46457 2.28069 2.46457 2.7164V17.5021L0.821716 22.4307L7.39315 20.7878H20.536C20.9717 20.7878 21.3896 20.6147 21.6977 20.3067C22.0058 19.9986 22.1789 19.5807 22.1789 19.145V10.9307"
+                          stroke="#1C1C1C"
+                          stroke-width="1.64286"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
                         />
-                      </clipPath>
-                    </defs>
+                        <path
+                          d="M13.7391 13.6194L8.81049 14.5066L9.63191 9.51226L17.4026 1.77441C17.5554 1.62042 17.7371 1.4982 17.9373 1.4148C18.1375 1.33139 18.3522 1.28845 18.5691 1.28845C18.7859 1.28845 19.0007 1.33139 19.2009 1.4148C19.4011 1.4982 19.5828 1.62042 19.7355 1.77441L21.4769 3.51584C21.6309 3.66856 21.7531 3.85026 21.8365 4.05046C21.9199 4.25066 21.9629 4.46539 21.9629 4.68226C21.9629 4.89914 21.9199 5.11387 21.8365 5.31407C21.7531 5.51427 21.6309 5.69597 21.4769 5.84869L13.7391 13.6194Z"
+                          stroke="#1C1C1C"
+                          stroke-width="1.64286"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_243_369">
+                          <rect
+                            width="23"
+                            height="23"
+                            fill="white"
+                            transform="translate(0 0.251831)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
                   </svg>
-                </svg>
-              }
-              route="/generator-dokumen"
-            />
+                }
+                route="/generator-dokumen"
+              />
+            </Link>
           </li>
           <li>
             <SidebarButtons
