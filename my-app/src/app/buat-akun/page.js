@@ -44,6 +44,15 @@ export default function BuatAkun() {
         }, 1000);
     };
 
+    const handleCancel = () => {
+        // Clear all input fields
+        setUsername('');
+        setName('');
+        setEmail('');
+        setPassword('');
+        setRole('');
+    };
+
     return (
         <div className={styles.buatakunBody}>
             <div className={styles.buatakunContainer}>
@@ -115,7 +124,7 @@ export default function BuatAkun() {
                     {error && <p className={styles.error}>{error}</p>}
 
                     <button type="submit" className={styles.simpanBtn}>Simpan</button>
-                    <button type="submit" className={styles.batalBtn}>Batal</button>
+                    <button type="button" className={styles.batalBtn} onClick={handleCancel}>Batal</button>
                 </form>
 
                 {showNotification && (
