@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import styles from '../../../styles/login.module.css';
 
 
 export default function Login() {
@@ -77,85 +78,87 @@ export default function Login() {
     };
 
   return (
-    <div className="login-container">
-      <div className="logo-header-container">
-        <img src="/siap-logo.png" alt="SIAP Logo" className="logo" />
-        <h1 className="system-title">
-          Sistem Informasi Administrasi <br /> dan Pengendalian Mutu
-        </h1>
-      </div>
+    <div className={styles.loginBody}>
+      <div className={styles.loginContainer}>
+        <div className={styles.logoHeaderContainer}>
+          <img src="/siap-logo.png" alt="SIAP Logo" className={styles.logo} />
+          <h1 className={styles.systemTitle}>
+            Sistem Informasi Administrasi <br /> dan Pengendalian Mutu
+          </h1>
+        </div>
 
-      <h2 className="login-heading">Login</h2>
+        <h2 className={styles.loginHeading}>Login</h2>
 
-      <form onSubmit={handleSubmit}>
-        <label>Username</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Masukkan Username"
-          required
-        />
-
-        <label>Password</label>
-        <div className="password-container">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Masukkan Password"
+        <form onSubmit={handleSubmit}>
+          <label className={styles.label}>Username</label>
+          <input className={styles.input}
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Masukkan Username"
             required
           />
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            <img
-              src="/eye-icon.png"  
-              alt="Show Password"
-              className="eye-icon"
+
+          <label className={styles.label}>Password</label>
+          <div className={styles.passwordContainer}>
+            <input className={styles.input}
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Masukkan Password"
+              required
             />
-          </button>
+            <button
+              type="button"
+              className={styles.togglePassword}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <img
+                src="/eye-icon.png"  
+                alt="Show Password"
+                className="eye-icon"
+              />
+            </button>
+          </div>
+
+          {error && <p className="error">{error}</p>}
+
+          <div className={styles.rememberForgot}>
+            <label className={styles.label}>
+              <input className={styles.input}
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              /> Ingat Saya
+            </label>
+            <a onClick={handleLupaPassword} style={{ cursor: 'pointer' }}>Lupa Password?</a>
+          </div>
+
+          <button type="submit" className={styles.loginBtn}>Login</button>
+        </form>
+
+        {/* Notification Pop-up */}
+        {showNotification && (
+          <div className={`${styles.notification} ${success ? styles.success : styles.failure}`}>
+            {success ? (
+              <div>
+                <img src="/success-icon.png" alt="Success Icon" className={styles.icon} />
+                <p>Berhasil Login!</p>
+                <button onClick={() => setShowNotification(false)}>OK</button>
+              </div>
+            ) : (
+              <div>
+                <img src="/error-icon.png" alt="Error Icon" className={styles.icon} />
+                <p>Username/Password Salah!</p>
+                <button onClick={() => setShowNotification(false)}>Coba lagi</button>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className={styles.footer}>
+          @2024 optimasys | Contact optimasys.work@gmail.com
         </div>
-
-        {error && <p className="error">{error}</p>}
-
-        <div className="remember-forgot">
-          <label>
-            <input 
-            type="checkbox"
-            checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
-             /> Ingat Saya
-          </label>
-          <a onClick={handleLupaPassword} style={{ cursor: 'pointer' }}>Lupa Password?</a>
-        </div>
-
-        <button type="submit" className="login-btn">Login</button>
-      </form>
-
-      {/* Notification Pop-up */}
-      {showNotification && (
-        <div className={`notification ${success ? 'success' : 'failure'}`}>
-          {success ? (
-            <div>
-              <img src="/success-icon.png" alt="Success Icon" className="icon" />
-              <p>Berhasil Login!</p>
-              <button onClick={() => setShowNotification(false)}>OK</button>
-            </div>
-          ) : (
-            <div>
-              <img src="/error-icon.png" alt="Error Icon" className="icon" />
-              <p>Username/Password Salah!</p>
-              <button onClick={() => setShowNotification(false)}>Coba lagi</button>
-            </div>
-          )}
-        </div>
-      )}
-
-      <div className="footer">
-        @2024 optimasys | Contact optimasys.work@gmail.com
       </div>
     </div>
   );

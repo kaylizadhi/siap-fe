@@ -9,7 +9,7 @@ export default function BuatAkun() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState(''); // New state for role
+    const [role, setRole] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -20,9 +20,9 @@ export default function BuatAkun() {
         e.preventDefault();
         setError(null);
 
-        // Validation checks
+        // Form validation
         if (!username || !name || !email || !role || !password) {
-            setError("Seluruh field tidak boleh kosong!");
+            setError("Semua field harus diisi!");
             setShowNotification(true);
             setTimeout(() => setShowNotification(false), 3000);
             return;
@@ -35,7 +35,7 @@ export default function BuatAkun() {
             return;
         }
 
-        // Simulate account creation success notification
+        // Simulate success and redirect
         setSuccess(true);
         setShowNotification(true);
         setTimeout(() => {
@@ -45,16 +45,9 @@ export default function BuatAkun() {
     };
 
     return (
-        <div className={styles.loginBody}>
-            <div className={styles.loginContainer}>
-                <div className={styles.logoHeaderContainer}>
-                    <img src="/siap-logo.png" alt="SIAP Logo" className={styles.logo} />
-                    <h1 className={styles.systemTitle}>
-                        Sistem Informasi Administrasi <br /> dan Pengendalian Mutu
-                    </h1>
-                </div>
-
-                <h2 className={styles.loginHeading}>Buat Akun</h2>
+        <div className={styles.buatakunBody}>
+            <div className={styles.buatakunContainer}>
+                <h2 className={styles.buatkunHeading}>Buat Akun</h2>
 
                 <form onSubmit={handleSubmit}>
                     <label className={styles.label}>Username</label>
@@ -78,7 +71,7 @@ export default function BuatAkun() {
                     <label className={styles.label}>Email</label>
                     <input
                         className={styles.input}
-                        type="text"
+                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Masukkan Email"
@@ -92,7 +85,7 @@ export default function BuatAkun() {
                         onChange={(e) => setRole(e.target.value)}
                         required
                     >
-                        <option value="" disabled>Select Role</option>
+                        <option value="" disabled>Pilih Role</option>
                         <option value="Eksekutif">Eksekutif</option>
                         <option value="Administrasi">Administrasi</option>
                         <option value="Admin Sistem">Admin Sistem</option>
@@ -115,26 +108,27 @@ export default function BuatAkun() {
                             className={styles.togglePassword}
                             onClick={() => setShowPassword(!showPassword)}
                         >
-                            <img src="/eye-icon.png" alt="Show Password" className="eye-icon" />
+                            <img src="/eye-icon.png" alt="Toggle Password Visibility" />
                         </button>
                     </div>
 
-                    {error && <p className="error">{error}</p>}
+                    {error && <p className={styles.error}>{error}</p>}
 
-                    <button type="submit" className={styles.BuatAkunBtn}>Simpan</button>
+                    <button type="submit" className={styles.simpanBtn}>Simpan</button>
+                    <button type="submit" className={styles.batalBtn}>Batal</button>
                 </form>
 
                 {showNotification && (
                     <div className={`${styles.notification} ${success ? styles.success : styles.failure}`}>
                         {success ? (
                             <div>
-                                <img src="/success-icon.png" alt="Success Icon" className={styles.icon} />
+                                <img src="/success-icon.png" alt="Success Icon" />
                                 <p>Berhasil Membuat Akun!</p>
                                 <button onClick={() => setShowNotification(false)}>OK</button>
                             </div>
                         ) : (
                             <div>
-                                <img src="/error-icon.png" alt="Error Icon" className={styles.icon} />
+                                <img src="/error-icon.png" alt="Error Icon" />
                                 <p>{error}</p>
                                 <button onClick={() => setShowNotification(false)}>Coba lagi</button>
                             </div>
