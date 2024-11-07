@@ -16,7 +16,10 @@ export default function DaftarAkun() {
     useEffect(() => {
         const fetchAccounts = async () => {
             try {
-                const response = await fetch('http://localhost:8000/accounts/daftarAkun/');
+                const url = searchQuery
+                    ? `http://localhost:8000/daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}`
+                    : 'http://localhost:8000/daftarAkun/api/daftarAkun/';
+                const response = await fetch(url);
                 const data = await response.json();
                 setAccounts(data);
             } catch (error) {
@@ -24,11 +27,12 @@ export default function DaftarAkun() {
             }
         };
         fetchAccounts();
-    }, []);
+    }, [searchQuery]);
 
     // Filter accounts based on search query
     const filteredAccounts = accounts.filter(account =>
-        account.nama.toLowerCase().includes(searchQuery.toLowerCase())
+        account.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        `${account.first_name} ${account.last_name}`.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const indexOfLastAccount = currentPage * accountsPerPage;
@@ -97,7 +101,7 @@ export default function DaftarAkun() {
                                 className={index + indexOfFirstAccount === deletingIndex ? styles.fadeOut : ""}
                             >
                                 <td><img src="/images/Profile.svg" alt="User Icon" className={styles.icon} /> {account.username}</td>
-                                <td>{account.nama}</td>
+                                <td>{account.first_name} {account.last_name}</td>
                                 <td>{account.email}</td>
                                 <td>{account.role}</td>
                                 <td className={styles.actions}>
