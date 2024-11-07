@@ -45,6 +45,9 @@ export default function BuatAkun() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
+        
+        
+        
 
         if (!username || !name || !email || !role || !password) {
             setError("Semua field harus diisi!");

@@ -12,11 +12,37 @@ export default function DaftarAkun() {
     const [accounts, setAccounts] = useState([]);
     const [deletingIndex, setDeletingIndex] = useState(null);
 
+    // useEffect(() => {
+    //     const verifyUser = async () => {
+    //         const token = localStorage.getItem('authToken');
+    //         if (!token) {
+    //             router.push('/login');
+    //             return;
+    //         } 
+
+    //         try {
+    //             const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
+    //                 headers: { 'Authorization': `Token ${token}` },
+    //             });
+    //             const data = await response.json();
+
+    //             if (data.error || data.role !== 'Admin Sistem') {
+    //                 router.push('/login');
+    //             }
+    //         } catch (error) {
+    //             console.error('Failed to verify role:', error);
+    //             router.push('/login');
+    //         }
+    //     };
+
+    //     verifyUser();
+    // }, [router]);
+
     // Fetch account data from backend
     useEffect(() => {
         const fetchAccounts = async () => {
             try {
-                const response = await fetch('http://localhost:8000/accounts/daftarAkun/');
+                const response = await fetch('http://localhost:8000/buatAkun/api/daftarAkun/');
                 const data = await response.json();
                 setAccounts(data);
             } catch (error) {
@@ -41,6 +67,8 @@ export default function DaftarAkun() {
         setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
+    
+    
 
     const handleDelete = async (index, accountId) => {
         const accountIndex = index + indexOfFirstAccount;
