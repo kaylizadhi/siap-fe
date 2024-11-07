@@ -8,6 +8,8 @@ export default function BuatAkun() {
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [security_question, setSecurityQuestion] = useState('');
+    const [security_answer, setSecurityAnswer] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -45,15 +47,12 @@ export default function BuatAkun() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
-        
-        
-        
 
         const names = name.split(' ');
         const firstName = names[0] || '';  // First part as firstName
         const lastName = names.slice(1).join(' ') || '';  // Remaining as lastName
 
-        if (!username || !name || !email || !role || !password) {
+        if (!username || !name || !email || !role ||!security_question || !security_answer || !password) {
             setError("Semua field harus diisi!");
             setShowNotification(true);
             setTimeout(() => setShowNotification(false), 3000);
@@ -67,7 +66,7 @@ export default function BuatAkun() {
             return;
         }
 
-        const data = { username, name, email, password, role };
+        const data = { username, name, email, password, role, security_question, security_answer };
 
         try {
             const response = await fetch('http://localhost:8000/buatAkun/api/buatAkun/', {
@@ -81,6 +80,8 @@ export default function BuatAkun() {
                     email: email,
                     username: username,
                     role: role,
+                    security_question: security_question,
+                    security_answer: security_answer,
                     password: password,
                 }),
             });
@@ -110,6 +111,8 @@ export default function BuatAkun() {
         setUsername('');
         setName('');
         setEmail('');
+        setSecurityQuestion('');
+        setSecurityAnswer('');
         setPassword('');
         setRole('');
     }; 
@@ -161,6 +164,24 @@ export default function BuatAkun() {
                         <option value="Logistik">Logistik</option>
                         <option value="Pengendali Mutu">Pengendali Mutu</option>
                     </select>
+                    <label className={styles.label}>Security Question</label>
+                    <input
+                        className={styles.input}
+                        type="text"  // Perbaikan tipe menjadi "text"
+                        value={security_question}
+                        onChange={(e) => setSecurityQuestion(e.target.value)}
+                        placeholder="Buat Security Question"
+                        required
+                    />
+                    <label className={styles.label}>Security Answer</label>
+                    <input
+                        className={styles.input}
+                        type="text"  // Perbaikan tipe menjadi "text"
+                        value={security_answer}  // Memperbaiki value ke state yang benar
+                        onChange={(e) => setSecurityAnswer(e.target.value)}
+                        placeholder="Buat Jawaban dari Security Question"
+                        required
+                    />
                     <label className={styles.label}>Password</label>
                     <div className={styles.passwordContainer}>
                         <input

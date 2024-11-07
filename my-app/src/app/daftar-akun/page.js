@@ -11,6 +11,8 @@ export default function DaftarAkun() {
     const accountsPerPage = 10;
     const [accounts, setAccounts] = useState([]);
     const [deletingIndex, setDeletingIndex] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [accountToDelete, setAccountToDelete] = useState(null);
 
     // useEffect(() => {
     //     const verifyUser = async () => {
@@ -72,8 +74,6 @@ export default function DaftarAkun() {
         setCurrentPage(1);
     };
     
-    
-
     const handleDelete = async (index, accountId) => {
         const accountIndex = index + indexOfFirstAccount;
         setDeletingIndex(accountIndex);
@@ -153,6 +153,17 @@ export default function DaftarAkun() {
                     )}
                 </div>
             </div>
+
+            {/* Delete Confirmation Modal */}
+            {showDeleteModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <p>Apakah Anda yakin ingin menghapus akun ini?</p>
+                        <button onClick={handleDelete} className={styles.confirmButton}>Ya</button>
+                        <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Tidak</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
