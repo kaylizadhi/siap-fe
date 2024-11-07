@@ -49,6 +49,10 @@ export default function BuatAkun() {
         
         
 
+        const names = name.split(' ');
+        const firstName = names[0] || '';  // First part as firstName
+        const lastName = names.slice(1).join(' ') || '';  // Remaining as lastName
+
         if (!username || !name || !email || !role || !password) {
             setError("Semua field harus diisi!");
             setShowNotification(true);
@@ -66,12 +70,19 @@ export default function BuatAkun() {
         const data = { username, name, email, password, role };
 
         try {
-            const response = await fetch('http://localhost:8000/buatAkun/api/buatAkun', {
+            const response = await fetch('http://localhost:8000/buatAkun/api/buatAkun/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    username: username,
+                    role: role,
+                    password: password,
+                }),
             });
             console.log('Response received:', response);
 
