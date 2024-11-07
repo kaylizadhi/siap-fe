@@ -6,37 +6,41 @@
 
 .title {
     font-size: 2em;
-    color: #800000;
-}
-
-.addButton {
-    background-color: #800000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    float: right;
-    cursor: pointer;
+    color: #A62626;
 }
 
 .searchContainer {
-    margin-bottom: 20px;
+    display: flex;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e3e6eb;
+    border-radius: 25px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    position: relative;
 }
 
+.searchIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Space between icon and input */
+    color: #666;
+}
 
 .searchInput {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-family: 'Caudex', serif; /* Apply Caudex font to the input text */
+    border: none;
+    background: none;
+    font-family: 'Caudex', serif;
+    font-size: 1.1em;
+    color: #666;
+    outline: none;
+    flex: 1; 
 }
 
 .searchInput::placeholder {
-    font-family: 'Caudex', serif; /* Use the Caudex font for the placeholder */
-    color: #999; /* Optional: Set a color for the placeholder */
-    opacity: 1; /* Ensure full opacity */
+    color: #999;
+    font-size: 1.1em;
 }
 
 
@@ -66,14 +70,6 @@
 .actions {
     display: flex;
     gap: 10px;
-}
-
-.editButton,
-.deleteButton,
-.moreButton {
-    background: none;
-    border: none;
-    cursor: pointer;
 }
 
 .pagination {

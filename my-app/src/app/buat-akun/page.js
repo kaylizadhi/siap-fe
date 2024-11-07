@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/buat-akun.module.css';
 
@@ -16,11 +16,36 @@ export default function BuatAkun() {
     const [showNotification, setShowNotification] = useState(false);
     const router = useRouter();
 
+    // useEffect(() => {
+    //     const verifyUser = async () => {
+    //         const token = localStorage.getItem('authToken');
+    //         if (!token) {
+    //             router.push('/login');
+    //             return;
+    //         } 
+
+    //         try {
+    //             const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
+    //                 headers: { 'Authorization': `Token ${token}` },
+    //             });
+    //             const data = await response.json();
+
+    //             if (data.error || data.role !== 'Admin Sistem') {
+    //                 router.push('/login');
+    //             }
+    //         } catch (error) {
+    //             console.error('Failed to verify role:', error);
+    //             router.push('/login');
+    //         }
+    //     };
+
+    //     verifyUser();
+    // }, [router]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
-        // Form validation
         if (!username || !name || !email || !role || !password) {
             setError("Semua field harus diisi!");
             setShowNotification(true);
@@ -35,28 +60,50 @@ export default function BuatAkun() {
             return;
         }
 
-        // Simulate success and redirect
-        setSuccess(true);
-        setShowNotification(true);
-        setTimeout(() => {
-            setShowNotification(false);
-            router.push('/dashboard');
-        }, 1000);
+        const data = { username, name, email, password, role };
+
+        try {
+            const response = await fetch('http://localhost:8000/buatAkun/api/buatAkun', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            console.log('Response received:', response);
+
+            if (!response.ok) {
+                throw new Error('Failed to make document');
+            }
+
+            setSuccess(true);
+            setShowNotification(true);
+            setTimeout(() => {
+                setShowNotification(false);
+                router.push('/dashboard');
+            }, 1000);
+
+        } catch (error) {
+            console.error(error);
+            setError("Gagal membuat akun. Coba lagi.");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
+        }
     };
 
-    const handleCancel = () => {
-        // Clear all input fields
+    //batal buat akun
+    const handleCancel = () => { 
         setUsername('');
         setName('');
         setEmail('');
         setPassword('');
         setRole('');
-    };
+    }; 
 
     return (
         <div className={styles.buatakunBody}>
             <div className={styles.buatakunContainer}>
-                <h2 className={styles.buatkunHeading}>Buat Akun</h2>
+                <h2 className={styles.buatakunHeading}>Buat Akun</h2>
 
                 <form onSubmit={handleSubmit}>
                     <label className={styles.label}>Username</label>
@@ -86,7 +133,6 @@ export default function BuatAkun() {
                         placeholder="Masukkan Email"
                         required
                     />
-
                     <label className={styles.label}>Role</label>
                     <select
                         className={styles.input}
@@ -101,7 +147,6 @@ export default function BuatAkun() {
                         <option value="Logistik">Logistik</option>
                         <option value="Pengendali Mutu">Pengendali Mutu</option>
                     </select>
-
                     <label className={styles.label}>Password</label>
                     <div className={styles.passwordContainer}>
                         <input
