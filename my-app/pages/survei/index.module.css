@@ -1,1008 +1,220 @@
-.contact {
+@import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400&display=swap');
+
+.headingSurvei {
     position: absolute;
-    top: 954px;
-    left: 1236px;
-    text-decoration: underline;
-    letter-spacing: -0.02em;
-    line-height: 150%;
-    display: flex;
-    color: #fff;
-    text-align: right;
-    align-items: center;
-    width: 144px;
-    mix-blend-mode: normal;
-}
-.daftarKlien {
-    position: absolute;
-    top: 117px;
-    left: 353px;
+    top: 116px;
+    left: 352px;
     font-size: 40px;
-    line-height: 16px;
-}
-.groupIcon {
-    position: absolute;
-    height: 1.56%;
-    width: 1.11%;
-    top: 11.62%;
-    right: 28.61%;
-    bottom: 86.82%;
-    left: 70.28%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.i {
-    position: absolute;
-    top: 38.11%;
-    left: 40.79%;
-    transform:  rotate(9.3deg);
-    transform-origin: 0 0;
-}
-.s {
-    position: absolute;
-    top: 35%;
-    left: 27.41%;
-    transform:  rotate(16.8deg);
-    transform-origin: 0 0;
-}
-.a {
-    position: absolute;
-    top: 39.17%;
-    left: 49.6%;
-    transform:  rotate(4.7deg);
-    transform-origin: 0 0;
-}
-.p {
-    position: absolute;
-    top: 40.56%;
-    left: 69.29%;
-    transform:  rotate(9.3deg);
-    transform-origin: 0 0;
-}
-.logoChild {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0%;
-    right: 0%;
-    bottom: 0%;
-    left: 0%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.logo {
-    width: 58px;
-    position: absolute;
-    margin: 0 !important;
-    top: 0px;
-    left: 12px;
-    height: 60.3px;
-    z-index: 0;
-}
-.siap {
-    margin: 0;
-}
-.sistemInformasiAdministrasi {
-    margin: 0;
-    font-size: 12px;
-}
-.siapSistemInformasiContainer1 {
-    width: 100%;
-}
-.siapSistemInformasiContainer {
-    width: 170px;
-    position: absolute;
-    margin: 0 !important;
-    top: 0px;
-    left: 81px;
-    display: flex;
-    align-items: center;
-    height: 60px;
-    z-index: 1;
-    font-size: 24px;
-}
-.logoParent {
-    align-self: stretch;
-    height: 60.3px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    position: relative;
-    gap: 16px;
-}
-.iconsRedhome {
-    width: 24px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 16px;
-    height: 24px;
-    z-index: 0;
-}
-.dashboard {
-    width: 81px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboardButton {
-    align-self: stretch;
-    border-radius: 4px;
-    background-color: #fff;
-    height: 52px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-    gap: 10px;
-}
-.dashboard1 {
-    width: 84px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard2 {
-    width: 79px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard3 {
-    width: 110px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard4 {
-    width: 123px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard6 {
-    width: 154px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard7 {
-    width: 91px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboardButton1 {
-    align-self: stretch;
-    border-radius: 4px;
-    background-color: #f2cfd5;
-    height: 52px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-    gap: 10px;
+    line-height: 40px;
     color: #a62626;
+    font-family: caudex;
 }
-.dashboard8 {
-    width: 97px;
+
+.containerSurvei {
     position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboardButtonParent {
-    align-self: stretch;
+    top: 200px;
+    left: 352px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 8px;
-}
-.dashboard9 {
-    width: 51px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.frameParent {
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 220px;
-    font-size: 16px;
     color: #1c1c1c;
 }
-.navigationBar {
-    position: absolute;
-    top: 28px;
-    left: 31px;
-    border-radius: 20px;
+
+.textFieldSurvei {
+    border-radius: 8px;
     background-color: #fff;
-    border: 0.8px solid #bbc7cd;
-    box-sizing: border-box;
-    width: 283px;
-    height: 968px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 40px 16px;
-    gap: 40px;
-    font-size: 10.36px;
-}
-.text {
-    position: relative;
+    border: 1px solid #bbc7cd;
+    padding: 12px 16px;
+    color: #1c1c1c;
+    font-size: 16px;
     line-height: 24px;
+    font-family: Caudex;
+    width: 572px;
+    margin-bottom: 20px;
 }
-.buttondesktopWeb {
-    align-self: stretch;
-    flex: 1;
+
+.textFieldTitleSurvei {
+    color: #1c1c1c;
+    margin-bottom: 4px;
+}
+
+.primaryButtonSurvei {
+    position: absolute;
+    top: 960px;
+    left: 352px;
     border-radius: 32px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 48px;
+    background-color: #a62626;
+    padding: 20px 280px;
+    color: #ffffff;
+    font-family: caudex;
+    font-size: 16px;
+    border: none;
 }
-.button {
+
+.secondaryButtonSurvei {
     position: absolute;
-    top: 958px;
-    left: 955px;
-    width: 485px;
-    height: 66px;
+    top: 992px;
+    left: 352px;
+    background-color: #ffffff;
+    color: #a62626;
+    border-radius: 32px;
+    border: 1px solid #a62626;
+    padding: 18px 286px;
+    margin-top: 40px; 
+    font-family: caudex;
+    font-size: 16px;
+}
+
+.searchBarContainer {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
 }
-.searchBar1 {
-    width: 83px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
+
+.iconSearch {
+    width: 16px;
+    height: 16px;
+    color: #5f737f;
+    margin-left: 364px;
+    margin-top: 200px;
+    z-index: 1; 
 }
+
 .searchBar {
     position: absolute;
-    top: 194px;
-    left: 353px;
+    top: 192px;
+    left: 352px;
     border-radius: 20px;
     background-color: #e1e8ec;
-    width: 950px;
+    width: 952px;
     height: 52px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
     box-sizing: border-box;
-    gap: 10px;
+    gap: 12px;
     color: #5f737f;
-    outline: none;
     border: none;
-    box-shadow: none;
     font-size: 16px;
-    line-height: 24px;
-    display: inline-block;
     font-family: Caudex;
-    padding-left: 28px;
+    padding-left: 44px;
 }
-.judulSurveiParent {
-    width: 822px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 252px;
+
+.searchBar:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 20px; 
 }
-.judul {
-    position: relative;
-    line-height: 24px;
-    z-index: 0;
-}
-.ptOptimasys {
-    position: relative;
-    line-height: 24px;
-    z-index: 1;
-}
-.iconsBlackedit {
-    width: 24px;
-    position: relative;
-    height: 24px;
-}
-.deleteIcon {
-    width: 24px;
-    position: relative;
-    height: 24px;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-.vectorIcon {
-    width: 18.7px;
-    position: relative;
-    height: 4px;
-}
-.phdotsThreeCircle {
-    width: 20px;
-    overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 8px 0px;
-    box-sizing: border-box;
-}
-.iconsBlackeditParent {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-    z-index: 2;
-}
-.iconsReddocument {
-    width: 16px;
+
+.tableContainerSurvei {
+    left: 400px;
+    top: 280px;
+    width: 60%;
     position: absolute;
-    margin: 0 !important;
-    top: 16px;
-    left: 33px;
-    height: 16px;
-    z-index: 3;
+    color: #1c1c1c;
+    text-align: center;
 }
-.judulParent {
-    width: 950px;
+
+.tdSurvei {
     border-radius: 28px;
     border: 1px solid #bbc7cd;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
+}
+
+.buttonSurvei {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.iconSurvei {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.iconChevron{
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.buttonEnabledSebelumnya {
+    display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    padding: 12px 64px;
-    position: relative;
-    gap: 280px;
-}
-.frameWrapper {
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-.frameGroup {
+    cursor: pointer;
     position: absolute;
-    top: 274px;
-    left: 353px;
-    width: 950px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
+    top: 892px;
+    left: 992px;
+    border: none;
+    background: none;
     color: #1c1c1c;
+    font-family: Caudex;
+    font-size: 16px;
 }
-.sebelumnya {
-    width: 89px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.previousdefault {
-    width: 160px;
-    border-radius: 4px;
-    background-color: #fff;
-    height: 52px;
-    display: flex;
-    flex-direction: row;
+
+.buttonDisabledSebelumnya {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 198px 10px 10px;
-    box-sizing: border-box;
-    position: relative;
-    gap: 10px;
-}
-.previousdisabled {
+    cursor: not-allowed;
     position: absolute;
-    top: 890px;
-    left: 991px;
-    width: 160px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
+    top: 892px;
+    left: 992px;
+    border: none;
+    background: none;
     color: #bbc7cd;
+    font-family: Caudex;
+    font-size: 16px;
 }
-.selanjutnya {
-    width: 85px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 20px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 0;
-}
-.iconsBlacknext {
-    width: 24px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 117px;
-    height: 24px;
-    z-index: 1;
-}
-.nextdefault {
-    position: absolute;
-    top: 890px;
-    left: 1151px;
-    border-radius: 4px;
-    background-color: #fff;
-    width: 152px;
-    height: 52px;
-    display: flex;
-    flex-direction: row;
+
+.buttonEnabledSelanjutnya {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 198px 10px 10px;
-    box-sizing: border-box;
-    gap: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 892px;
+    left: 1152px;
+    border: none;
+    background: none;
     color: #1c1c1c;
+    font-family: Caudex;
+    font-size: 16px;
 }
-.dashboard10 {
-    width: 102px;
+
+.buttonDisabledSelanjutnya {
+    display: inline-flex;
+    align-items: center;
+    cursor: not-allowed;
     position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 61px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 0;
+    top: 892px;
+    left: 1152px;
+    border: none;
+    background: none;
+    color: #bbc7cd;
+    font-family: Caudex;
+    font-size: 16px;
 }
-.iconsBlackadd1 {
-    width: 24px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 23px;
-    height: 24px;
-    z-index: 1;
-}
-.dashboardButton2 {
+
+.buttonTambahSurvei {
+    display: inline-flex;
+    align-items: center;
     position: absolute;
     top: 104px;
-    left: 1102px;
+    left: 1100px;
     border-radius: 36px;
     background-color: #a62626;
     width: 192px;
     height: 52px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     padding: 10px 20px;
     outline: none;
     border: none;
     box-shadow: none;
-    gap: 10px;
     color: #fff;
     font-size: 16px;
-    line-height: 24px;
-    display: inline-block;
     font-family: Caudex;
-}
-.manajemenDataKlien {
-    width: 100%;
-    position: relative;
-    background-color: #fff;
-    height: 1024px;
-    overflow: hidden;
-    text-align: left;
-    font-size: 16px;
-    color: #a62626;
-    font-family: Caudex;
+    cursor: pointer;
 }
 
-.contact {
-    position: absolute;
-    top: 954px;
-    left: 1236px;
-    text-decoration: underline;
-    letter-spacing: -0.02em;
-    line-height: 150%;
-    display: flex;
-    color: #fff;
-    text-align: right;
-    align-items: center;
-    width: 144px;
-    mix-blend-mode: normal;
-}
-.daftarKlien {
-    position: absolute;
-    top: 117px;
-    left: 353px;
-    font-size: 40px;
-    line-height: 16px;
-}
-.groupIcon {
-    position: absolute;
-    height: 1.56%;
-    width: 1.11%;
-    top: 11.62%;
-    right: 28.61%;
-    bottom: 86.82%;
-    left: 70.28%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.i {
-    position: absolute;
-    top: 38.11%;
-    left: 40.79%;
-    transform:  rotate(9.3deg);
-    transform-origin: 0 0;
-}
-.s {
-    position: absolute;
-    top: 35%;
-    left: 27.41%;
-    transform:  rotate(16.8deg);
-    transform-origin: 0 0;
-}
-.a {
-    position: absolute;
-    top: 39.17%;
-    left: 49.6%;
-    transform:  rotate(4.7deg);
-    transform-origin: 0 0;
-}
-.p {
-    position: absolute;
-    top: 40.56%;
-    left: 69.29%;
-    transform:  rotate(9.3deg);
-    transform-origin: 0 0;
-}
-.logoChild {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0%;
-    right: 0%;
-    bottom: 0%;
-    left: 0%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.logo {
-    width: 58px;
-    position: absolute;
-    margin: 0 !important;
-    top: 0px;
-    left: 12px;
-    height: 60.3px;
-    z-index: 0;
-}
-.siap {
-    margin: 0;
-}
-.sistemInformasiAdministrasi {
-    margin: 0;
-    font-size: 12px;
-}
-.siapSistemInformasiContainer1 {
-    width: 100%;
-}
-.siapSistemInformasiContainer {
-    width: 170px;
-    position: absolute;
-    margin: 0 !important;
-    top: 0px;
-    left: 81px;
-    display: flex;
-    align-items: center;
-    height: 60px;
-    z-index: 1;
-    font-size: 24px;
-}
-.logoParent {
-    align-self: stretch;
-    height: 60.3px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    position: relative;
-    gap: 16px;
-}
-.iconsRedhome {
-    width: 24px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 16px;
-    height: 24px;
-    z-index: 0;
-}
-.dashboard {
-    width: 81px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboardButton {
-    align-self: stretch;
-    border-radius: 4px;
-    background-color: #fff;
-    height: 52px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-    gap: 10px;
-}
-.dashboard1 {
-    width: 84px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard2 {
-    width: 79px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard3 {
-    width: 110px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard4 {
-    width: 123px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard6 {
-    width: 154px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboard7 {
-    width: 91px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboardButton1 {
-    align-self: stretch;
-    border-radius: 4px;
-    background-color: #f2cfd5;
-    height: 52px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-    gap: 10px;
-    color: #a62626;
-}
-.dashboard8 {
-    width: 97px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.dashboardButtonParent {
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 8px;
-}
-.dashboard9 {
-    width: 51px;
-    position: absolute;
-    margin: 0 !important;
-    top: 14px;
-    left: 52px;
-    line-height: 24px;
-    display: inline-block;
-    z-index: 1;
-}
-.frameParent {
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 220px;
-    font-size: 16px;
-    color: #1c1c1c;
-}
-.navigationBar {
-    position: absolute;
-    top: 28px;
-    left: 31px;
-    border-radius: 20px;
-    background-color: #fff;
-    border: 0.8px solid #bbc7cd;
-    box-sizing: border-box;
-    width: 283px;
-    height: 968px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 40px 16px;
-    gap: 40px;
-    font-size: 10.36px;
-}
-.text {
-    position: relative;
-    line-height: 24px;
-}
-.buttondesktopWeb {
-    align-self: stretch;
-    flex: 1;
-    border-radius: 32px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 48px;
-}
-.button {
-    position: absolute;
-    top: 958px;
-    left: 955px;
-    width: 485px;
-    height: 66px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-.title {
-    align-self: stretch;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-}
-.fieldText {
-    flex: 1;
-    position: relative;
-    line-height: 24px;
-}
-.container {
-    align-self: stretch;
-    border-radius: 8px;
-    background-color: #fff;
-    border: 1px solid #bbc7cd;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 12px 16px;
-    color: #bbc7cd;
-    font-size: 16px;
-    line-height: 24px;
-    font-family: Caudex;
-    text-align: left;
-    display: inline-block;
-}
-.textField {
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-.prefix {
-    background-color: #e1e8ec;
-    border: 1px solid #bbc7cd;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-}
-.fieldText3 {
-    flex: 1;
-    position: relative;
-    line-height: 24px;
-    color: #bbc7cd;
-}
-.container3 {
-    align-self: stretch;
-    border-radius: 8px;
-    background-color: #fff;
-    border: 1px solid #bbc7cd;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0px 16px 0px 0px;
-    gap: 16px;
-}
-.textFieldParent {
-    position: absolute;
-    top: 174px;
-    left: 353px;
-    width: 592px;
-    height: 1000px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 20px;
-    color: #1c1c1c;
-}
-.buttondesktopWeb1 {
-    flex: 1;
-    border-radius: 32px;
-    background-color: #a62626;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 48px;
-    margin-top:400px;
-}
-.button1 {
-    align-self: stretch;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-.buttondesktopWeb2 {
-    flex: 1;
-    border-radius: 32px;
-    border: 1px solid #a62626;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 48px;
-}
-.button2 {
-    align-self: stretch;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    color: #a62626;
-}
-.buttonParent {
-    position: absolute;
-    top: 588px;
-    left: 353px;
-    width: 592px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 20px;
-    color: #ecfdf3;
-}
-.manajemenDataKlien {
-    width: 100%;
-    position: relative;
-    background-color: #fff;
-    height: 1024px;
-    overflow: hidden;
-    text-align: left;
-    font-size: 16px;
-    color: #a62626;
-    font-family: Caudex;
-    min-height: 100%;
-}
-
-.table {
-    border-collapse: separate; /* Pastikan border tidak menyatu */
-    border-spacing: 10px; /* Jarak antar kolom */
+.idContainer {
+    font-family: caudex;
+    font-size: 20px;
+    margin-top: 200px;
+    margin-left: 352px;
 }

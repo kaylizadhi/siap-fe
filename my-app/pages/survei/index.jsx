@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Link from 'next/link';
+import { PencilIcon, TrashIcon, EyeIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 export default function Index() {
     const [survei, setSurvei] = useState([]);
     const [page, setPage] = useState(1); // Track the current page
     const [totalCount, setTotalCount] = useState(0); // Track the total count
+    const [searchTerm, setSearchTerm] = useState('');  // Single search term
+    const [filteredSurvei, setFilteredSurvei] = useState([]);
 
     useEffect(() => {
         async function fetchingData() {
@@ -43,7 +46,6 @@ export default function Index() {
                 );
 
                 if (response.ok) {
-                    // No need to check for result.success if you are removing it from state directly
                     setSurvei((prevSurvei) => prevSurvei.filter((e) => e.id !== id));
                 } else {
                     console.error("Failed to delete the survey");
@@ -53,6 +55,20 @@ export default function Index() {
             }
         }
     };
+
+    useEffect(() => {
+        const search = () => {
+            let searched = survei;
+            if (searchTerm) {
+                searched = searched.filter((element) => 
+                    (element.nama_survei && element.nama_survei.toLowerCase().includes(searchTerm.toLowerCase())) || 
+                    (element.nama_klien && element.nama_klien.toLowerCase().includes(searchTerm.toLowerCase()))
+                );
+            }
+            setFilteredSurvei(searched);
+        }
+        search();
+    }, [searchTerm, survei]);
 
     const handleNextPage = () => {
         if (survei.length > 0) {
@@ -68,66 +84,65 @@ export default function Index() {
 
     return (
         <div className={styles.manajemenDataKlien}>
-            <b className={styles.daftarKlien}>Daftar Survei</b>
+            <b className={styles.headingSurvei}>Daftar Survei</b>
             {/* Navigation Bar omitted for brevity */}
-
-            <input
-                className={styles.searchBar}
-                type='text'
-                name='daftarsurvei'
-                placeholder='Cari survei...'
-            />
-
-            <div className={styles.frameGroup}>
-                <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white border border-gray-300">
-                        <thead>
-                            <tr className="bg-gray-100 text-gray-700">
-                                <th className="py-3 px-4 border-b">Judul Survei</th>
-                                <th className="py-3 px-4 border-b">Nama Klien</th>
-                                <th className="py-3 px-4 border-b">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {survei.map((element) => (
-                                <tr key={element.id} className={styles.table}>
-                                    <td className={styles.table}>{element.nama_survei}</td>
-                                    <td className={styles.table}>{element.nama_klien}</td>
-                                    <td className={styles.table}>
-                                        <Link href={`/survei/edit/${element.id}`}>
-                                            <button className="text-blue-500 hover:underline mr-2">Edit</button>
-                                        </Link>
-                                        <button onClick={() => HandleDelete(element.id)} className="text-red-500 hover:underline mr-2">Delete</button>
-                                        <Link href={`/survei/${element.id}`}>
-                                            <button className="text-green-500 hover:underline">View</button>
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+            <div className={styles.searchBarContainer}>
+                <MagnifyingGlassIcon className={styles.iconSearch} />
+                <input
+                    className={styles.searchBar}
+                    type='text'
+                    name='search'
+                    placeholder='Cari berdasarkan judul survei atau nama klien...'
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}  // Update search term
+                />
             </div>
+            <table className={styles.tableContainerSurvei}>
+                <thead>
+                    <tr>
+                        <th>Judul Survei</th>
+                        <th>Nama Klien</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody className={styles.tdSurvei}>
+                    {filteredSurvei.map((element) => (
+                        <tr key={element.id}>
+                            <td>{element.nama_survei}</td>
+                            <td>{element.nama_klien}</td>
+                            <td>
+                                <Link href={`/survei/edit/${element.id}`}>
+                                    <button className={styles.buttonSurvei}><PencilIcon className={styles.iconSurvei}/></button>
+                                </Link>
+                                    <button className={styles.buttonSurvei} onClick={() => HandleDelete(element.id)}><TrashIcon className={styles.iconSurvei}/></button>
+                                <Link href={`/survei/${element.id}`}>
+                                    <button className={styles.buttonSurvei}><EyeIcon className={styles.iconSurvei}/></button>
+                                </Link>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
 
-            <div className="flex justify-between mt-4">
+            <div>
                 <button
                     onClick={handlePreviousPage}
                     disabled={page === 1}
-                    className={`text-gray-500 ${page === 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                >
+                    className={`${page === 1 ? styles['buttonDisabledSebelumnya'] : styles['buttonEnabledSebelumya']}`}>
+                    <ChevronLeftIcon className={styles.iconChevron} />
                     Sebelumnya
                 </button>
                 <button
                     onClick={handleNextPage}
                     disabled={survei.length === 0}
-                    className={`text-gray-500 ${survei.length === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                >
+                    className={`${survei.length === 0 ? styles['buttonDisabledSelanjutnya'] : styles['buttonEnabledSelanjutnya']}`}>
                     Selanjutnya
+                    <ChevronRightIcon className={styles.iconChevron} />
                 </button>
             </div>
 
             <Link href="/survei/buat-survei">
-                <button className={styles.dashboardButton2}>Tambah Survei</button>
+                <button className={styles.buttonTambahSurvei}><PlusIcon className={styles.iconSurvei}/>Tambah Survei</button>
             </Link>
         </div>
     );
