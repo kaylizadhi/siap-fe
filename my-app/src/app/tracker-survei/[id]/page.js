@@ -68,7 +68,6 @@ export default function SurveyTrackerDetail({ params }) {
           return;
         }
 
-        // If none of the roles match, redirect to login
         router.push("/login");
       } catch (error) {
         console.error("Failed to verify role:", error);
@@ -117,17 +116,35 @@ export default function SurveyTrackerDetail({ params }) {
     const token = localStorage.getItem("authToken");
     setUpdatingField(field);
 
-    // Determine which endpoint to use based on the field and user role
+    // Determine which endpoint to use based on the field
     let endpoint;
-    if (userRole === "Administrasi") {
-      endpoint = `http://localhost:8000/survei-status/${id}/administrasi/`;
-    } else if (userRole === "Logistik") {
-      endpoint = `http://localhost:8000/survei-status/${id}/logistik/`;
-    } else if (userRole === "Pengendali Mutu") {
+    const administrasiAwalFields = [
+      "buat_kontrak",
+      "buat_invoice_dp",
+      "pembayaran_dp",
+      "pembuatan_kwitansi_dp",
+    ];
+    const administrasiAkhirFields = [
+      "buat_invoice_final",
+      "pembayaran_lunas",
+      "pembuatan_kwitansi_final",
+    ];
+    const pengendaliMutuFields = [
+      "terima_info_survei",
+      "lakukan_survei",
+      "pantau_responden",
+      "pantau_data_cleaning",
+    ];
+    const logistikFields = ["terima_request_souvenir", "ambil_souvenir"];
+
+    if (administrasiAwalFields.includes(field)) {
+      endpoint = `http://localhost:8000/survei-status/${id}/administrasi-awal/`;
+    } else if (administrasiAkhirFields.includes(field)) {
+      endpoint = `http://localhost:8000/survei-status/${id}/administrasi-akhir/`;
+    } else if (pengendaliMutuFields.includes(field)) {
       endpoint = `http://localhost:8000/survei-status/${id}/pengendali-mutu/`;
-    } else {
-      toast.error("Unauthorized to make changes");
-      return;
+    } else if (logistikFields.includes(field)) {
+      endpoint = `http://localhost:8000/survei-status/${id}/logistik/`;
     }
 
     try {
@@ -142,7 +159,6 @@ export default function SurveyTrackerDetail({ params }) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        // Handle the specific error format {"__all__": ["error message"]}
         const errorMessage =
           errorData.__all__?.[0] || "Failed to update status";
         throw new Error(errorMessage);
@@ -167,13 +183,16 @@ export default function SurveyTrackerDetail({ params }) {
     }
   };
 
-  const isFieldEditable = (fieldCategory) => {
+  const isFieldEditable = (field) => {
     const roleMapping = {
       Administrasi: [
         "buat_kontrak",
-        "buat_invoice",
+        "buat_invoice_dp",
+        "pembayaran_dp",
+        "pembuatan_kwitansi_dp",
+        "buat_invoice_final",
         "pembayaran_lunas",
-        "pembuatan_kwitansi",
+        "pembuatan_kwitansi_final",
       ],
       Logistik: ["terima_request_souvenir", "ambil_souvenir"],
       "Pengendali Mutu": [
@@ -184,7 +203,7 @@ export default function SurveyTrackerDetail({ params }) {
       ],
     };
 
-    return roleMapping[userRole]?.includes(fieldCategory) || false;
+    return roleMapping[userRole]?.includes(field) || false;
   };
 
   if (loading || !surveyData) {
@@ -193,7 +212,7 @@ export default function SurveyTrackerDetail({ params }) {
         <div className="animate-pulse">
           <div className="h-20 bg-gray-200 rounded-lg mb-6"></div>
           <div className="space-y-8">
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3, 4].map((i) => (
               <div key={i} className="h-48 bg-gray-200 rounded-lg"></div>
             ))}
           </div>
@@ -218,10 +237,10 @@ export default function SurveyTrackerDetail({ params }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Administrasi Column */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Administrasi Awal Section */}
         <div>
-          <h3 className="font-semibold text-lg mb-4">Administrasi</h3>
+          <h3 className="font-semibold text-lg mb-4">Administrasi Awal</h3>
           <StatusBox
             label="Buat Kontrak"
             status={surveyData.status.buat_kontrak}
@@ -231,53 +250,32 @@ export default function SurveyTrackerDetail({ params }) {
             isEditable={isFieldEditable("buat_kontrak")}
           />
           <StatusBox
-            label="Buat Invoice"
-            status={surveyData.status.buat_invoice}
+            label="Buat Invoice DP"
+            status={surveyData.status.buat_invoice_dp}
             onStatusChange={handleStatusChange}
-            fieldKey="buat_invoice"
-            isLoading={updatingField === "buat_invoice"}
-            isEditable={isFieldEditable("buat_invoice")}
+            fieldKey="buat_invoice_dp"
+            isLoading={updatingField === "buat_invoice_dp"}
+            isEditable={isFieldEditable("buat_invoice_dp")}
           />
           <StatusBox
-            label="Pembayaran Lunas"
-            status={surveyData.status.pembayaran_lunas}
+            label="Pembayaran DP"
+            status={surveyData.status.pembayaran_dp}
             onStatusChange={handleStatusChange}
-            fieldKey="pembayaran_lunas"
-            isLoading={updatingField === "pembayaran_lunas"}
-            isEditable={isFieldEditable("pembayaran_lunas")}
+            fieldKey="pembayaran_dp"
+            isLoading={updatingField === "pembayaran_dp"}
+            isEditable={isFieldEditable("pembayaran_dp")}
           />
           <StatusBox
-            label="Pembuatan Kwitansi"
-            status={surveyData.status.pembuatan_kwitansi}
+            label="Pembuatan Kwitansi DP"
+            status={surveyData.status.pembuatan_kwitansi_dp}
             onStatusChange={handleStatusChange}
-            fieldKey="pembuatan_kwitansi"
-            isLoading={updatingField === "pembuatan_kwitansi"}
-            isEditable={isFieldEditable("pembuatan_kwitansi")}
+            fieldKey="pembuatan_kwitansi_dp"
+            isLoading={updatingField === "pembuatan_kwitansi_dp"}
+            isEditable={isFieldEditable("pembuatan_kwitansi_dp")}
           />
         </div>
 
-        {/* Logistik Column */}
-        <div>
-          <h3 className="font-semibold text-lg mb-4">Logistik</h3>
-          <StatusBox
-            label="Menerima request souvenir"
-            status={surveyData.status.terima_request_souvenir}
-            onStatusChange={handleStatusChange}
-            fieldKey="terima_request_souvenir"
-            isLoading={updatingField === "terima_request_souvenir"}
-            isEditable={isFieldEditable("terima_request_souvenir")}
-          />
-          <StatusBox
-            label="Mengambil souvenir"
-            status={surveyData.status.ambil_souvenir}
-            onStatusChange={handleStatusChange}
-            fieldKey="ambil_souvenir"
-            isLoading={updatingField === "ambil_souvenir"}
-            isEditable={isFieldEditable("ambil_souvenir")}
-          />
-        </div>
-
-        {/* Pengendali Mutu Column */}
+        {/* Pengendali Mutu Section */}
         <div>
           <h3 className="font-semibold text-lg mb-4">Pengendali Mutu</h3>
           <StatusBox
@@ -297,7 +295,7 @@ export default function SurveyTrackerDetail({ params }) {
             isEditable={isFieldEditable("lakukan_survei")}
           />
           <StatusBox
-            label="Memantau responden yang sedang mengisi survei"
+            label="Memantau responden"
             status={surveyData.status.pantau_responden}
             onStatusChange={handleStatusChange}
             fieldKey="pantau_responden"
@@ -305,12 +303,62 @@ export default function SurveyTrackerDetail({ params }) {
             isEditable={isFieldEditable("pantau_responden")}
           />
           <StatusBox
-            label="Memantau banyaknya data yang dilakukan data cleaning"
+            label="Memantau data cleaning"
             status={surveyData.status.pantau_data_cleaning}
             onStatusChange={handleStatusChange}
             fieldKey="pantau_data_cleaning"
             isLoading={updatingField === "pantau_data_cleaning"}
             isEditable={isFieldEditable("pantau_data_cleaning")}
+          />
+        </div>
+
+        {/* Administrasi Akhir Section */}
+        <div>
+          <h3 className="font-semibold text-lg mb-4">Administrasi Akhir</h3>
+          <StatusBox
+            label="Buat Invoice Final"
+            status={surveyData.status.buat_invoice_final}
+            onStatusChange={handleStatusChange}
+            fieldKey="buat_invoice_final"
+            isLoading={updatingField === "buat_invoice_final"}
+            isEditable={isFieldEditable("buat_invoice_final")}
+          />
+          <StatusBox
+            label="Pembayaran Lunas"
+            status={surveyData.status.pembayaran_lunas}
+            onStatusChange={handleStatusChange}
+            fieldKey="pembayaran_lunas"
+            isLoading={updatingField === "pembayaran_lunas"}
+            isEditable={isFieldEditable("pembayaran_lunas")}
+          />
+          <StatusBox
+            label="Pembuatan Kwitansi Final"
+            status={surveyData.status.pembuatan_kwitansi_final}
+            onStatusChange={handleStatusChange}
+            fieldKey="pembuatan_kwitansi_final"
+            isLoading={updatingField === "pembuatan_kwitansi_final"}
+            isEditable={isFieldEditable("pembuatan_kwitansi_final")}
+          />
+        </div>
+
+        {/* Logistik Section */}
+        <div>
+          <h3 className="font-semibold text-lg mb-4">Logistik</h3>
+          <StatusBox
+            label="Menerima request souvenir"
+            status={surveyData.status.terima_request_souvenir}
+            onStatusChange={handleStatusChange}
+            fieldKey="terima_request_souvenir"
+            isLoading={updatingField === "terima_request_souvenir"}
+            isEditable={isFieldEditable("terima_request_souvenir")}
+          />
+          <StatusBox
+            label="Mengambil souvenir"
+            status={surveyData.status.ambil_souvenir}
+            onStatusChange={handleStatusChange}
+            fieldKey="ambil_souvenir"
+            isLoading={updatingField === "ambil_souvenir"}
+            isEditable={isFieldEditable("ambil_souvenir")}
           />
         </div>
       </div>
