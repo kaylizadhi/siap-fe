@@ -124,27 +124,27 @@ export default function SurveyTrackerDetail({ params }) {
       "pembayaran_dp",
       "pembuatan_kwitansi_dp",
     ];
-    const administrasiAkhirFields = [
-      "buat_invoice_final",
-      "pembayaran_lunas",
-      "pembuatan_kwitansi_final",
-    ];
+    const logistikFields = ["terima_request_souvenir", "ambil_souvenir"];
     const pengendaliMutuFields = [
       "terima_info_survei",
       "lakukan_survei",
       "pantau_responden",
       "pantau_data_cleaning",
     ];
-    const logistikFields = ["terima_request_souvenir", "ambil_souvenir"];
+    const administrasiAkhirFields = [
+      "buat_invoice_final",
+      "pembayaran_lunas",
+      "pembuatan_kwitansi_final",
+    ];
 
     if (administrasiAwalFields.includes(field)) {
       endpoint = `http://localhost:8000/survei-status/${id}/administrasi-awal/`;
-    } else if (administrasiAkhirFields.includes(field)) {
-      endpoint = `http://localhost:8000/survei-status/${id}/administrasi-akhir/`;
-    } else if (pengendaliMutuFields.includes(field)) {
-      endpoint = `http://localhost:8000/survei-status/${id}/pengendali-mutu/`;
     } else if (logistikFields.includes(field)) {
       endpoint = `http://localhost:8000/survei-status/${id}/logistik/`;
+    } else if (pengendaliMutuFields.includes(field)) {
+      endpoint = `http://localhost:8000/survei-status/${id}/pengendali-mutu/`;
+    } else if (administrasiAkhirFields.includes(field)) {
+      endpoint = `http://localhost:8000/survei-status/${id}/administrasi-akhir/`;
     }
 
     try {
@@ -275,6 +275,27 @@ export default function SurveyTrackerDetail({ params }) {
           />
         </div>
 
+        {/* Logistik Section */}
+        <div>
+          <h3 className="font-semibold text-lg mb-4">Logistik</h3>
+          <StatusBox
+            label="Menerima request souvenir"
+            status={surveyData.status.terima_request_souvenir}
+            onStatusChange={handleStatusChange}
+            fieldKey="terima_request_souvenir"
+            isLoading={updatingField === "terima_request_souvenir"}
+            isEditable={isFieldEditable("terima_request_souvenir")}
+          />
+          <StatusBox
+            label="Mengambil souvenir"
+            status={surveyData.status.ambil_souvenir}
+            onStatusChange={handleStatusChange}
+            fieldKey="ambil_souvenir"
+            isLoading={updatingField === "ambil_souvenir"}
+            isEditable={isFieldEditable("ambil_souvenir")}
+          />
+        </div>
+
         {/* Pengendali Mutu Section */}
         <div>
           <h3 className="font-semibold text-lg mb-4">Pengendali Mutu</h3>
@@ -338,27 +359,6 @@ export default function SurveyTrackerDetail({ params }) {
             fieldKey="pembuatan_kwitansi_final"
             isLoading={updatingField === "pembuatan_kwitansi_final"}
             isEditable={isFieldEditable("pembuatan_kwitansi_final")}
-          />
-        </div>
-
-        {/* Logistik Section */}
-        <div>
-          <h3 className="font-semibold text-lg mb-4">Logistik</h3>
-          <StatusBox
-            label="Menerima request souvenir"
-            status={surveyData.status.terima_request_souvenir}
-            onStatusChange={handleStatusChange}
-            fieldKey="terima_request_souvenir"
-            isLoading={updatingField === "terima_request_souvenir"}
-            isEditable={isFieldEditable("terima_request_souvenir")}
-          />
-          <StatusBox
-            label="Mengambil souvenir"
-            status={surveyData.status.ambil_souvenir}
-            onStatusChange={handleStatusChange}
-            fieldKey="ambil_souvenir"
-            isLoading={updatingField === "ambil_souvenir"}
-            isEditable={isFieldEditable("ambil_souvenir")}
           />
         </div>
       </div>
