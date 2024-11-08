@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Link from 'next/link';
 import { PencilIcon, TrashIcon, EyeIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { Diplomata } from 'next/font/google';
 
 export default function Index() {
     const [survei, setSurvei] = useState([]);
@@ -48,10 +49,10 @@ export default function Index() {
                 if (response.ok) {
                     setSurvei((prevSurvei) => prevSurvei.filter((e) => e.id !== id));
                 } else {
-                    console.error("Failed to delete the survey");
+                    console.error("Gagal menghapus survei");
                 }
             } catch (error) {
-                console.error("An error occurred while deleting the survey", error);
+                console.error("Error muncul ketika menghapus survei", error);
             }
         }
     };
@@ -83,7 +84,7 @@ export default function Index() {
     };
 
     return (
-        <div className={styles.manajemenDataKlien}>
+        <div>
             <b className={styles.headingSurvei}>Daftar Survei</b>
             {/* Navigation Bar omitted for brevity */}
             <div className={styles.searchBarContainer}>

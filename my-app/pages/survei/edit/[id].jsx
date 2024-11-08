@@ -45,7 +45,7 @@ export default function EditSurvei(){
             }
         } catch (error){
             console.log("response", survei)
-            alert("Gagal membuat survei")
+            alert("Gagal menyimpan perubahan informasi survei")
         }
     }
     return (
