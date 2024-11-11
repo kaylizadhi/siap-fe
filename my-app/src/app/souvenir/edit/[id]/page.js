@@ -1,6 +1,8 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import styles from '../index.module.css';
+import { useRouter } from "next/navigation";
+import styles from '../../index.module.css';
 export default function EditSouvenir(){
     const router = useRouter();
     const { id } = router.query;

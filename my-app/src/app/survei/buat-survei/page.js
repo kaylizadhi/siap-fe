@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from 'react';
-import { useRouter } from 'next/router';
-import styles from './index.module.css';
+import { useRouter } from 'next/navigation';
+import styles from '../index.module.css';
 export default function BuatSurvei() {
     const [survei, setSurvei] = useState();
     const router = useRouter();

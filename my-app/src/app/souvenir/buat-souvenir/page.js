@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from 'react';
-import { useRouter } from 'next/router';
-import styles from './index.module.css';
+import { useRouter } from 'next/navigation';
+import styles from '../index.module.css';
 
 export default function BuatSouvenir() {
     const [souvenir, setSouvenir] = useState({
@@ -14,7 +16,7 @@ export default function BuatSouvenir() {
         router.push("/souvenir"); 
     };
 
-    const HandleSubmit = async (event) => {
+    const handleSubmit = async (event) => {  // Updated function name
         event.preventDefault();
 
         // Validasi input
@@ -49,7 +51,6 @@ export default function BuatSouvenir() {
                 }
             );
             const result = await response.json();
-            // Log result to debug the response
             console.log(result);
             if (response.ok && result?.id) {
                 alert("Berhasil menambahkan souvenir!");
@@ -66,7 +67,7 @@ export default function BuatSouvenir() {
     return (
         <div>
             <b className={styles.headingSouvenir}>Tambah Souvenir</b>
-            <form onSubmit={HandleSubmit} className={styles.containerSouvenir}>
+            <form onSubmit={handleSubmit} className={styles.containerSouvenir}>
                 <b className={styles.textFieldTitleSouvenir}>Nama Souvenir</b>
                 <input
                     className={styles.textFieldSouvenir}

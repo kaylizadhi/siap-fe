@@ -1,6 +1,8 @@
+"use client";
+
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Detail() {
     const router = useRouter();
