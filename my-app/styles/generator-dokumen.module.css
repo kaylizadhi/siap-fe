@@ -331,12 +331,29 @@ width:300px;
   font-family: 'Caudex';
   }
 
+.uploadConfirmButton {
+  background-color: white;
+  width:100px;
+  color: #A62626;
+  border: 1px solid #A62626;
+  border-radius: 32px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-family: 'Caudex';
+}
+
 .exportButton img {
 margin-right: 8px;
 }
 
 .image {
   width: 700px;
+}
+
+.kontrakImage {
+  height: 300px;
+  padding-left: 300px;
 }
 
 .footer {
