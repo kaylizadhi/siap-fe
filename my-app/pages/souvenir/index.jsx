@@ -6,12 +6,10 @@ import { PencilIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, 
 export default function Index() {
     const [souvenir, setSouvenir] = useState([]);
     const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredSouvenir, setFilteredSouvenir] = useState([]);
     const [notifications, setNotifications] = useState('');
-    const itemsPerPage = 10;
-    const startIndex = (page - 1) * itemsPerPage;
-    const paginatedSouvenirs = souvenir.slice(startIndex, startIndex + itemsPerPage);
 
     useEffect(() => {
         async function fetchingData() {
@@ -27,12 +25,12 @@ export default function Index() {
 
                 const listSouvenir = await res.json();
                 setSouvenir(listSouvenir.results);
+                setTotalPages(Math.ceil(listSouvenir.count / 10));  // Update total halaman
 
-                // Gabungkan pesan notifikasi untuk souvenir yang perlu di-restock
                 const restockSouvenirs = listSouvenir.results
                     .filter(item => item.jumlah_stok < item.jumlah_minimum)
                     .map(item => item.nama_souvenir)
-                    .join(', ');  // Menggabungkan nama souvenir yang perlu direstock
+                    .join(', ');
 
                 if (restockSouvenirs) {
                     setNotifications(`${restockSouvenirs} perlu direstock!`);
@@ -60,9 +58,12 @@ export default function Index() {
                         method: "DELETE",
                     }
                 );
-
+    
                 if (response.ok) {
-                    setSouvenir((prevSouvenir) => prevSouvenir.filter((e) => e.id !== id));
+                    setSouvenir((prevSouvenir) => prevSouvenir.map((e) =>
+                        e.id === id ? { ...e, is_deleted: true } : e
+                    ));
+                    setFilteredSouvenir(filteredSouvenir.filter((item) => item.id !== id));
                 } else {
                     console.error("Gagal menghapus souvenir");
                 }
@@ -74,7 +75,7 @@ export default function Index() {
 
     useEffect(() => {
         const search = () => {
-            let searched = souvenir;
+            let searched = souvenir.filter((element) => !element.is_deleted);
             if (searchTerm) {
                 searched = searched.filter((element) => 
                     (element.nama_souvenir && element.nama_souvenir.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -86,7 +87,7 @@ export default function Index() {
     }, [searchTerm, souvenir]);
 
     const handleNextPage = () => {
-        if (paginatedSouvenirs.length === itemsPerPage) setPage(page + 1);
+        if (page < totalPages) setPage(page + 1);
     };
 
     const handlePreviousPage = () => {
@@ -97,7 +98,6 @@ export default function Index() {
         <div> 
             <b className={styles.headingSouvenir}>Tracker Souvenir</b>
 
-            {/* Notifikasi per item */}
             {notifications && (
                 <div className={styles.notification}>
                     <p>{notifications}</p>
@@ -149,8 +149,8 @@ export default function Index() {
                 </button>
                 <button
                     onClick={handleNextPage}
-                    disabled={paginatedSouvenirs.length < itemsPerPage}
-                    className={`${paginatedSouvenirs.length < itemsPerPage ? styles['buttonDisabledSelanjutnya'] : styles['buttonEnabledSelanjutnya']}`}>
+                    disabled={page === totalPages}
+                    className={`${page === totalPages ? styles['buttonDisabledSelanjutnya'] : styles['buttonEnabledSelanjutnya']}`}>
                     Selanjutnya
                     <ChevronRightIcon className={styles.iconChevron} />
                 </button>
