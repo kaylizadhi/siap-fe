@@ -18,31 +18,31 @@ export default function BuatAkun() {
     const [showNotification, setShowNotification] = useState(false);
     const router = useRouter();
 
-    // useEffect(() => {
-    //     const verifyUser = async () => {
-    //         const token = localStorage.getItem('authToken');
-    //         if (!token) {
-    //             router.push('/login');
-    //             return;
-    //         } 
+    useEffect(() => {
+        const verifyUser = async () => {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                router.push('/login');
+                return;
+            } 
 
-    //         try {
-    //             const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
-    //                 headers: { 'Authorization': `Token ${token}` },
-    //             });
-    //             const data = await response.json();
+            try {
+                const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
+                    headers: { 'Authorization': `Token ${token}` },
+                });
+                const data = await response.json();
 
-    //             if (data.error || data.role !== 'Admin Sistem') {
-    //                 router.push('/login');
-    //             }
-    //         } catch (error) {
-    //             console.error('Failed to verify role:', error);
-    //             router.push('/login');
-    //         }
-    //     };
+                if (data.error || data.role !== 'Admin Sistem') {
+                    router.push('/login');
+                }
+            } catch (error) {
+                console.error('Failed to verify role:', error);
+                router.push('/login');
+            }
+        };
 
-    //     verifyUser();
-    // }, [router]);
+        verifyUser();
+    }, [router]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
