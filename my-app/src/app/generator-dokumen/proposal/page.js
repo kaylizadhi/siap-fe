@@ -1,67 +1,23 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import styles from "../../../../styles/generator-dokumen.module.css";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from '../../../../styles/generator-dokumen.module.css'; 
+
+
 
 const Proposal = () => {
   const router = useRouter();
-  const [docType, setDocType] = useState("");
+  const [docType, setDocType] = useState(''); // State to track selected document type
   const [isVisible, setIsVisible] = useState(false);
   const [file, setFile] = useState(null);
 
-  useEffect(() => {
-    const verifyUser = async () => {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-
-      try {
-        const response = await fetch(
-          "http://localhost:8000/accounts/check_role_proposal/",
-          {
-            headers: { Authorization: `Token ${token}` },
-          }
-        );
-        const data = await response.json();
-
-        if (
-          data.error ||
-          (data.role !== "Administrasi" && data.role !== "Eksekutif")
-        ) {
-          router.push("/login");
-        }
-      } catch (error) {
-        console.error("Failed to verify role:", error);
-        router.push("/login");
-      }
-    };
-
-    const fetchSlideImage = async () => {
-      const response = await fetch(
-        "http://localhost:8000/dokumen_pendukung/convert_pptx_to_image/"
-      );
-      if (response.ok) {
-        const imageBlob = await response.blob();
-        const imageUrl = URL.createObjectURL(imageBlob);
-        setSlideImage(imageUrl);
-      } else {
-        console.error("Failed to load slide image.");
-      }
-    };
-
-    verifyUser();
-    fetchSlideImage();
-  }, [router]);
-
   const handleUploadClick = () => {
-    setIsVisible(!isVisible);
+    setIsVisible(!isVisible); // Toggle visibility
   };
 
   const handleFileChange = (event) => {
     const uploadedFile = event.target.files[0];
-    if (uploadedFile && uploadedFile.name.endsWith(".ppt")) {
+    if (uploadedFile && uploadedFile.name.endsWith('.ppt')) {
       setFile(uploadedFile);
     } else {
       alert("Only .ppt files are allowed.");
@@ -71,7 +27,7 @@ const Proposal = () => {
   const handleDrop = (event) => {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files[0];
-    if (droppedFile && droppedFile.name.endsWith(".ppt")) {
+    if (droppedFile && droppedFile.name.endsWith('.ppt')) {
       setFile(droppedFile);
     } else {
       alert("Only .ppt files are allowed.");
@@ -82,50 +38,98 @@ const Proposal = () => {
     event.preventDefault();
   };
 
+  
+
+  useEffect(() => {
+    const verifyUser = async () => {
+        const token = localStorage.getItem('authToken');  
+        if (!token) {
+            router.push('/login');  
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8000/accounts/check_role_proposal/', {
+                headers: { 'Authorization': `Token ${token}` },
+            });
+            const data = await response.json();
+
+            if (data.error || data.role !== 'Administrasi' && data.role !== 'Eksekutif') {
+                router.push('/login');  // Redirect if not "Administrasi" or "Eksekutif"
+            }
+        } catch (error) {
+            console.error('Failed to verify role:', error);
+            router.push('/login');
+        }
+    };
+
+    const fetchSlideImage = async () => {
+        const response = await fetch('http://localhost:8000/dokumen_pendukung/convert_pptx_to_image/');
+        if (response.ok) {
+            const imageBlob = await response.blob();
+            const imageUrl = URL.createObjectURL(imageBlob);
+            setSlideImage(imageUrl);
+        } else {
+            console.error("Failed to load slide image.");
+        }
+    };
+
+    verifyUser();
+    fetchSlideImage();
+}, [router]);
+  
+
   const handleExport = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8000/dokumen_pendukung/download_template_proposal/",
-        {
-          method: "GET",
+        const response = await fetch('http://localhost:8000/dokumen_pendukung/download_template_proposal/', {
+          method: 'GET',
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to download the template');
         }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to download the template");
+  
+        // Convert the response to a Blob and trigger download
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'templateProposal.ppt'; // Specify the filename
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (error) {
+        console.error('Error downloading template:', error);
       }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "templateProposal.ppt";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    } catch (error) {
-      console.error("Error downloading template:", error);
-    }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');  // Remove the token
+    router.push('/login');
+  };
+
+  
+    
 
   const handleDocTypeChange = (e) => {
     const selectedDocType = e.target.value;
     setDocType(selectedDocType);
 
-    if (selectedDocType === "invoiceDP") {
-      router.push("/generator-dokumen/invoice-dp");
+    // Redirect based on selected document type
+    if (selectedDocType === 'invoiceDP') {
+      router.push('/generator-dokumen/invoice-dp');
     }
-    if (selectedDocType === "invoiceFinal") {
-      router.push("/generator-dokumen/invoice-final");
+    if (selectedDocType === 'invoiceFinal') {
+        router.push('/generator-dokumen/invoice-final');
     }
-    if (selectedDocType === "kontrak") {
-      router.push("/generator-dokumen/kontrak");
+    if (selectedDocType === 'kontrak') {
+        router.push('/generator-dokumen/kontrak');
     }
-    if (selectedDocType === "kwitansiDP") {
-      router.push("/generator-dokumen/kwitansi-dp");
+    if (selectedDocType === 'kwitansiDP') {
+        router.push('/generator-dokumen/kwitansi-dp');
     }
-    if (selectedDocType === "kwitansiFinal") {
-      router.push("/generator-dokumen/kwitansi-final");
+    if (selectedDocType === 'kwitansiFinal') {
+        router.push('/generator-dokumen/kwitansi-final');
     }
   };
 
@@ -168,9 +172,8 @@ const Proposal = () => {
 
 
   return (
-    <div className={styles.content}>
-      <h1 className={styles.title}>Buat Dokumen</h1>
-
+    <div className={styles.containerbackground}>
+      <div className={styles.container}>
         {/* Main Content */}
         <div className={styles.content}>
             <h1 className={styles.title}>Buat Dokumen</h1>
@@ -283,61 +286,11 @@ const Proposal = () => {
             
         </div>
       </div>
-
-      <div className={styles.subtitle}>Template Proposal Survey</div>
-
-      <img
-        src="/images/proposal_preview.png"
-        alt="Template Preview"
-        className={styles.image}
-      />
-
-      {/* Export Button */}
-      <div className={styles.buttonGroup}>
-        <button
-          type="button"
-          onClick={handleUploadClick}
-          className={styles.uploadButton}
-        >
-          Upload Template Baru
-        </button>
-        <button
-          type="button"
-          className={styles.exportButton}
-          onClick={handleExport}
-        >
-          <img src="/images/AddItem.svg" alt="Export Icon" />
-          Export
-        </button>
-      </div>
-
-      {isVisible && (
-        <div
-          className={styles.uploadContainer}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-        >
-          <label className={styles.fileInputLabel} htmlFor="fileInput">
-            <img
-              src="/images/upload_icon.svg"
-              alt="Upload Icon"
-              className={styles.uploadIcon}
-            />
-            <p>Unggah Dokumen</p>
-            <p className={styles.uploadSubtitle}>Ukuran maksimal:</p>
-            <p className={styles.uploadSubtitle}>Format file: .ppt</p>
-          </label>
-          <input
-            type="file"
-            id="fileInput"
-            accept=".ppt"
-            onChange={handleFileChange}
-            className={styles.fileInput}
-          />
-          {file && <p>Selected file: {file.name}</p>}
-        </div>
-      )}
+      <div className={styles.footer}>
+        @2024 optimasys | Contact optimasys.work@gmail.com
     </div>
+    </div>
+    
   );
 };
 

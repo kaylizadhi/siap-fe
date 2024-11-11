@@ -13,6 +13,8 @@ export default function DaftarAkun() {
     const [deletingIndex, setDeletingIndex] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [currentAccountIndex, setCurrentAccountIndex] = useState(null);
+    
+    
 
     // Fetch account data from backend
     useEffect(() => {
@@ -28,9 +30,38 @@ export default function DaftarAkun() {
             } catch (error) {
                 console.error("Error fetching accounts:", error);
             }
-        };
-        fetchAccounts();
-    }, [searchQuery]);
+        }
+    
+
+        const verifyUser = async () => {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                router.push('/login');
+                return;
+            }
+            
+                try {
+                    const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
+                        headers: { 'Authorization': `Token ${token}` },
+                    });
+                    const data = await response.json();
+    
+                    if (data.error || data.role !== 'Admin Sistem') {
+                        router.push('/login');
+                    }
+                } catch (error) {
+                    console.error('Failed to verify role:', error);
+                    router.push('/login');
+                }
+        
+    };
+    fetchAccounts();
+    verifyUser();
+}, [searchQuery], [router]);
+
+
+        
+            
 
     const handleDeleteClick = (index) => {
         setCurrentAccountIndex(index);
@@ -72,11 +103,6 @@ export default function DaftarAkun() {
             setDeletingIndex(null);
         }
     };
-
-    // const handleLogout = () => {
-    //     localStorage.removeItem('authToken');
-    //     router.push('/login');
-    // };
 
     return (
         <div className={styles.mainContainer}>
