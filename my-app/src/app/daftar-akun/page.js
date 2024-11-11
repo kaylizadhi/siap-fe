@@ -13,8 +13,6 @@ export default function DaftarAkun() {
     const [deletingIndex, setDeletingIndex] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [currentAccountIndex, setCurrentAccountIndex] = useState(null);
-    
-    
 
     // Fetch account data from backend
     useEffect(() => {
@@ -62,6 +60,11 @@ export default function DaftarAkun() {
 
         
             
+
+    const handleDeleteClick = (index) => {
+        setCurrentAccountIndex(index);
+        setShowDeleteModal(true);
+    };
 
     const handleDeleteClick = (index) => {
         setCurrentAccountIndex(index);
