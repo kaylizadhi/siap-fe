@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/buat-akun.module.css';
 
@@ -8,21 +8,52 @@ export default function BuatAkun() {
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [security_question, setSecurityQuestion] = useState('');
+    const [security_answer, setSecurityAnswer] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState(''); // New state for role
+    const [role, setRole] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const router = useRouter();
 
+    // useEffect(() => {
+    //     const verifyUser = async () => {
+    //         const token = localStorage.getItem('authToken');
+    //         if (!token) {
+    //             router.push('/login');
+    //             return;
+    //         } 
+
+    //         try {
+    //             const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
+    //                 headers: { 'Authorization': `Token ${token}` },
+    //             });
+    //             const data = await response.json();
+
+    //             if (data.error || data.role !== 'Admin Sistem') {
+    //                 router.push('/login');
+    //             }
+    //         } catch (error) {
+    //             console.error('Failed to verify role:', error);
+    //             router.push('/login');
+    //         }
+    //     };
+
+    //     verifyUser();
+    // }, [router]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
-        // Validation checks
-        if (!username || !name || !email || !role || !password) {
-            setError("Seluruh field tidak boleh kosong!");
+        const names = name.split(' ');
+        const firstName = names[0] || '';  // First part as firstName
+        const lastName = names.slice(1).join(' ') || '';  // Remaining as lastName
+
+        if (!username || !name || !email || !role ||!security_question || !security_answer || !password) {
+            setError("Semua field harus diisi!");
             setShowNotification(true);
             setTimeout(() => setShowNotification(false), 3000);
             return;
@@ -35,26 +66,61 @@ export default function BuatAkun() {
             return;
         }
 
-        // Simulate account creation success notification
-        setSuccess(true);
-        setShowNotification(true);
-        setTimeout(() => {
-            setShowNotification(false);
-            router.push('/dashboard');
-        }, 1000);
+        const data = { username, name, email, password, role, security_question, security_answer };
+
+        try {
+            const response = await fetch('http://localhost:8000/buatAkun/api/buatAkun/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    username: username,
+                    role: role,
+                    security_question: security_question,
+                    security_answer: security_answer,
+                    password: password,
+                }),
+            });
+            console.log('Response received:', response);
+
+            if (!response.ok) {
+                throw new Error('Failed to make document');
+            }
+
+            setSuccess(true);
+            setShowNotification(true);
+            setTimeout(() => {
+                setShowNotification(false);
+                router.push('/dashboard');
+            }, 1000);
+
+        } catch (error) {
+            console.error(error);
+            setError("Gagal membuat akun. Coba lagi.");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
+        }
     };
 
-    return (
-        <div className={styles.loginBody}>
-            <div className={styles.loginContainer}>
-                <div className={styles.logoHeaderContainer}>
-                    <img src="/siap-logo.png" alt="SIAP Logo" className={styles.logo} />
-                    <h1 className={styles.systemTitle}>
-                        Sistem Informasi Administrasi <br /> dan Pengendalian Mutu
-                    </h1>
-                </div>
+    //batal buat akun
+    const handleCancel = () => { 
+        setUsername('');
+        setName('');
+        setEmail('');
+        setSecurityQuestion('');
+        setSecurityAnswer('');
+        setPassword('');
+        setRole('');
+    }; 
 
-                <h2 className={styles.loginHeading}>Buat Akun</h2>
+    return (
+        <div className={styles.buatakunBody}>
+            <div className={styles.buatakunContainer}>
+                <h2 className={styles.buatakunHeading}>Buat Akun</h2>
 
                 <form onSubmit={handleSubmit}>
                     <label className={styles.label}>Username</label>
@@ -78,13 +144,12 @@ export default function BuatAkun() {
                     <label className={styles.label}>Email</label>
                     <input
                         className={styles.input}
-                        type="text"
+                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Masukkan Email"
                         required
                     />
-
                     <label className={styles.label}>Role</label>
                     <select
                         className={styles.input}
@@ -92,14 +157,31 @@ export default function BuatAkun() {
                         onChange={(e) => setRole(e.target.value)}
                         required
                     >
-                        <option value="" disabled>Select Role</option>
+                        <option value="" disabled>Pilih Role</option>
                         <option value="Eksekutif">Eksekutif</option>
                         <option value="Administrasi">Administrasi</option>
                         <option value="Admin Sistem">Admin Sistem</option>
                         <option value="Logistik">Logistik</option>
                         <option value="Pengendali Mutu">Pengendali Mutu</option>
                     </select>
-
+                    <label className={styles.label}>Security Question</label>
+                    <input
+                        className={styles.input}
+                        type="text"  // Perbaikan tipe menjadi "text"
+                        value={security_question}
+                        onChange={(e) => setSecurityQuestion(e.target.value)}
+                        placeholder="Buat Security Question"
+                        required
+                    />
+                    <label className={styles.label}>Security Answer</label>
+                    <input
+                        className={styles.input}
+                        type="text"  // Perbaikan tipe menjadi "text"
+                        value={security_answer}  // Memperbaiki value ke state yang benar
+                        onChange={(e) => setSecurityAnswer(e.target.value)}
+                        placeholder="Buat Jawaban dari Security Question"
+                        required
+                    />
                     <label className={styles.label}>Password</label>
                     <div className={styles.passwordContainer}>
                         <input
@@ -115,26 +197,27 @@ export default function BuatAkun() {
                             className={styles.togglePassword}
                             onClick={() => setShowPassword(!showPassword)}
                         >
-                            <img src="/eye-icon.png" alt="Show Password" className="eye-icon" />
+                            <img src="/eye-icon.png" alt="Toggle Password Visibility" />
                         </button>
                     </div>
 
-                    {error && <p className="error">{error}</p>}
+                    {error && <p className={styles.error}>{error}</p>}
 
-                    <button type="submit" className={styles.BuatAkunBtn}>Simpan</button>
+                    <button type="submit" className={styles.simpanBtn}>Simpan</button>
+                    <button type="button" className={styles.batalBtn} onClick={handleCancel}>Batal</button>
                 </form>
 
                 {showNotification && (
                     <div className={`${styles.notification} ${success ? styles.success : styles.failure}`}>
                         {success ? (
                             <div>
-                                <img src="/success-icon.png" alt="Success Icon" className={styles.icon} />
+                                <img src="/success-icon.png" alt="Success Icon" />
                                 <p>Berhasil Membuat Akun!</p>
                                 <button onClick={() => setShowNotification(false)}>OK</button>
                             </div>
                         ) : (
                             <div>
-                                <img src="/error-icon.png" alt="Error Icon" className={styles.icon} />
+                                <img src="/error-icon.png" alt="Error Icon" />
                                 <p>{error}</p>
                                 <button onClick={() => setShowNotification(false)}>Coba lagi</button>
                             </div>
