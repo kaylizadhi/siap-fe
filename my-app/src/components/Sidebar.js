@@ -66,8 +66,9 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
+              <Link href="/profil">
               <SidebarButtons
-                buttonText="Ubah Profil"
+                buttonText="Profil"
                 svgIcon={
                   <svg
                     className="w-4 h-4 text-black"
@@ -97,8 +98,9 @@ const Sidebar = () => {
                     </svg>
                   </svg>
                 }
-                route="/anjay"
+                route="/profil"
               />
+              </Link>
             </li>
             <li>
               <Link href="/buat-akun">
@@ -199,6 +201,7 @@ const Sidebar = () => {
               />
             </li>
             <li>
+              <Link href="/souvenir">
               <SidebarButtons
                 buttonText="Tracker Souvenir"
                 svgIcon={
@@ -261,8 +264,9 @@ const Sidebar = () => {
                     </svg>
                   </svg>
                 }
-                route="/anjay"
+                route="/souvernir"
               />
+              </Link>
             </li>
             <li>
               <Link href="/tracker-survei">
@@ -328,6 +332,8 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
+              <Link href="/survei">
+              
               <SidebarButtons
                 buttonText="Daftar Survei"
                 svgIcon={
@@ -352,8 +358,9 @@ const Sidebar = () => {
                     </svg>
                   </svg>
                 }
-                route="/anjay"
+                route="/survei"
               />
+              </Link>
             </li>
           </ul>
           <div className={styles.logoutContainer}>

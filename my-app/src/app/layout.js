@@ -23,8 +23,7 @@ export default function RootLayout({ children }) {
   const pathname = usePathname();
   const noSidebar =
     pathname === "/login" ||
-    pathname === "/forgot-password" ||
-    pathname === "/buat-akun";
+    pathname === "/forgot-password"
 
   return (
     <html lang="en">

@@ -148,7 +148,7 @@ export default function Profil() {
             <a href="/dashboard">
               <img src="/images/Home.svg" alt="Dashboard Icon" className={styles.icon} />Dashboard
             </a>
-            <a href="/profil" className={styles.active}>
+            <a href="/profil">
               <img src="/images/ProfileRed.svg" alt="Profile Icon" className={styles.active} />Profil
             </a>
             <a href="/create-account">
@@ -177,6 +177,7 @@ export default function Profil() {
             <img src="/images/Out.svg" alt="Logout Icon" className={styles.icon} />Logout
           </a>
         </aside>
+
 
         <div className={styles.content}>
           <h1 className={styles.title}>Profil {firstName}</h1>

@@ -1,24 +1,40 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from '../../../styles/daftar-akun.module.css';
 
 export default function DaftarAkun() {
+    const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const accountsPerPage = 10;
-    const [accounts, setAccounts] = useState(
-        Array(10).fill({
-            username: "JaneDoe123",
-            name: "Jane Doe",
-            email: "janedoe@gmail.com",
-            roles: "Eksekutif"
-        })
-    );
+    const [accounts, setAccounts] = useState([]);
     const [deletingIndex, setDeletingIndex] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    // Fetch account data from backend
+    useEffect(() => {
+        const fetchAccounts = async () => {
+            try {
+                const url = searchQuery
+                    ? `http://localhost:8000/daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}`
+                    : 'http://localhost:8000/daftarAkun/api/daftarAkun/';
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log("Fetched accounts:", data);
+                setAccounts(data);
+            } catch (error) {
+                console.error("Error fetching accounts:", error);
+            }
+        };
+        fetchAccounts();
+    }, [searchQuery]);
+
+    // Filter accounts based on search query
     const filteredAccounts = accounts.filter(account =>
-        account.name.toLowerCase().includes(searchQuery.toLowerCase())
+        account.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        `${account.first_name} ${account.last_name}`.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const indexOfLastAccount = currentPage * accountsPerPage;
@@ -32,83 +48,97 @@ export default function DaftarAkun() {
         setCurrentPage(1);
     };
 
-    const handleDelete = (index) => {
-        const accountIndex = index + indexOfFirstAccount; // Adjust index for pagination
-        setDeletingIndex(accountIndex); // Set the deleting index to trigger animation
-        setTimeout(() => {
+    const handleDelete = async (index, accountId) => {
+        const accountIndex = index + indexOfFirstAccount;
+        setDeletingIndex(accountIndex);
+        try {
+            await fetch(`http://localhost:8000/daftarAkun/${accountId}/delete`, {
+                method: 'DELETE',
+                
+            });
+            console.log("account deleted");
             const updatedAccounts = accounts.filter((_, i) => i !== accountIndex);
             setAccounts(updatedAccounts);
-            setDeletingIndex(null); // Reset the deleting index after deletion
-        }, 500); // Match this with the animation duration
-    };
-
-    const goToPreviousPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
-
-    const goToNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
+        } catch (error) {
+            console.error("Error deleting account:", error);
+        } finally {
+            setDeletingIndex(null);
         }
     };
 
+    // const handleLogout = () => {
+    //     localStorage.removeItem('authToken');
+    //     router.push('/login');
+    // };
+
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Daftar Akun</h1>
+        <div className={styles.mainContainer}>
+            {/* Main Account List Content */}
+            <div className={styles.container}>
+                <h1 className={styles.title}>Daftar Akun</h1>
 
-            <div className={styles.searchContainer}>
-                <input
-                    type="text"
-                    placeholder="Cari akun..."
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    className={styles.searchInput}
-                />
-            </div>
+                <div className={styles.searchContainer}>
+                <img src="/search.svg" alt="Search" className={styles.searchIcon} />
+                    <input
+                        type="text"
+                        placeholder="Cari akun..."
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        className={styles.searchInput}
+                    />
+                </div>
 
-            <table className={styles.table}>
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentAccounts.map((account, index) => (
-                        <tr
-                            key={index}
-                            className={index + indexOfFirstAccount === deletingIndex ? styles.fadeOut : ""}
-                        >
-                            <td><img src="/images/Profile.svg" alt="User Icon" className={styles.icon} /> {account.username}</td>
-                            <td>{account.name}</td>
-                            <td>{account.email}</td>
-                            <td>{account.roles}</td>
-                            <td className={styles.actions}>
-                                <button 
-                                    className={styles.deleteButton} 
-                                    onClick={() => handleDelete(index)}
-                                >
-                                    <img src="/images/Delete.svg" alt="Delete" />
-                                </button>
-                            </td>
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {currentAccounts.map((account, index) => (
+                            <tr
+                                key={account.id}
+                                className={index + indexOfFirstAccount === deletingIndex ? styles.fadeOut : ""}
+                            >
+                                <td><img src="/images/Profile.svg" alt="User Icon" className={styles.icon} /> {account.username}</td>
+                                <td>{account.first_name} {account.last_name}</td>
+                                <td>{account.email}</td>
+                                <td>{account.role}</td>
+                                <td className={styles.actions}>
+                                    <button 
+                                        className={styles.deleteButton} 
+                                        onClick={() => handleDelete(index, account.id)}
+                                        
+                                    >
+                                        <img src="/images/Delete.svg" alt="Delete" />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
 
-            <div className={styles.pagination}>
-                {/* <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-                    &lt; Sebelumnya
-                </button>  */}
-                {currentPage < totalPages && (
-                    <button onClick={goToNextPage}>
-                        Selanjutnya &gt;
-                    </button>
-                )}
+                <div className={styles.pagination}>
+                    {currentPage < totalPages && (
+                        <button onClick={() => setCurrentPage(currentPage + 1)}>
+                            Selanjutnya &gt;
+                        </button>
+                    )}
+                </div>
             </div>
+            {/* {showDeleteModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <p>Apakah Anda yakin ingin menghapus akun ini?</p>
+                        <button onClick={handleDelete} className={styles.confirmButton}>Ya</button>
+                        <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Tidak</button>
+                    </div>
+                </div>
+            )} */}
         </div>
     );
 }
