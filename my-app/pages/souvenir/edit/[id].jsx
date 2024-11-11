@@ -48,18 +48,53 @@ export default function EditSouvenir(){
             alert("Gagal menyimpan perubahan informasi souvenir")
         }
     }
+    const handleBackToSouvenir = () => {
+        router.push("/souvenir"); 
+    };
     return (
         <div>
-			<b className={styles.headingSouvenir}>Tracker Souvenir</b>
-			<div className={styles.containerSouvenir}>
-				<b className={styles.textFieldTitleSouvenir}>Nama Souvenir</b>
-					<input className={styles.textFieldSouvenir} type='text' name='namasouvenir' value={souvenir.nama_souvenir|| ''} onChange={(event) => setSouvenir({...souvenir, nama_souvenir: event.target.value})}></input>
-				<b className={styles.textFieldTitleSouvenir}>Jumlah stok</b>
-					<input className={styles.textFieldSouvenir} type='text' name='jumlahstok' value={souvenir.jumlah_stok || ''} onChange={(event) => setSouvenir({...souvenir, jumlah_stok: event.target.value})}></input>
-				<b className={styles.textFieldTitleSouvenir}>Jumlah minimum</b>
-					<input className={styles.textFieldSouvenir} type='text' name='jumlahminimum' value={souvenir.jumlah_minimum || ''} onChange={(event) => setSouvenir({...souvenir, jumlah_minimum: event.target.value})}></input>
-      		</div>
-			<button onClick={() => HandleSubmit()} className={styles.primaryButtonSouvenir}>Simpan</button>	
-			<button className={styles.secondaryButtonSouvenir}>Batal</button>
+			<b className={styles.headingSouvenir}>Edit Souvenir</b>
+            <div className={styles.containerSouvenir}>
+                <b className={styles.textFieldTitleSouvenir}>Nama Souvenir</b>
+                <input 
+                    className={styles.textFieldSouvenir} 
+                    type="text" 
+                    name="namasouvenir" 
+                    value={souvenir.nama_souvenir || ''} 
+                    placeholder={souvenir.nama_souvenir || ''}  // Bisa diisi dengan teks statis jika diinginkan
+                    onChange={(event) => setSouvenir({...souvenir, nama_souvenir: event.target.value})} 
+                />
+                
+                <b className={styles.textFieldTitleSouvenir}>Jumlah Stok</b>
+                <input 
+                    className={styles.textFieldSouvenir} 
+                    type="number" 
+                    name="jumlahstok" 
+                    value={souvenir.jumlah_stok || ''} 
+                    placeholder={souvenir.jumlah_stok || ''}
+                    onChange={(event) => setSouvenir({...souvenir, jumlah_stok: event.target.value})} 
+                />
+                
+                <b className={styles.textFieldTitleSouvenir}>Jumlah Minimum</b>
+                <input 
+                    className={styles.textFieldSouvenir} 
+                    type="number" 
+                    name="jumlahminimum" 
+                    value={souvenir.jumlah_minimum || ''} 
+                    placeholder={souvenir.jumlah_minimum || ''} 
+                    onChange={(event) => setSouvenir({...souvenir, jumlah_minimum: event.target.value})} 
+                />
+            </div>
+
+			<button 
+                type="submit"
+                onClick={() => HandleSubmit()} 
+                className={styles.primaryButtonSouvenir2}>
+                    Simpan</button>	
+			<button 
+                type="button"
+                onClick={handleBackToSouvenir}
+                className={styles.secondaryButtonSouvenir2}>
+                    Kembali</button>
     		</div>);
 }

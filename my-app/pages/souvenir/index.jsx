@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Link from 'next/link';
-import { PencilIcon, TrashIcon, EyeIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 export default function Index() {
     const [souvenir, setSouvenir] = useState([]);
-    const [page, setPage] = useState(1); // Track the current page
-    const [totalCount, setTotalCount] = useState(0); // Track the total count
-    const [searchTerm, setSearchTerm] = useState('');  // Single search term
+    const [page, setPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
     const [filteredSouvenir, setFilteredSouvenir] = useState([]);
+    const [notifications, setNotifications] = useState('');
+    const itemsPerPage = 10;
+    const startIndex = (page - 1) * itemsPerPage;
+    const paginatedSouvenirs = souvenir.slice(startIndex, startIndex + itemsPerPage);
 
     useEffect(() => {
         async function fetchingData() {
@@ -20,13 +23,22 @@ export default function Index() {
                     },
                 });
 
-                if (!res.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                if (!res.ok) throw new Error('Network response was not ok');
 
                 const listSouvenir = await res.json();
                 setSouvenir(listSouvenir.results);
-                setTotalCount(listSouvenir.count);
+
+                // Gabungkan pesan notifikasi untuk souvenir yang perlu di-restock
+                const restockSouvenirs = listSouvenir.results
+                    .filter(item => item.jumlah_stok < item.jumlah_minimum)
+                    .map(item => item.nama_souvenir)
+                    .join(', ');  // Menggabungkan nama souvenir yang perlu direstock
+
+                if (restockSouvenirs) {
+                    setNotifications(`${restockSouvenirs} perlu direstock!`);
+                } else {
+                    setNotifications('');
+                }
             } catch (error) {
                 console.error("Failed to fetch data:", error);
             }
@@ -34,6 +46,10 @@ export default function Index() {
 
         fetchingData();
     }, [page]);
+
+    const closeNotification = () => {
+        setNotifications('');
+    };
 
     const HandleDelete = async (id) => {
         if (confirm("Apakah Anda yakin ingin menghapus souvenir ini?")) {
@@ -65,35 +81,38 @@ export default function Index() {
                 );
             }
             setFilteredSouvenir(searched);
-        }
+        };
         search();
     }, [searchTerm, souvenir]);
 
     const handleNextPage = () => {
-        if (souvenir.length > 0) {
-            setPage(page + 1);
-        }
+        if (paginatedSouvenirs.length === itemsPerPage) setPage(page + 1);
     };
 
     const handlePreviousPage = () => {
-        if (page > 1) {
-            setPage(page - 1);
-        }
+        if (page > 1) setPage(page - 1);
     };
 
     return (
-        <div>
+        <div> 
             <b className={styles.headingSouvenir}>Tracker Souvenir</b>
-            {/* Navigation Bar omitted for brevity */}
+
+            {/* Notifikasi per item */}
+            {notifications && (
+                <div className={styles.notification}>
+                    <p>{notifications}</p>
+                    <button onClick={closeNotification} className={styles.closeButton}>X</button>
+                </div>
+            )}
+
             <div className={styles.searchBarContainer}>
-                <MagnifyingGlassIcon className={styles.iconSearch} />
                 <input
                     className={styles.searchBar}
                     type='text'
                     name='search'
                     placeholder='Cari berdasarkan nama souvenir...'
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}  // Update search term
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
             <table className={styles.tableContainerSouvenir}>
@@ -104,16 +123,16 @@ export default function Index() {
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody className={styles.tdSouvenir}>
+                <tbody>
                     {filteredSouvenir.map((element) => (
-                        <tr key={element.id}>
+                        <tr className={styles.trSouvenir} key={element.id}>
                             <td>{element.nama_souvenir}</td>
                             <td>{element.jumlah_stok}</td>
                             <td>
                                 <Link href={`/souvenir/edit/${element.id}`}>
                                     <button className={styles.buttonSouvenir}><PencilIcon className={styles.iconSouvenir}/></button>
                                 </Link>
-                                    <button className={styles.buttonSouvenir} onClick={() => HandleDelete(element.id)}><TrashIcon className={styles.iconSouvenir}/></button>
+                                <button className={styles.buttonSouvenir} onClick={() => HandleDelete(element.id)}><TrashIcon className={styles.iconSouvenir}/></button>
                             </td>
                         </tr>
                     ))}
@@ -124,21 +143,21 @@ export default function Index() {
                 <button
                     onClick={handlePreviousPage}
                     disabled={page === 1}
-                    className={`${page === 1 ? styles['buttonDisabledSebelumnya'] : styles['buttonEnabledSebelumya']}`}>
+                    className={`${page === 1 ? styles['buttonDisabledSebelumnya'] : styles['buttonEnabledSebelumnya']}`}>
                     <ChevronLeftIcon className={styles.iconChevron} />
                     Sebelumnya
                 </button>
                 <button
                     onClick={handleNextPage}
-                    disabled={souvenir.length === 0}
-                    className={`${souvenir.length === 0 ? styles['buttonDisabledSelanjutnya'] : styles['buttonEnabledSelanjutnya']}`}>
+                    disabled={paginatedSouvenirs.length < itemsPerPage}
+                    className={`${paginatedSouvenirs.length < itemsPerPage ? styles['buttonDisabledSelanjutnya'] : styles['buttonEnabledSelanjutnya']}`}>
                     Selanjutnya
                     <ChevronRightIcon className={styles.iconChevron} />
                 </button>
             </div>
 
             <Link href="/souvenir/buat-souvenir">
-                <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconSouvenir}/>Tambah Souvenir</button>
+                <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconSouvenir1}/>Tambah Souvenir</button>
             </Link>
         </div>
     );
