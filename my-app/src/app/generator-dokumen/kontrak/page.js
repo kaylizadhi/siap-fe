@@ -171,43 +171,6 @@ const Kontrak = () => {
   return (
     <div className={styles.containerbackground}>
       <div className={styles.container}>
-        <aside className={styles.sidebar}>
-          <div className={styles.logo}>
-            <img src="/images/siap-logo-2.svg" alt="siap-logo-2" />
-          </div>
-          <nav className={styles.nav}>
-            <a href="/dashboard">
-              <img src="/images/Home.svg" alt="Dashboard Icon" className={styles.icon} />Dashboard
-            </a>
-            <a href="/profil">
-              <img src="/images/Profile.svg" alt="Profile Icon" className={styles.active} />Profil
-            </a>
-            <a href="/create-account">
-              <img src="/images/Add.svg" alt="Create Icon" className={styles.icon} />Buat Akun
-            </a>
-            <a href="/generator-dokumen/invoice-final" className={styles.active}>
-              <img src="/images/CreateRed.svg" alt="Buat Dokumen Icon" className={styles.icon} />Buat Dokumen
-            </a>
-            <a href="/documents">
-              <img src="/images/Document.svg" alt="Daftar Dokumen Icon" className={styles.icon} />Daftar Dokumen
-            </a>
-            <a href="/souvenir-tracker">
-              <img src="/images/Inventory.svg" alt="Tracker Souvenir Icon" className={styles.icon} />Tracker Souvenir
-            </a>
-            <a href="/survey-tracker">
-              <img src="/images/Status.svg" alt="Tracker Status Icon" className={styles.icon} />Tracker Status Survei
-            </a>
-            <a href="/clients">
-              <img src="/images/Client.svg" alt="Daftar Klien Icon" className={styles.icon} />Daftar Klien
-            </a>
-            <a href="/surveys">
-              <img src="/images/Survey.svg" alt="Daftar Survey Icon" className={styles.icon} />Daftar Survei
-            </a>
-          </nav>
-          <a href="/login" onClick={handleLogout} className={styles.logout}>
-            <img src="/images/Out.svg" alt="Logout Icon" className={styles.icon} />Logout
-          </a>
-        </aside>
 
         {/* Main Content */}
         <div className={styles.content}>

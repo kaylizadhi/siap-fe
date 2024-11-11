@@ -19,6 +19,7 @@ align-items: center;
 .container {
 display: flex;
 min-height: 100vh;
+width: 1000px;
 font-family: 'Caudex', serif;
 background-color:#FFFF;
 }

@@ -125,6 +125,43 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
+              <Link href="/daftar-akun">
+                <SidebarButtons
+                  buttonText="Daftar Akun"
+                  svgIcon={
+                    <svg
+                      className="w-4 h-4 text-black"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 28 28"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 22.2518C1 20.6605 1.63214 19.1344 2.75736 18.0092C3.88258 16.884 5.4087 16.2518 7 16.2518H19C20.5913 16.2518 22.1174 16.884 23.2426 18.0092C24.3679 19.1344 25 20.6605 25 22.2518C25 23.0475 24.6839 23.8105 24.1213 24.3732C23.5587 24.9358 22.7956 25.2518 22 25.2518H4C3.20435 25.2518 2.44129 24.9358 1.87868 24.3732C1.31607 23.8105 1 23.0475 1 22.2518Z"
+                          stroke="#1C1C1C"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M13 10.2518C15.4853 10.2518 17.5 8.23711 17.5 5.75183C17.5 3.26655 15.4853 1.25183 13 1.25183C10.5147 1.25183 8.5 3.26655 8.5 5.75183C8.5 8.23711 10.5147 10.2518 13 10.2518Z"
+                          stroke="#1C1C1C"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </svg>
+                  }
+                  route="/daftar-akun"
+                />
+              </Link>
+            </li>
+            <li>
               <Link href="/generator-dokumen/proposal">
                 <SidebarButtons
                   buttonText="Buat Dokumen"
