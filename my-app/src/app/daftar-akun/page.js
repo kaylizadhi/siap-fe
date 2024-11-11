@@ -12,6 +12,7 @@ export default function DaftarAkun() {
     const [accounts, setAccounts] = useState([]);
     const [deletingIndex, setDeletingIndex] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [currentAccountIndex, setCurrentAccountIndex] = useState(null);
 
     // Fetch account data from backend
     useEffect(() => {
@@ -30,6 +31,11 @@ export default function DaftarAkun() {
         };
         fetchAccounts();
     }, [searchQuery]);
+
+    const handleDeleteClick = (index) => {
+        setCurrentAccountIndex(index);
+        setShowDeleteModal(true);
+    };
 
     // Filter accounts based on search query
     const filteredAccounts = accounts.filter(account =>
@@ -56,6 +62,7 @@ export default function DaftarAkun() {
                 method: 'DELETE',
                 
             });
+            setShowDeleteModal(false);
             console.log("account deleted");
             const updatedAccounts = accounts.filter((_, i) => i !== accountIndex);
             setAccounts(updatedAccounts);
@@ -111,8 +118,7 @@ export default function DaftarAkun() {
                                 <td className={styles.actions}>
                                     <button 
                                         className={styles.deleteButton} 
-                                        onClick={() => handleDelete(index, account.id)}
-                                        
+                                        onClick={() => handleDeleteClick(index)}
                                     >
                                         <img src="/images/Delete.svg" alt="Delete" />
                                     </button>
@@ -130,15 +136,15 @@ export default function DaftarAkun() {
                     )}
                 </div>
             </div>
-            {/* {showDeleteModal && (
+            {showDeleteModal && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modal}>
                         <p>Apakah Anda yakin ingin menghapus akun ini?</p>
-                        <button onClick={handleDelete} className={styles.confirmButton}>Ya</button>
+                        <button onClick={() => handleDelete(currentAccountIndex, accounts[currentAccountIndex].id)} className={styles.confirmButton}>Ya</button>
                         <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Tidak</button>
                     </div>
                 </div>
-            )} */}
+            )}
         </div>
     );
 }
