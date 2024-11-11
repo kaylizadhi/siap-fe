@@ -198,7 +198,7 @@ width: 100%;
 }
 
 .nominalInput span {
-padding: 10px;
+padding: 22px;
 /* background-color: #f1f1f1; */
 border: 1px solid #A62626;
 border-right: none;
@@ -231,7 +231,7 @@ padding: 10px;
   }
 
 .percentageInput span {
-    padding: 10px;
+    padding: 22px;
     /* background-color: #f1f1f1; */
     border: 1px solid #A62626;
     border-left: none;
