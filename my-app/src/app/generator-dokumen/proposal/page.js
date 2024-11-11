@@ -305,7 +305,7 @@ const Proposal = () => {
                   <label className={styles.fileInputLabel} htmlFor="fileInput">
                     <img src="/images/upload_icon.svg" alt="Upload Icon" className={styles.uploadIcon} />
                     <p>Unggah Dokumen</p>
-                    <p className={styles.uploadSubtitle}>Ukuran maksimal:</p>
+                    {/* <p className={styles.uploadSubtitle}>Ukuran maksimal:</p> */}
                     <p className={styles.uploadSubtitle}>Format file: .ppt</p>
                   </label>
                   <input
