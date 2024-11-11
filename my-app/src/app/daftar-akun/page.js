@@ -52,7 +52,7 @@ export default function DaftarAkun() {
         const accountIndex = index + indexOfFirstAccount;
         setDeletingIndex(accountIndex);
         try {
-            await fetch(`http://localhost:8000/daftarAkun/${accountId}/delete`, {
+            await fetch(`http://localhost:8000/daftarAkun/${accountId}/delete/`, {
                 method: 'DELETE',
                 
             });
