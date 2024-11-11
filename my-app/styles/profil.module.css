@@ -14,6 +14,7 @@
 .container {
   display: flex;
   min-height: 100vh;
+
   font-family: 'Caudex', serif;
   background-color:#FFFF;
 }
@@ -27,8 +28,8 @@
 
 .sidebar {
   width: 250px;
-  background-color: #fdfdfd;
-  border-right: 1px solid #e3e3e3;
+  background-color: #ffffff;
+  border-right: 1px solid #ffffff;
   padding: 20px;
   margin-right: 200px;
 }
@@ -50,7 +51,7 @@
   display: flex;
   align-items: center;  
   margin-bottom: 15px;
-  color: #4c2323;
+  color: #ffffff;
   text-decoration: none;
   font-size: 18px;
   padding-left: 10px;
@@ -69,14 +70,14 @@
   background-color: #f7d9d9;
   padding: 10px;
   border-radius: 4px;
-  color: #A62626;
+  color: #ffffff;
   font-weight: bold;
 }
 
 .logout {
   display: flex;
   margin-top: 30px;
-  color: #A62626;
+  color: #ffffff;
   font-size: 18px;
   text-decoration: none;
   padding-left: 10px;
