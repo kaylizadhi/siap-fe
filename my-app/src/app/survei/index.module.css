@@ -72,9 +72,8 @@
     width: 16px;
     height: 16px;
     color: #5f737f;
-    margin-left: 364px;
-    margin-top: 200px;
     z-index: 1; 
+    position: absolute;
 }
 
 .searchBar {
@@ -122,16 +121,16 @@
 }
 
 .iconSurvei {
-    width: 16px;
-    height: 16px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     padding-right: 8px;
     padding-left: 8px;
 }
 
 .iconChevron{
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     padding-right: 8px;
     padding-left: 8px;

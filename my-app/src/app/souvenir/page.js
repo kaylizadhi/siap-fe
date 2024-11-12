@@ -35,7 +35,7 @@ export default function Index() {
                     .join(', ');
 
                 if (restockSouvenirs) {
-                    setNotifications(`${restockSouvenirs} perlu direstock!`);
+                    setNotifications(`${restockSouvenirs} perlu di-restock!`);
                 } else {
                     setNotifications('');
                 }
@@ -108,6 +108,7 @@ export default function Index() {
             )}
 
             <div className={styles.searchBarContainer}>
+                <MagnifyingGlassIcon className={styles.iconSearch}/>
                 <input
                     className={styles.searchBar}
                     type='text'
@@ -120,14 +121,16 @@ export default function Index() {
             <table className={styles.tableContainerSouvenir}>
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Nama Souvenir</th>
                         <th>Jumlah Stok</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredSouvenir.map((element) => (
+                    {filteredSouvenir.map((element, index) => (
                         <tr className={styles.trSouvenir} key={element.id}>
+                            <td>{(page - 1) * 10 + index + 1}</td>
                             <td>{element.nama_souvenir}</td>
                             <td>{element.jumlah_stok}</td>
                             <td>
@@ -159,7 +162,7 @@ export default function Index() {
             </div>
 
             <Link href="/souvenir/buat-souvenir">
-                <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconSouvenir1}/>Tambah Souvenir</button>
+                <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconChevron}/>Tambah Souvenir</button>
             </Link>
         </div>
     );

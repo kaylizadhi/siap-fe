@@ -8,7 +8,6 @@ export default function EditSurvei(){
     const router = useRouter();
     const params = useParams();
     const id = params.id;
-    
     const [survei, setSurvei] = useState({});
 
     useEffect(() => {
