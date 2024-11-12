@@ -44,7 +44,8 @@ export default function Toast({ message, isVisible, onClose }) {
             transform: translateY(20px);
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }
