@@ -9,32 +9,32 @@ const KwitansiDP = () => {
 
   useEffect(() => {
     const verifyUser = async () => {
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            console.log("Token missing - redirecting to login");
-            router.push('/login');
-            return;
-        }
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.log("Token missing - redirecting to login");
+        router.push('/login');
+        return;
+      }
 
-        try {
-            const response = await fetch('http://localhost:8000/accounts/check_role_administrasi/', {
-                headers: { 'Authorization': `Token ${token}` },
-            });
-            const data = await response.json();
-            console.log("Token verification response:", data);
+      try {
+        const response = await fetch('http://localhost:8000/accounts/check_role_administrasi/', {
+          headers: { 'Authorization': `Token ${token}` },
+        });
+        const data = await response.json();
+        console.log("Token verification response:", data);
 
-            if (data.error || data.role !== 'Administrasi') {
-                console.log("Invalid role or error - redirecting to login");
-                router.push('/login');
-            }
-        } catch (error) {
-            console.error('Failed to verify role:', error);
-            router.push('/login');
+        if (data.error || data.role !== 'Administrasi') {
+          console.log("Invalid role or error - redirecting to login");
+          router.push('/login');
         }
+      } catch (error) {
+        console.error('Failed to verify role:', error);
+        router.push('/login');
+      }
     };
 
     verifyUser();
-}, [router]);
+  }, [router]);
 
 
   const handleExport = async () => {
@@ -49,8 +49,8 @@ const KwitansiDP = () => {
     };
 
     try {
-        const response = await fetch('http://localhost:8000/dokumen_pendukung/generate-kwitansi-dp/', {
-            method: 'POST',
+      const response = await fetch('http://localhost:8000/dokumen_pendukung/generate-kwitansi-dp/', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -100,7 +100,6 @@ const KwitansiDP = () => {
   const handleDocTypeChange = (e) => {
     const selectedDocType = e.target.value;
     setDocType(selectedDocType);
-
     if (selectedDocType === 'proposal') router.push('/generator-dokumen/proposal');
     else if (selectedDocType === 'invoiceFinal') router.push('/generator-dokumen/invoice-final');
     else if (selectedDocType === 'kontrak') router.push('/generator-dokumen/kontrak');
@@ -150,25 +149,79 @@ const KwitansiDP = () => {
         </aside>
 
         <div className={styles.content}>
-          <h1 className={styles.title}>Buat Kwitansi DP</h1>
+          <h1 className={styles.title}>Buat Dokumen</h1>
 
+          {/* Document Type Section */}
           <div className={styles.docType}>
             <label className={styles.label}>Jenis Dokumen</label>
             <div className={styles.radioGroup}>
-              <input type="radio" id="kwitansiDP" name="docType" value="kwitansiDP" checked onChange={handleDocTypeChange} />
+              <input
+                type="radio"
+                id="proposal"
+                name="docType"
+                value="proposal"
+                checked={docType === "proposal"}
+                onChange={handleDocTypeChange}
+              />
+              <label htmlFor="proposal">Proposal</label>
+
+              <input
+                type="radio"
+                id="kontrak"
+                name="docType"
+                value="kontrak"
+                checked={docType === "kontrak"}
+                onChange={handleDocTypeChange}
+              />
+              <label htmlFor="kontrak">Kontrak</label>
+
+              <input
+                type="radio"
+                id="invoiceDP"
+                name="docType"
+                value="invoiceDP"
+                checked={docType === "invoiceDP"}
+                onChange={handleDocTypeChange}
+              />
+              <label htmlFor="invoiceDP">Invoice DP</label>
+
+              <input
+                type="radio"
+                id="invoiceFinal"
+                name="docType"
+                value="invoiceFinal"
+                checked={docType === "invoiceFinal"}
+                onChange={handleDocTypeChange}
+              />
+              <label htmlFor="invoiceFinal">Invoice Final</label>
+
+              <input
+                type="radio"
+                id="kwitansiDP"
+                name="docType"
+                value="kwitansiDP"
+                checked
+                onChange={handleDocTypeChange}
+              />
               <label htmlFor="kwitansiDP">Kwitansi DP</label>
-              {/* Additional radio buttons for other document types */}
+
+              <input
+                type="radio"
+                id="kwitansiFinal"
+                name="docType"
+                value="kwitansiFinal"
+                checked={docType === "kwitansiFinal"}
+                onChange={handleDocTypeChange}
+              />
+              <label htmlFor="kwitansiFinal">Kwitansi Final</label>
             </div>
+
           </div>
 
           <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
             <div className={styles.inputGroup}>
               <label htmlFor="pembayar">Pembayar</label>
               <input type="text" id="pembayar" placeholder="Masukkan nama pembayar" value={pembayar} onChange={(e) => setPembayar(e.target.value)} />
-            </div>
-            <div className={styles.inputGroup}>
-              <label htmlFor="nominalPembayaran">Nominal Pembayaran</label>
-              <input type="text" id="nominalPembayaran" placeholder="Masukkan nominal pembayaran" value={nominalPembayaran} onChange={(e) => setNominalPembayaran(e.target.value)} />
             </div>
             <div className={styles.inputGroup}>
               <label htmlFor="tujuanPembayaran">Tujuan Pembayaran</label>
