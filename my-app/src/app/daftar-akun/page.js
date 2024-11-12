@@ -66,11 +66,6 @@ export default function DaftarAkun() {
         setShowDeleteModal(true);
     };
 
-    const handleDeleteClick = (index) => {
-        setCurrentAccountIndex(index);
-        setShowDeleteModal(true);
-    };
-
     // Filter accounts based on search query
     const filteredAccounts = accounts.filter(account =>
         account.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
