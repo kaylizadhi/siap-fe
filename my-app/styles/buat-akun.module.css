@@ -1,36 +1,30 @@
 /* Import Caudex Font */
 @import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
 
-
-
-.loginBody {
-  font-family: 'Caudex', serif;
-  background: radial-gradient(circle at top left, rgba(166, 38, 38, 0.7) 5%, transparent 60%), 
-              radial-gradient(circle at top right, rgba(166, 38, 38, 0.7) 5%, transparent 60%), 
-              radial-gradient(circle at bottom center, rgba(166, 38, 38, 0.7) 5%, transparent 60%),
-              radial-gradient(circle at center, rgba(240, 224, 224, 0.5) 40%, transparent 60%);
-              
-  background-color: #f0e2e2;
-  background-blend-mode: multiply;
-  height: 100%;
+.buatakunBody {
+  font-family: 'Caudex', serif;  
+  color: #A62626;
+  background-color: white;
+  height: 100vh;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left; /* Centers content horizontally */
+  align-items: flex-start; /* Centers content at the top */
   margin: 0;
   padding: 0;
+  padding-left: 250px; /* Adjust for sidebar width */
 }
 
-.loginContainer {
+.buatakunContainer {
   background-color: white;
   padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-  width: 400px; /* Adjust width to match design */
-  text-align: center;
+  width: 60%; /* Adjust width to match design */
+  max-width: 800px; /* Prevents the container from being too wide */
+  text-align: left; /* Aligns text left */
+  margin-top: 2rem; /* Adds space at the top */
 }
 
-.logoHeaderContainer {
+.buatakunHeaderContainer {
   display: flex;
   justify-content: left;
   align-items: center;
@@ -42,16 +36,9 @@
   width: 60px; /* Adjust size to match design */
 }
 
-.systemTitle {
-  font-size: 1.2rem;
-  color: #A62626; /* Primary color */
-  font-weight: 700; /* Bold */
-  text-align: left;
-}
-
-h2.loginHeading {
+h2.buatkunHeading {
   font-size: 1.5rem;
-  color: #4c2323; 
+  color: #A62626; 
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: left;
@@ -76,7 +63,6 @@ h2.loginHeading {
     box-sizing: border-box; /* Ensures padding doesn’t affect width */
   }
   
-
 .passwordContainer {
   position: relative;
   margin-bottom: 1.5rem;
@@ -146,7 +132,7 @@ h2.loginHeading {
   text-decoration: underline;
 }
 
-.loginBtn {
+.simpanBtn {
   background-color: #A62626; 
   color: white;
   padding: 12px;
@@ -158,10 +144,29 @@ h2.loginHeading {
   font-weight: 700;
 }
 
-.loginBtn:hover {
+.batalBtn {
+  background-color: white;
+  color: #A62626;
+  padding: 12px;
+  border: 2px solid #A62626; /* Added border */
+  border-radius: 32px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center; /* Center-aligns the text */
+  margin-top: 1.5rem; /* Adds space above the button */
+  transition: background-color 0.3s, color 0.3s; /* Smooth hover transition */
+}
+
+.simpanBtn:hover {
   background-color: #6d3030;
 }
 
+.batalBtn:hover {
+  background-color: #eae0e0; /* Change background on hover */
+  color: white; /* Change text color on hover */
+}
 
 .notification {
   position: fixed;
@@ -202,20 +207,17 @@ h2.loginHeading {
   cursor: pointer;
 }
 
-
 .notification.success {
   background-color: #28a745; 
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
 .notification.failure {
   background-color: #dc3545; 
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .success {
   color: green;

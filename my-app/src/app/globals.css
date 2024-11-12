@@ -1,7 +1,30 @@
 /* Import Caudex Font */
-@import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html, body {
+.login-container {
+  background-color: white;
+  padding-left: px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  width: 800px; /* Adjust width to match design */
+  text-align: center;
+}
+
+.content-area {
+  margin-left: 290px; /* Adjusted margin to account for sidebar width + padding */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  flex: 1;
+  background-color: #fff;
+  min-height: 100vh; /* Ensure it takes full height */
+  overflow: auto;
+}
+
+html,
+body {
   height: 100%;
   width: 100%;
   margin: 0;

@@ -5,7 +5,7 @@ import styles from '../../../../styles/generator-dokumen.module.css';
 
 
 
-const Proposal = () => {
+const Kontrak = () => {
   const router = useRouter();
   const [docType, setDocType] = useState(''); // State to track selected document type
   const [isVisible, setIsVisible] = useState(false);
@@ -17,20 +17,20 @@ const Proposal = () => {
 
   const handleFileChange = (event) => {
     const uploadedFile = event.target.files[0];
-    if (uploadedFile && uploadedFile.name.endsWith('.ppt')) {
+    if (uploadedFile && uploadedFile.name.endsWith('.docx')) {
       setFile(uploadedFile);
     } else {
-      alert("Only .ppt files are allowed.");
+      alert("Only .docx files are allowed.");
     }
   };
 
   const handleDrop = (event) => {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files[0];
-    if (droppedFile && droppedFile.name.endsWith('.ppt')) {
+    if (droppedFile && droppedFile.name.endsWith('.docx')) {
       setFile(droppedFile);
     } else {
-      alert("Only .ppt files are allowed.");
+      alert("Only .docx files are allowed.");
     }
   };
 
@@ -81,7 +81,7 @@ const Proposal = () => {
 
   const handleExport = async () => {
     try {
-        const response = await fetch('http://localhost:8000/dokumen_pendukung/download_template_proposal/', {
+        const response = await fetch('http://localhost:8000/dokumen_pendukung/download_template_kontrak/', {
           method: 'GET',
         });
   
@@ -94,7 +94,7 @@ const Proposal = () => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'templateProposal.ppt'; // Specify the filename
+        a.download = 'templateKontrak.docx'; // Specify the filename
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -108,9 +108,6 @@ const Proposal = () => {
     router.push('/login');
   };
 
-  
-    
-
   const handleDocTypeChange = (e) => {
     const selectedDocType = e.target.value;
     setDocType(selectedDocType);
@@ -122,8 +119,8 @@ const Proposal = () => {
     if (selectedDocType === 'invoiceFinal') {
         router.push('/generator-dokumen/invoice-final');
     }
-    if (selectedDocType === 'kontrak') {
-        router.push('/generator-dokumen/kontrak');
+    if (selectedDocType === 'proposal') {
+        router.push('/generator-dokumen/proposal');
     }
     if (selectedDocType === 'kwitansiDP') {
         router.push('/generator-dokumen/kwitansi-dp');
@@ -139,7 +136,7 @@ const Proposal = () => {
       return;
     }
 
-    const confirmUpload = window.confirm("Apakah anda yakin ingin mengubah template proposal pada sistem?");
+    const confirmUpload = window.confirm("Apakah anda yakin ingin mengubah template kontrak pada sistem?");
 
     if (confirmUpload && file) {
       // Proceed with upload if user confirms
@@ -150,7 +147,7 @@ const Proposal = () => {
 
       try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch('http://localhost:8000/dokumen_pendukung/upload_template_proposal/', {
+        const response = await fetch('http://localhost:8000/dokumen_pendukung/upload_template_kontrak/', {
           method: 'POST',
           headers: { 'Authorization': `Token ${token}` },
           body: formData,
@@ -174,6 +171,7 @@ const Proposal = () => {
   return (
     <div className={styles.containerbackground}>
       <div className={styles.container}>
+
         {/* Main Content */}
         <div className={styles.content}>
             <h1 className={styles.title}>Buat Dokumen</h1>
@@ -187,8 +185,8 @@ const Proposal = () => {
                         id="Proposal"
                         name="docType"
                         value="proposal"
-                        checked
-                        readOnly
+                        checked={docType === 'proposal'}
+                        onChange={handleDocTypeChange}
                         />
                     <label htmlFor="proposal">Proposal</label>
                     <input 
@@ -196,8 +194,8 @@ const Proposal = () => {
                         id="kontrak" 
                         name="docType" 
                         value="kontrak" 
-                        checked={docType === 'kontrak'}
-                        onChange={handleDocTypeChange}
+                        checked
+                        readOnly
                         />
                     <label htmlFor="kontrak">Kontrak</label>
                     <input 
@@ -240,13 +238,13 @@ const Proposal = () => {
             </div>
 
             <div className={styles.subtitle}>
-                Template Proposal Survey
+                Template Kontrak Survey
             </div>
 
             <img 
-                src="/images/proposal_preview.png"  
+                src="/images/kontrak_preview.png"  
                 alt="Template Preview" 
-                className={styles.image}  
+                className={styles.kontrakImage}  
             />
             
 
@@ -268,12 +266,12 @@ const Proposal = () => {
                     <img src="/images/upload_icon.svg" alt="Upload Icon" className={styles.uploadIcon} />
                     <p>Unggah Dokumen</p>
                     {/* <p className={styles.uploadSubtitle}>Ukuran maksimal:</p> */}
-                    <p className={styles.uploadSubtitle}>Format file: .ppt</p>
+                    <p className={styles.uploadSubtitle}>Format file: .docx</p>
                   </label>
                   <input
                     type="file"
                     id="fileInput"
-                    accept=".ppt"
+                    accept=".docx"
                     onChange={handleFileChange}
                     className={styles.fileInput}
                   />
@@ -294,4 +292,4 @@ const Proposal = () => {
   );
 };
 
-export default Proposal;
+export default Kontrak;
