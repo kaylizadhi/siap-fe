@@ -16,7 +16,7 @@ export default function BuatSouvenir() {
         router.push("/souvenir"); 
     };
 
-    const handleSubmit = async (event) => {  // Updated function name
+    const handleSubmit = async (event) => {  
         event.preventDefault();
 
         // Validasi input
@@ -25,11 +25,11 @@ export default function BuatSouvenir() {
             return; 
         }
         if (!souvenir.jumlah_stok || isNaN(souvenir.jumlah_stok)) {
-            alert("Jumlah stok harus berupa angka.");
+            alert("Jumlah stok tidak boleh kosong.");
             return; 
         }
         if (!souvenir.jumlah_minimum || isNaN(souvenir.jumlah_minimum)) {
-            alert("Jumlah minimum harus berupa angka");
+            alert("Jumlah minimum tidak boleh kosong.");
             return;
         }
 
@@ -41,22 +41,61 @@ export default function BuatSouvenir() {
         };
 
         try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BASE_URL}souvenir/add-souvenir/`, {
-                    method: 'POST',
+            // Cek apakah souvenir dengan nama yang sama ada, termasuk yang soft-deleted
+            const checkResponse = await fetch(
+                `${process.env.NEXT_PUBLIC_BASE_URL}souvenir/check-souvenir/${souvenir.nama_souvenir}/`, {
+                    method: 'GET',
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(newSouvenir),
                 }
             );
-            const result = await response.json();
-            console.log(result);
-            if (response.ok && result?.id) {
-                alert("Berhasil menambahkan souvenir!");
-                router.push("/souvenir");
+            const checkResult = await checkResponse.json();
+
+            if (checkResponse.ok) {
+                if (checkResult?.is_deleted === true) {
+                    // Jika souvenir ada dan is_deleted = true, update status is_deleted menjadi false
+                    const response = await fetch(
+                        `${process.env.NEXT_PUBLIC_BASE_URL}souvenir/update-souvenir/${checkResult.id}/`, {
+                            method: 'PATCH',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                ...newSouvenir,
+                                is_deleted: false,  // Mengubah status menjadi tidak terhapus
+                            }),
+                        }
+                    );
+                    const result = await response.json();
+                    if (response.ok && result?.id) {
+                        alert("Berhasil memperbarui souvenir yang sudah dihapus!");
+                        router.push("/souvenir");
+                    } else {
+                        alert("Gagal memperbarui souvenir!");
+                    }
+                } else {
+                    // Jika souvenir sudah ada dan tidak terhapus, beri pesan bahwa sudah ada
+                    alert("Souvenir dengan nama ini sudah ada.");
+                }
             } else {
-                alert("Gagal menambahkan souvenir!");
+                // Jika souvenir belum ada, tambahkan souvenir baru
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_BASE_URL}souvenir/add-souvenir/`, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(newSouvenir),
+                    }
+                );
+                const result = await response.json();
+                if (response.ok && result?.id) {
+                    alert("Berhasil menambahkan souvenir!");
+                    router.push("/souvenir");
+                } else {
+                    alert("Gagal menambahkan souvenir!");
+                }
             }
         } catch (error) {
             console.error("Error:", error);
