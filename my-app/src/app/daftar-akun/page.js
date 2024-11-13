@@ -19,8 +19,8 @@ export default function DaftarAkun() {
         const fetchAccounts = async () => {
             try {
                 const url = searchQuery
-                    ? `http://localhost:8000/daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}`
-                    : 'http://localhost:8000/daftarAkun/api/daftarAkun/';
+                    ? `https://siap-be-production.up.railway.app/daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}`
+                    : 'https://siap-be-production.up.railway.app/daftarAkun/api/daftarAkun/';
                 const response = await fetch(url);
                 const data = await response.json();
                 console.log("Fetched accounts:", data);
@@ -39,7 +39,7 @@ export default function DaftarAkun() {
             }
             
                 try {
-                    const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
+                    const response = await fetch('https://siap-be-production.up.railway.app/accounts/check_role_admin/', {
                         headers: { 'Authorization': `Token ${token}` },
                     });
                     const data = await response.json();
@@ -87,7 +87,7 @@ export default function DaftarAkun() {
         const accountIndex = index + indexOfFirstAccount;
         setDeletingIndex(accountIndex);
         try {
-            await fetch(`http://localhost:8000/daftarAkun/${accountId}/delete/`, {
+            await fetch(`https://siap-be-production.up.railway.app/daftarAkun/${accountId}/delete/`, {
                 method: 'DELETE',
                 
             });

@@ -17,7 +17,7 @@ const InvoiceFinal = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:8000/accounts/check_role_administrasi/",
+          "https://siap-be-production.up.railway.app/check_role_administrasi/",
           {
             headers: { Authorization: `Token ${token}` },
           }
@@ -53,7 +53,7 @@ const InvoiceFinal = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/dokumen_pendukung/generate_invoice_final/",
+        "https://siap-be-production.up.railway.app/generate_invoice_final/",
         {
           method: "POST",
           headers: {

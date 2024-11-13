@@ -19,7 +19,7 @@ export default function KlienDetail({ params }) {
   // Fetch client details
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/klien/${id}/`)
+      fetch(`https://siap-be-production.up.railway.app/${id}/`)
         .then((response) => response.json())
         .then((data) => setKlien(data))
         .catch((error) => console.error("Error:", error));
@@ -35,7 +35,7 @@ export default function KlienDetail({ params }) {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/klien/${id}/delete/`,
+        `https://siap-be-production.up.railway.app/${id}/delete/`,
         {
           method: "DELETE",
         }

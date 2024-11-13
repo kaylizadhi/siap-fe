@@ -49,7 +49,7 @@ const Kontrak = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:8000/accounts/check_role_proposal/', {
+            const response = await fetch('https://siap-be-production.up.railway.app/accounts/check_role_proposal/', {
                 headers: { 'Authorization': `Token ${token}` },
             });
             const data = await response.json();
@@ -64,7 +64,7 @@ const Kontrak = () => {
     };
 
     const fetchSlideImage = async () => {
-        const response = await fetch('http://localhost:8000/dokumen_pendukung/convert_pptx_to_image/');
+        const response = await fetch('https://siap-be-production.up.railway.app/dokumen_pendukung/convert_pptx_to_image/');
         if (response.ok) {
             const imageBlob = await response.blob();
             const imageUrl = URL.createObjectURL(imageBlob);
@@ -81,7 +81,7 @@ const Kontrak = () => {
 
   const handleExport = async () => {
     try {
-        const response = await fetch('http://localhost:8000/dokumen_pendukung/download_template_kontrak/', {
+        const response = await fetch('https://siap-be-production.up.railway.app/dokumen_pendukung/download_template_kontrak/', {
           method: 'GET',
         });
   
@@ -147,7 +147,7 @@ const Kontrak = () => {
 
       try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch('http://localhost:8000/dokumen_pendukung/upload_template_kontrak/', {
+        const response = await fetch('https://siap-be-production.up.railway.app/dokumen_pendukung/upload_template_kontrak/', {
           method: 'POST',
           headers: { 'Authorization': `Token ${token}` },
           body: formData,

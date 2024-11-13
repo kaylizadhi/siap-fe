@@ -20,7 +20,7 @@ export default function DaftarKlien() {
   useEffect(() => {
     const fetchKliens = async () => {
       try {
-        const response = await fetch("http://localhost:8000/klien/");
+        const response = await fetch("https://siap-be-production.up.railway.app/klien/");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -61,7 +61,7 @@ export default function DaftarKlien() {
     if (selectedKlien) {
       try {
         const response = await fetch(
-          `http://localhost:8000/klien/${selectedKlien.id}/delete/`,
+          `https://siap-be-production.up.railway.app/${selectedKlien.id}/delete/`,
           {
             method: "DELETE",
           }

@@ -22,7 +22,7 @@ export default function UpdateKlien({ params }) {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/klien/${id}/`)
+      fetch(`https://siap-be-production.up.railway.app/klien/${id}/`)
         .then((response) => response.json())
         .then((data) => setFormData(data))
         .catch((error) => console.error("Error:", error));
@@ -38,7 +38,7 @@ export default function UpdateKlien({ params }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8000/klien/${id}/update/`,
+        `https://siap-be-production.up.railway.app/klien/${id}/update/`,
         {
           method: "PUT",
           headers: {

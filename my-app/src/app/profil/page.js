@@ -39,7 +39,7 @@ export default function Profil() {
         }
       
         try {
-          const res = await fetch('http://localhost:8000/api/profil/', {
+          const res = await fetch('https://siap-be-production.up.railway.app/api/profil/', {
             method: 'GET',
             headers: {
               'Authorization': `Token ${token}`,  
@@ -85,7 +85,7 @@ export default function Profil() {
 
     try {
       // Update profile details (name, email, etc.)
-      const res = await fetch('http://localhost:8000/api/profil/', {
+      const res = await fetch('https://siap-be-production.up.railway.app/api/profil/', {
         method: 'PATCH',
         headers: {
           'Authorization': `Token ${token}`,
@@ -105,7 +105,7 @@ export default function Profil() {
 
       // If both passwords are provided, update the password
       if (oldPassword && newPassword) {
-        const passwordRes = await fetch('http://localhost:8000/api/change-password/', {
+        const passwordRes = await fetch('https://siap-be-production.up.railway.app/api/change-password/', {
           method: 'PATCH',
           headers: {
             'Authorization': `Token ${token}`,

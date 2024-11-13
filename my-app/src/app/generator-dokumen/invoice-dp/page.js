@@ -17,7 +17,7 @@ const InvoiceDP = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:8000/accounts/check_role_administrasi/",
+          "https://siap-be-production.up.railway.app/accounts/check_role_administrasi/",
           {
             headers: { Authorization: `Token ${token}` },
           }
@@ -53,7 +53,7 @@ const InvoiceDP = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/dokumen_pendukung/generate_invoice_dp/",
+        "https://siap-be-production.up.railway.app/dokumen_pendukung/generate_invoice_dp/",
         {
           method: "POST",
           headers: {
