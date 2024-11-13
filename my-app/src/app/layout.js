@@ -1,6 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@pages/components/Sidebar";
@@ -20,10 +22,15 @@ const geistMono = localFont({
 });
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname();
+  const router = usePathname();
+  useEffect(()=> {
+    console.log(router.pathname);
+  }, [router.pathname])
   const noSidebar =
-    pathname === "/login" ||
-    pathname === "/forgot-password"
+    router.pathname === "/app" ||
+    router.pathname === "/login" ||
+    router.pathname === "/forgot-password";
+    console.log(router.pathname)
 
   return (
     <html lang="en">
@@ -43,6 +50,7 @@ export default function RootLayout({ children }) {
           draggable
           pauseOnHover
         />
+        <p>{router.pathname}</p>
       </body>
     </html>
   );
