@@ -28,7 +28,7 @@ export default function SurveyTrackerDetail({ params }) {
       try {
         // Check role for Administrasi
         const adminResponse = await fetch(
-          "http://localhost:8000/accounts/check_role_administrasi/",
+          "https://siap-be-production.up.railway.app/api/accounts/check_role_administrasi/",
           {
             headers: { Authorization: `Token ${token}` },
           }
@@ -42,7 +42,7 @@ export default function SurveyTrackerDetail({ params }) {
 
         // If not Administrasi, check for Logistik
         const logistikResponse = await fetch(
-          "http://localhost:8000/accounts/check_role_logistik/",
+          "https://siap-be-production.up.railway.app/api/accounts/check_role_logistik/",
           {
             headers: { Authorization: `Token ${token}` },
           }
@@ -56,7 +56,7 @@ export default function SurveyTrackerDetail({ params }) {
 
         // If not Logistik, check for Pengendali Mutu
         const mutuResponse = await fetch(
-          "http://localhost:8000/accounts/check_role_pengendalimutu/",
+          "https://siap-be-production.up.railway.app/api/accounts/check_role_pengendalimutu/",
           {
             headers: { Authorization: `Token ${token}` },
           }
@@ -85,7 +85,7 @@ export default function SurveyTrackerDetail({ params }) {
     const token = localStorage.getItem("authToken");
     try {
       const response = await fetch(
-        `http://localhost:8000/survei-status/${id}/`,
+        `https://siap-be-production.up.railway.app/survei-status/${id}/`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -138,13 +138,13 @@ export default function SurveyTrackerDetail({ params }) {
     ];
 
     if (administrasiAwalFields.includes(field)) {
-      endpoint = `http://localhost:8000/survei-status/${id}/administrasi-awal/`;
+      endpoint = `https://siap-be-production.up.railway.app/api/survei-status/${id}/administrasi-awal/`;
     } else if (logistikFields.includes(field)) {
-      endpoint = `http://localhost:8000/survei-status/${id}/logistik/`;
+      endpoint = `https://siap-be-production.up.railway.app/api/survei-status/${id}/logistik/`;
     } else if (pengendaliMutuFields.includes(field)) {
-      endpoint = `http://localhost:8000/survei-status/${id}/pengendali-mutu/`;
+      endpoint = `https://siap-be-production.up.railway.app/api/survei-status/${id}/pengendali-mutu/`;
     } else if (administrasiAkhirFields.includes(field)) {
-      endpoint = `http://localhost:8000/survei-status/${id}/administrasi-akhir/`;
+      endpoint = `https://siap-be-production.up.railway.app/api/survei-status/${id}/administrasi-akhir/`;
     }
 
     try {

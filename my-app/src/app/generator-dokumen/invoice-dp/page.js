@@ -17,7 +17,7 @@ const InvoiceDP = () => {
 
       try {
         const response = await fetch(
-          "https://siap-be-production.up.railway.app/accounts/check_role_administrasi/",
+          "https://siap-be-production.up.railway.app/api/accounts/check_role_administrasi/",
           {
             headers: { Authorization: `Token ${token}` },
           }

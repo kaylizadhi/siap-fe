@@ -49,7 +49,7 @@ const Proposal = () => {
         }
 
         try {
-            const response = await fetch('https://siap-be-production.up.railway.app/accounts/check_role_proposal/', {
+            const response = await fetch('https://siap-be-production.up.railway.app/api/accounts/check_role_proposal/', {
                 headers: { 'Authorization': `Token ${token}` },
             });
             const data = await response.json();

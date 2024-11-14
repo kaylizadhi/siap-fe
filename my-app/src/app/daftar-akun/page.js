@@ -39,7 +39,7 @@ export default function DaftarAkun() {
             }
             
                 try {
-                    const response = await fetch('https://siap-be-production.up.railway.app/accounts/check_role_admin/', {
+                    const response = await fetch('https://siap-be-production.up.railway.app/api/accounts/check_role_admin/', {
                         headers: { 'Authorization': `Token ${token}` },
                     });
                     const data = await response.json();

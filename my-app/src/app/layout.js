@@ -22,15 +22,10 @@ const geistMono = localFont({
 });
 
 export default function RootLayout({ children }) {
-  const router = usePathname();
-  useEffect(()=> {
-    console.log(router.pathname);
-  }, [router.pathname])
+  const pathname = usePathname();
   const noSidebar =
-    router.pathname === "/app" ||
-    router.pathname === "/login" ||
-    router.pathname === "/forgot-password";
-    console.log(router.pathname)
+    pathname === "/login" ||
+    pathname === "/forgot-password"
 
   return (
     <html lang="en">

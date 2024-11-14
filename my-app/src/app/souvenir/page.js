@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Link from 'next/link';
 import { PencilIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { useRouter } from 'next/navigation';
 
 export default function Index() {
     const [souvenir, setSouvenir] = useState([]);
@@ -12,6 +13,7 @@ export default function Index() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredSouvenir, setFilteredSouvenir] = useState([]);
     const [notifications, setNotifications] = useState('');
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchingData() {
@@ -35,17 +37,42 @@ export default function Index() {
                     .join(', ');
 
                 if (restockSouvenirs) {
-                    setNotifications(`${restockSouvenirs} perlu direstock!`);
+                    setNotifications(`${restockSouvenirs} perlu di-restock!`);
                 } else {
                     setNotifications('');
                 }
             } catch (error) {
                 console.error("Failed to fetch data:", error);
             }
-        }
+            
 
+    }
+
+    const verifyUser = async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+        
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_logistik/`, {
+                    headers: { 'Authorization': `Token ${token}` },
+                });
+                const data = await response.json();
+
+                if (data.error || data.role !== 'Logistik') {
+                    router.push('/login');
+                }
+            } catch (error) {
+                console.error('Failed to verify role:', error);
+                router.push('/login');
+            }
+    
+};
         fetchingData();
-    }, [page]);
+        verifyUser();
+    }, [page], [router]);
 
     const closeNotification = () => {
         setNotifications('');
@@ -108,6 +135,7 @@ export default function Index() {
             )}
 
             <div className={styles.searchBarContainer}>
+                <MagnifyingGlassIcon className={styles.iconSearch}/>
                 <input
                     className={styles.searchBar}
                     type='text'
@@ -120,14 +148,16 @@ export default function Index() {
             <table className={styles.tableContainerSouvenir}>
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Nama Souvenir</th>
                         <th>Jumlah Stok</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredSouvenir.map((element) => (
+                    {filteredSouvenir.map((element, index) => (
                         <tr className={styles.trSouvenir} key={element.id}>
+                            <td>{(page - 1) * 10 + index + 1}</td>
                             <td>{element.nama_souvenir}</td>
                             <td>{element.jumlah_stok}</td>
                             <td>
@@ -159,8 +189,9 @@ export default function Index() {
             </div>
 
             <Link href="/souvenir/buat-souvenir">
-                <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconSouvenir1}/>Tambah Souvenir</button>
+                <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconChevron}/>Tambah Souvenir</button>
             </Link>
         </div>
     );
 }
+
