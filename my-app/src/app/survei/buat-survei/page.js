@@ -35,7 +35,7 @@ export default function BuatSurvei() {
 				<b className={styles.textFieldTitleSurvei}>Judul Survei</b>
 					<input className={styles.textFieldSurvei} type='text' name='judulsurvei' placeholder='Masukkan judul survei' onChange={(event) => setSurvei({...survei, nama_survei: event.target.value})}></input>
 				<b className={styles.textFieldTitleSurvei}>Nama Klien</b>
-					<input className={styles.textFieldSurvei} type='text' name='namaklien' placeholder='Masukkan nama klien' onChange={(event) => setSurvei({...survei, nama_klien: event.target.value})}></input>
+					<input className={styles.textFieldSurvei} type='text' name='namaklien' placeholder='Masukkan nama klien' onChange={(event) => setSurvei({...survei, klien_id: event.target.value})}></input>
 				<b className={styles.textFieldTitleSurvei}>Daerah</b>
 					<input className={styles.textFieldSurvei} type='text' name='wilayahsurvei' placeholder='Masukkan wilayah survei' onChange={(event) => setSurvei({...survei, ruang_lingkup_survei: event.target.value})}></input>
 				<b className={styles.textFieldTitleSurvei}>Harga</b>
