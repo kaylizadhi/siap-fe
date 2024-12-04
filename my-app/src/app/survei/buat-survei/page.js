@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "../index.module.css";
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid'; 
 
 export default function BuatSurvei() {
   const [survei, setSurvei] = useState({});
@@ -10,6 +11,10 @@ export default function BuatSurvei() {
   const [daerahOptions, setDaerahOptions] = useState([]);
   const router = useRouter();
   const [wilayahSurvei, setWilayahSurvei] = useState([]);
+
+	const handleBackToSurvei = () => {
+		router.push("/survei"); 
+	};
 
   // Fungsi untuk mengambil data daerah berdasarkan parameter ruang lingkup
   const fetchDaerah = async (param) => {
@@ -87,6 +92,20 @@ export default function BuatSurvei() {
 
   // Fungsi untuk mengirim data survei ke backend
   const handleSubmit = async () => {
+	// Validasi input
+	if (!survei.nama_survei) {
+		alert("Judul survei tidak boleh kosong.");
+		return; 
+	}
+	if (!survei.harga_survei || isNaN(survei.harga_survei)) {
+		alert("Harga survei tidak boleh kosong.");
+		return; 
+	}
+	if (!survei.jumlah_responden || isNaN(survei.jumlah_responden)) {
+		alert("Jumlah responden tidak boleh kosong.");
+		return;
+	}
+
     try {
       const surveiData = { ...survei, wilayah_survei: wilayahSurvei };
       const response = await fetch(
@@ -111,72 +130,57 @@ export default function BuatSurvei() {
 
   return (
     <div>
-      <b className={styles.headingSurvei}>Daftar Survei</b>
-      <div className={styles.containerSurvei}>
-        {/* Input untuk judul survei */}
-        <b className={styles.textFieldTitleSurvei}>Judul Survei</b>
-        <input
-          className={styles.textFieldSurvei}
-          type="text"
-          placeholder="Masukkan judul survei"
-          onChange={(event) =>
-            setSurvei({ ...survei, nama_survei: event.target.value })
-          }
-        />
+		<b className={styles.headingSurvei}>Daftar Survei</b>
+		<form onSubmit={handleSubmit} className={styles.containerSurvei}>
+			<b className={styles.textFieldTitleSurvei}>Nama Survei</b>
+			<input
+				className={styles.textFieldSurvei}
+				type="text"
+				placeholder="Masukkan judul survei"
+				onChange={(event) => setSurvei({ ...survei, nama_survei: event.target.value })}
+			/>
 
-        {/* Dropdown untuk memilih klien */}
         <b className={styles.textFieldTitleSurvei}>Nama Klien</b>
-        <select
-          className={styles.textFieldSurvei}
-          onChange={(event) =>
-            setSurvei({ ...survei, klien_id: event.target.value })
-          }
+		<select
+          	className={styles.textFieldSurveiDropdown}
+          	onChange={(event) => setSurvei({ ...survei, klien_id: event.target.value })}
         >
-          <option value="">Pilih Klien</option>
-          {klien.map((e) => (
+          	<option value="">Pilih Klien</option>
+          		{klien.map((e) => (
             <option key={e.id} value={e.id}>
-              {e.nama_klien}
+              	{e.nama_klien}
             </option>
-          ))}
+          	))}
         </select>
 
-        {/* Radio button untuk ruang lingkup survei */}
         <b className={styles.textFieldTitleSurvei}>Ruang Lingkup Survei</b>
         <div className={styles.radioGroupSurvei}>
-          {["Nasional", "Provinsi", "Kota"].map((scope) => (
+          	{["Nasional", "Provinsi", "Kota"].map((scope) => (
             <label key={scope}>
-              <input
-                type="radio"
-                name="ruanglingkup"
-                value={scope}
-                onChange={handleRuangLingkupChange}
-              />
-              {scope}
-            </label>
-          ))}
+              	<input
+                	type="radio"
+                	name="ruanglingkup"
+                	value={scope}
+                	onChange={handleRuangLingkupChange}/>
+              		{scope}
+            </label>))}
         </div>
 
-        {/* Opsi untuk menambahkan daerah */}
         <b className={styles.textFieldTitleSurvei}>Daerah</b>
-        <button onClick={addDaerah} style={{ marginLeft: "200px" }}>
-          Tambah Daerah
-        </button>
         <ul className={styles.daerahList}>
-          {wilayahSurvei.map((daerah) => (
-            <li key={daerah.id}>
-              {daerah.name}
-              <button
+          	{wilayahSurvei.map((daerah) => (
+            <li key={daerah.id} className={styles.daerahList}>
+            {daerah.name}
+            <button
                 style={{ marginLeft: "10px" }}
-                onClick={() => removeDaerah(daerah.id)}
-              >
+                onClick={() => removeDaerah(daerah.id)}>
                 Hapus
-              </button>
+            </button>
             </li>
           ))}
         </ul>
 
-        {/* Dropdown untuk memilih daerah */}
-        <select id="daerahSelect" className={styles.textFieldSurvei}>
+        <select id="daerahSelect" className={styles.textFieldSurveiDropdown}>
           <option value="">Pilih Daerah</option>
           {daerahOptions.map((daerah) => (
             <option key={daerah.id} value={daerah.id}>
@@ -184,12 +188,15 @@ export default function BuatSurvei() {
             </option>
           ))}
         </select>
+		<PlusIcon 
+			className={styles.iconEdit} 
+			onClick={addDaerah}
+		/>
 
-        {/* Input lainnya */}
         <b className={styles.textFieldTitleSurvei}>Harga</b>
         <input
           className={styles.textFieldSurvei}
-          type="text"
+          type="number"
           placeholder="Masukkan harga"
           onChange={(event) =>
             setSurvei({ ...survei, harga_survei: event.target.value })
@@ -198,7 +205,7 @@ export default function BuatSurvei() {
         <b className={styles.textFieldTitleSurvei}>Jumlah Responden</b>
         <input
           className={styles.textFieldSurvei}
-          type="text"
+          type="number"
           placeholder="Masukkan jumlah responden"
           onChange={(event) =>
             setSurvei({ ...survei, jumlah_responden: event.target.value })
@@ -224,7 +231,7 @@ export default function BuatSurvei() {
         />
         <b className={styles.textFieldTitleSurvei}>Tipe Survei</b>
         <select
-          className={styles.textFieldSurvei}
+          className={styles.textFieldSurveiDropdown}
           onChange={(event) =>
             setSurvei({ ...survei, tipe_survei: event.target.value })
           }
@@ -233,12 +240,20 @@ export default function BuatSurvei() {
           <option value="Digital">Digital</option>
           <option value="Lainnya">Lainnya</option>
         </select>
-      </div>
+      
 
-      <button onClick={handleSubmit} className={styles.primaryButtonSurvei}>
-        Simpan
-      </button>
-      <button className={styles.secondaryButtonSurvei}>Batal</button>
+		<button 
+			type="submit" 
+			className={styles.primaryButtonSurvei}>
+				Simpan
+		</button>
+		<button 
+			type="button" 
+			onClick={handleBackToSurvei}
+			className={styles.secondaryButtonSurvei}>
+				Batal
+		</button>
+	  </form>
     </div>
   );
 }
