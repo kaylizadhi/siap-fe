@@ -27,7 +27,7 @@ export default function DaftarKlien() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/klien/create/", {
+      const response = await fetch("http://localhost:8000/api/klien/create/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

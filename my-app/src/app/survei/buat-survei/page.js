@@ -124,7 +124,7 @@ export default function BuatSurvei() {
       }
     } catch (error) {
       console.error("Error submitting survei:", error);
-      alert("Gagal membuat survei"); // Tampilkan error jika gagal
+	  router.push("/survei");
     }
   };
 

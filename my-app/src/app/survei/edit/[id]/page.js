@@ -81,6 +81,10 @@ export default function EditSurvei(){
       fetchDaerah(value);
     };
 
+    const handleBackToSurvei = () => {
+        router.push("/survei"); 
+    };
+
     const handleSubmit = async () => {
         try {
             const response = await fetch(
@@ -177,7 +181,7 @@ export default function EditSurvei(){
               setSurvei({ ...survei, wilayah_survei: event.target.value })
             }
           >
-            <option value="">{survei.wilayah_survei}</option>
+            <option value=""></option>
             {daerahOptions.map((daerah) => (
               <option key={daerah.id} value={daerah.id}>
                 {daerah.name}
@@ -251,11 +255,11 @@ export default function EditSurvei(){
             <option value="Digital">Digital</option>
             <option value="Paper-based">Lainnya</option>
           </select>
-        </div>
-        <button onClick={handleSubmit} className={styles.primaryButtonSurvei}>
+          <button onClick={handleSubmit} className={styles.primaryButtonSurvei}>
           Simpan
         </button>
-        <button className={styles.secondaryButtonSurvei}>Batal</button>
+        <button onClick={handleBackToSurvei} className={styles.secondaryButtonSurvei}>Batal</button>
+        </div>
       </div>
     );
 }

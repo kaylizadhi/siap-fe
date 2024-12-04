@@ -20,7 +20,7 @@ export default function DaftarKlien() {
   useEffect(() => {
     const fetchKliens = async () => {
       try {
-        const response = await fetch("http://localhost:8000/klien/");
+        const response = await fetch("http://localhost:8000/api/klien/");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
