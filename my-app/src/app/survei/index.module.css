@@ -165,15 +165,26 @@
     margin-bottom: 20px;
 }
 
+.textFieldSurvei:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 8px; 
+}
+
+.textFieldSurvei:disabled {
+    color: #bbc7cd;
+}
+
 .textFieldTitleSurvei {
     color: #1c1c1c;
     margin-bottom: 4px;
+    font-family: caudex;
 }
 
 .primaryButtonSurvei {
     position: absolute;
-    top: 960px;
-    left: 352px;
+    top: 320px;
+    left: 0px;
     border-radius: 32px;
     background-color: #a62626;
     padding: 20px 280px;
@@ -181,12 +192,21 @@
     font-family: caudex;
     font-size: 16px;
     border: none;
+    cursor: pointer;
+}
+
+.primaryButtonSurvei:disabled {
+    background-color: #bbc7cd;
+}
+
+.primaryButtonSurvei:hover {
+    background-color: #D9878D;
 }
 
 .secondaryButtonSurvei {
     position: absolute;
-    top: 992px;
-    left: 352px;
+    top: 356px;
+    left: 0px;
     background-color: #ffffff;
     color: #a62626;
     border-radius: 32px;
@@ -195,6 +215,11 @@
     margin-top: 40px; 
     font-family: caudex;
     font-size: 16px;
+    cursor: pointer;
+}
+
+.secondaryButtonSurvei:hover {
+    background-color: #F2CFD5;
 }
 
 .searchBarContainer {

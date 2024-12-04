@@ -3,15 +3,15 @@
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Link from 'next/link';
-import { PencilIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, TrashIcon, EyeIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { Diplomata } from 'next/font/google';
 
 export default function Index() {
     const [survei, setSurvei] = useState([]);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [page, setPage] = useState(1); // Track the current page
+    const [totalCount, setTotalCount] = useState(0); // Track the total count
+    const [searchTerm, setSearchTerm] = useState('');  // Single search term
     const [filteredSurvei, setFilteredSurvei] = useState([]);
-    const [notifications, setNotifications] = useState('');
 
     useEffect(() => {
         async function fetchingData() {
@@ -23,22 +23,13 @@ export default function Index() {
                     },
                 });
 
-                if (!res.ok) throw new Error('Network response was not ok');
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
                 const listSurvei = await res.json();
                 setSurvei(listSurvei.results);
-                setTotalPages(Math.ceil(listSurvei.count / 10));  // Update total halaman
-
-                const restockSurvei = listSurvei.results
-                    .filter(item => item.jumlah_stok < item.jumlah_minimum)
-                    .map(item => item.nama_survei)
-                    .join(', ');
-
-                if (restockSurvei) {
-                    setNotifications(`${restockSurvei} perlu di-restock!`);
-                } else {
-                    setNotifications('');
-                }
+                setTotalCount(listSurvei.count);
             } catch (error) {
                 console.error("Failed to fetch data:", error);
             }
@@ -46,10 +37,6 @@ export default function Index() {
 
         fetchingData();
     }, [page]);
-
-    const closeNotification = () => {
-        setNotifications('');
-    };
 
     const HandleDelete = async (id) => {
         if (confirm("Apakah Anda yakin ingin menghapus survei ini?")) {
@@ -60,12 +47,9 @@ export default function Index() {
                         method: "DELETE",
                     }
                 );
-    
+
                 if (response.ok) {
-                    setSurvei((prevSurvei) => prevSurvei.map((e) =>
-                        e.id === id ? { ...e, is_deleted: true } : e
-                    ));
-                    setFilteredSurvei(filteredSurvei.filter((item) => item.id !== id));
+                    setSurvei((prevSurvei) => prevSurvei.filter((e) => e.id !== id));
                 } else {
                     console.error("Gagal menghapus survei");
                 }
@@ -77,60 +61,68 @@ export default function Index() {
 
     useEffect(() => {
         const search = () => {
-            let searched = survei.filter((element) => !element.is_deleted);
+            let searched = survei;
             if (searchTerm) {
                 searched = searched.filter((element) => 
-                    (element.nama_survei && element.nama_survei.toLowerCase().includes(searchTerm.toLowerCase()))
+                    (element.nama_survei && element.nama_survei.toLowerCase().includes(searchTerm.toLowerCase())) || 
+                    (element.nama_klien && element.nama_klien.toLowerCase().includes(searchTerm.toLowerCase()))
                 );
             }
             setFilteredSurvei(searched);
-        };
+        }
         search();
     }, [searchTerm, survei]);
 
     const handleNextPage = () => {
-        if (page < totalPages) setPage(page + 1);
+        if (survei.length > 0) {
+            setPage(page + 1);
+        }
     };
 
     const handlePreviousPage = () => {
-        if (page > 1) setPage(page - 1);
+        if (page > 1) {
+            setPage(page - 1);
+        }
     };
 
     return (
-        <div> 
+        <div>
             <b className={styles.headingSurvei}>Daftar Survei</b>
-
+            {/* Navigation Bar omitted for brevity */}
             <div className={styles.searchBarContainer}>
-                <MagnifyingGlassIcon className={styles.iconSearch}/>
+                <MagnifyingGlassIcon className={styles.iconSearch} />
                 <input
                     className={styles.searchBar}
                     type='text'
                     name='search'
-                    placeholder='Cari berdasarkan nama survei atau klien...'
+                    placeholder='Cari berdasarkan judul survei atau nama klien...'
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => setSearchTerm(e.target.value)}  // Update search term
                 />
             </div>
             <table className={styles.tableContainerSurvei}>
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Survei</th>
+                        <th>Judul Survei</th>
                         <th>Nama Klien</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className={styles.tdSurvei}>
                     {filteredSurvei.map((element, index) => (
                         <tr key={element.id}>
                             <td>{(page - 1) * 10 + index + 1}</td>
                             <td>{element.nama_survei}</td>
-                            <td>{element.jumlah_stok}</td>
+                            <td>{element.nama_klien}</td>
                             <td>
                                 <Link href={`/survei/edit/${element.id}`}>
                                     <button className={styles.buttonSurvei}><PencilIcon className={styles.iconSurvei}/></button>
                                 </Link>
-                                <button className={styles.buttonSurvei} onClick={() => HandleDelete(element.id)}><TrashIcon className={styles.iconSurvei}/></button>
+                                    <button className={styles.buttonSurvei} onClick={() => HandleDelete(element.id)}><TrashIcon className={styles.iconSurvei}/></button>
+                                <Link href={`/survei/${element.id}`}>
+                                    <button className={styles.buttonSurvei}><EyeIcon className={styles.iconSurvei}/></button>
+                                </Link>
                             </td>
                         </tr>
                     ))}
@@ -141,21 +133,21 @@ export default function Index() {
                 <button
                     onClick={handlePreviousPage}
                     disabled={page === 1}
-                    className={`${page === 1 ? styles['buttonDisabledSebelumnya'] : styles['buttonEnabledSebelumnya']}`}>
+                    className={`${page === 1 ? styles['buttonDisabledSebelumnya'] : styles['buttonEnabledSebelumya']}`}>
                     <ChevronLeftIcon className={styles.iconChevron} />
                     Sebelumnya
                 </button>
                 <button
                     onClick={handleNextPage}
-                    disabled={page === totalPages}
-                    className={`${page === totalPages ? styles['buttonDisabledSelanjutnya'] : styles['buttonEnabledSelanjutnya']}`}>
+                    disabled={survei.length === 0}
+                    className={`${survei.length === 0 ? styles['buttonDisabledSelanjutnya'] : styles['buttonEnabledSelanjutnya']}`}>
                     Selanjutnya
                     <ChevronRightIcon className={styles.iconChevron} />
                 </button>
             </div>
 
             <Link href="/survei/buat-survei">
-                <button className={styles.buttonTambahSurvei}><PlusIcon className={styles.iconChevron}/>Tambah Survei</button>
+                <button className={styles.buttonTambahSurvei}><PlusIcon className={styles.iconSurvei}/>Tambah Survei</button>
             </Link>
         </div>
     );
