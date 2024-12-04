@@ -99,7 +99,6 @@ export default function BuatSouvenir() {
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("Gagal menambahkan souvenir!");
         }
     }
 

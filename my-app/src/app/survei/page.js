@@ -103,14 +103,16 @@ export default function Index() {
             <table className={styles.tableContainerSurvei}>
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Judul Survei</th>
                         <th>Nama Klien</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody className={styles.tdSurvei}>
-                    {filteredSurvei.map((element) => (
+                    {filteredSurvei.map((element, index) => (
                         <tr key={element.id}>
+                            <td>{(page - 1) * 10 + index + 1}</td>
                             <td>{element.nama_survei}</td>
                             <td>{element.nama_klien}</td>
                             <td>
