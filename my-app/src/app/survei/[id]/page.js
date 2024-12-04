@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import styles from '../../index.module.css';
+import styles from '../index.module.css';
 import { useRouter, useParams } from "next/navigation";
 
 export default function Detail() {
