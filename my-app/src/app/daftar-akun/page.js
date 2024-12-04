@@ -106,22 +106,21 @@ export default function DaftarAkun() {
         <div className={styles.mainContainer}>
             {/* Main Account List Content */}
             <div className={styles.container}>
-                <h1 className={styles.title}>Daftar Akun</h1>
+                <h1 className={`text-4xl font-weight-700 text-primary-900`}>Daftar Akun</h1>
 
-                <div className={styles.searchContainer}>
-                <img src="/search.svg" alt="Search" className={styles.searchIcon} />
+                <div className="w-full flex px-6 py-3 mb-6 rounded-full border-2 border overflow-hidden mx-auto">
                     <input
                         type="text"
                         placeholder="Cari akun..."
                         value={searchQuery}
                         onChange={handleSearch}
-                        className={styles.searchInput}
+                        className={'w-full outline-none bg-transparent text-gray-600 text-sm'}
                     />
                 </div>
 
                 <table className={styles.table}>
                     <thead>
-                        <tr>
+                        <tr className={styles.header}>
                             <th>Username</th>
                             <th>Nama</th>
                             <th>Email</th>
@@ -153,6 +152,11 @@ export default function DaftarAkun() {
                 </table>
 
                 <div className={styles.pagination}>
+                    {currentPage > 1 && (
+                        <button onClick={() => setCurrentPage(currentPage - 1)}>
+                            &lt; Kembali
+                        </button>
+                    )}
                     {currentPage < totalPages && (
                         <button onClick={() => setCurrentPage(currentPage + 1)}>
                             Selanjutnya &gt;

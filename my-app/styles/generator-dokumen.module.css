@@ -1,7 +1,4 @@
-/* .container {
-display: flex;
-background-color: #fdfdfd;
-} */
+
 
 /* Import Caudex Font */
 @import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
@@ -117,6 +114,7 @@ padding: 40px;
 .label {
     font-weight: bold;
     margin-bottom: 10px;
+    font-family: 'Caudex', serif;
 }
 
 .form {
@@ -141,6 +139,7 @@ cursor: pointer;
 .radioGroup label {
 margin-right: 16px;
 cursor: pointer;
+font-family: 'Caudex', serif;
 }
 
 .inputGroup {
@@ -154,6 +153,7 @@ display: flex;
     font-weight: bold;
     flex: 0 0 150px; /* Fixed width for labels */
   margin-right: 10px;
+  font-family: 'Caudex', serif;
 }
 
 .inputGroup input,
@@ -261,6 +261,7 @@ padding: 10px;
     flex: 0 0 150px; /* Fixed width for labels */
   margin-right: 10px;
     font-weight: bold;
+    font-family: 'Caudex', serif;
 }
 
 .buttonGroup {
