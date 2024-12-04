@@ -1,0 +1,241 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./styles/daftar-akun.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************/
+.daftar-akun_container__iaKqH {
+    margin-left: 200px;
+    padding: 20px;
+    font-family: 'Caudex', serif;
+    
+}
+
+.daftar-akun_title__iKtRm {
+    font-size: 2em;
+    color: #A62626;
+}
+
+.daftar-akun_searchContainer__mWGaO {
+    display: flex;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e3e6eb;
+    border-radius: 25px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.daftar-akun_searchIcon__uqL26 {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Space between icon and input */
+    color: #666;
+}
+
+.daftar-akun_searchInput__dqKSY {
+    border: none;
+    background: none;
+    font-family: 'Caudex', serif;
+    font-size: 1.1em;
+    color: #666;
+    outline: none;
+    flex: 1; 
+}
+
+.daftar-akun_searchInput__dqKSY::placeholder {
+    color: #999;
+    font-size: 1.1em;
+}
+
+/* .modalOverlay - This will cover the entire screen with a semi-transparent background */
+.daftar-akun_modalOverlay___C6py {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure it appears on top of other content */
+}
+
+/* .modal - The actual modal content box */
+.daftar-akun_modal__SHpIh {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px; /* You can adjust the width as per your requirement */
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional styles for the buttons */
+.daftar-akun_confirmButton__MIcBF, .daftar-akun_cancelButton__c71iu {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.daftar-akun_confirmButton__MIcBF {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.daftar-akun_cancelButton__c71iu {
+    background-color: #f44336;
+    color: white;
+}
+
+.daftar-akun_confirmButton__MIcBF:hover {
+    background-color: #45a049;
+}
+
+.daftar-akun_cancelButton__c71iu:hover {
+    background-color: #e53935;
+}
+
+
+
+.daftar-akun_table__K5GiN {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.daftar-akun_table__K5GiN th,
+.daftar-akun_table__K5GiN td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.daftar-akun_table__K5GiN th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.daftar-akun_icon__0MARW {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.daftar-akun_actions__8ky03 {
+    display: flex;
+    gap: 10px;
+}
+
+.daftar-akun_pagination__wOKyB {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Add some margin on top for spacing */
+}
+
+.daftar-akun_pagination__wOKyB button {
+    font-family: 'Caudex', serif; /* Use the Caudex font */
+    color: #800000; /* White text for visibility */
+    border: none; /* No border */
+    padding: 10px 15px; /* Adjust padding for better appearance */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.daftar-akun_pagination__wOKyB button:hover {
+    background-color: #990000; /* Darker shade on hover */
+}
+
+.daftar-akun_deleteButton__gR8qw {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s, background-color 0.3s;
+}
+
+.daftar-akun_deleteButton__gR8qw:hover {
+    opacity: 0.10; /* Makes the button slightly darker on hover */
+}
+
+.daftar-akun_deleteButton__gR8qw:active {
+    background-color: rgba(0, 0, 0, 0.1); /* Darkens the background slightly on click */
+    opacity: 0.7; /* Reduces opacity a bit more to indicate click */
+}
+
+.daftar-akun_deleteButton__gR8qw img {
+    display: block;
+    width: 45px; 
+    height: 45px; 
+}
+
+/* Fade-out and slide-up animation */
+@keyframes daftar-akun_fadeOutSlideUp__EyvyF {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.daftar-akun_fadeOut__Fi38_ {
+    animation: daftar-akun_fadeOutSlideUp__EyvyF 0.2s forwards; 
+}
+
+.daftar-akun_modalOverlay___C6py {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.daftar-akun_modal__SHpIh {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+.daftar-akun_confirmButton__MIcBF {
+    background-color: #A62626;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.daftar-akun_cancelButton__c71iu {
+    background-color: #666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.daftar-akun_confirmButton__MIcBF:hover {
+    background-color: #800000;
+}
+
+.daftar-akun_cancelButton__c71iu:hover {
+    background-color: #444;
+}
+
+

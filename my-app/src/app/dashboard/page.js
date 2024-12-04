@@ -1,272 +1,226 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import styles from "../../../styles/dashboard.module.css"; 
-import Link from "next/link";
+import styles from "../../../styles/survey-table.module.css";
 
-const Dashboard = () => {
-  const router = useRouter();
-  const [totalCount, setTotalCount] = useState(0); 
-  const [page, setPage] = useState(1);
-  const [surveyType, setSurveyType] = useState("");
-  const [survei, setSurvei] = useState([]);
-  function formatDateTime(dateTimeString){
-    const options = {
-        day:"numeric",
-        month:"long",
-        year:"numeric"
-    };
-    const formattedDate = new Date(dateTimeString).toLocaleDateString(
-        "id-ID",options
-    );
-    return formattedDate;
-    
-}
-  // useEffect(() => {
-    // const verifyUser = async () => {
-    //   const token = localStorage.getItem("authToken");
-    //   if (!token) {
-    //     router.push("/login");
-    //     return;
-    //   }
+const SurveyTable = ({ params }) => {
+  const { id } = params; // Get dynamic route parameter
+  const [tableData, setTableData] = useState([]);
+  const [selectedRuangLingkup, setSelectedRuangLingkup] = useState("Nasional");
 
-    //   try {
-    //     const response = await fetch(
-    //       "http://localhost:8000/accounts/check_role/",
-    //       {
-    //         headers: { Authorization: `Token ${token}` },
-    //       }
-    //     );
-    //     const data = await response.json();
+  useEffect(() => {
+    if (!id) return; // Ensure `id` is available
 
-    //     if (
-    //       data.error ||
-    //       !["Administrasi", "Eksekutif", "Logistik"].includes(data.role)
-    //     ) {
-    //       router.push("/login");
-    //     }
-    //   } catch (error) {
-    //     console.error("Failed to verify role:", error);
-    //     router.push("/login");
-    //   }
-    // };
-
-    // verifyUser();
-  // }, [router]);
-
-  const handleSurveyTypeChange = (e) => {
-    const selectedSurveyType = e.target.value;
-    setSurveyType(selectedSurveyType);
-
-    if (selectedSurveyType === "nasional") {
-      router.push("/dashboard/nasional");
-    } else if (selectedSurveyType === "provinsi") {
-      router.push("/dashboard/provinsi");
-    } else if (selectedSurveyType === "kota") {
-      router.push("/dashboard/kota");
-    }
-  };
-
-  const handleSeeDetailClick = (index) => {
-    const router = useRouter();
-
-    // Get survey ID from index
-    const surveyId = getSurveyIdByIndex(index);
-
-    if (surveyId) {
-        // Navigate to the detail page
-        router.push(`/survei/get-survei-detail/${surveyId}`);
-    } else {
-        console.error("Survey ID not found for index:", index);
-    }
-};
-
-
-  const getSurveyIdByIndex = (index) => {
-    if (index >= 0 && index < surveyData.length) {
-        return surveyData[index].id; 
-    } else {
-        console.error("Invalid index:", index);
-        return null;
-    }
-  };
-
-
-// const handleSeeDetailSurvey = (e) => {
-//   const selectedDetailPage = e.target.value;
-//   setDetailPage(selectedDetailPage);
-
-//   if (selectedDetailPage === "DetailSurvei") {
-//     router.push("/survei/get-detail-survei");
-//   } 
-// };
-
-useEffect(() => {
-  async function fetchingData() {
+    const fetchTableData = async () => {
       try {
-          const res = await fetch(`http://127.0.0.1:8000/api/survei-status/dashboard`, {
-              method: 'GET',
-              headers: {
-                  "Content-Type": "application/json",
-              },
-          });
-
-          if (!res.ok) {
-              throw new Error('Network response was not ok');
+        const token = localStorage.getItem("authToken");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}survei/get-survei-detail/${id}/`,
+          {
+            headers: { Authorization: `Token ${token}` },
           }
-
-          const listSurvei = await res.json();
-          setSurvei(listSurvei);
+        );
+        const data = await response.json();
+        setTableData(data);
       } catch (error) {
-          console.error("Failed to fetch data:", error);
+        console.error("Failed to fetch table data:", error);
       }
+    };
+
+    fetchTableData();
+  }, [id]);
+
+  useEffect(() => {
+    let scriptsLoaded = false; // Local variable to track script loading state
+    let mapInitialized = false; // Local variable to track map initialization state
+  
+    const initializeMap = (data) => {
+      if (mapInitialized) return; // Prevent multiple map initializations
+      mapInitialized = true;
+  
+      if (typeof anychart === "undefined" || !anychart.map) {
+        console.error("AnyChart or map module is not loaded properly.");
+        return;
+      }
+  
+      const mapContainer = document.getElementById("map-container");
+      if (!mapContainer) {
+        console.error("Map container not found.");
+        return;
+      }
+  
+      // Clear map container to avoid overlapping maps
+      mapContainer.innerHTML = "";
+  
+      const map = anychart.map();
+
+      const dataSet = anychart.data.set(data);
+  
+      const series = map.choropleth(dataSet);
+      series.geoIdField("id");
+      series.colorScale(anychart.scales.linearColor("#D9878D", "#A62626"));
+      if (selectedRuangLingkup === "Nasional") {
+        series.stroke(null); // Remove borders from the series
+        series
+          .tooltip()
+          .title("Indonesia") // Set the tooltip title as "Indonesia"
+          .format("Jumlah Survei: {%value}"); // Customize the tooltip format
+      }
+      else {
+        series
+          .tooltip()
+          .format("Jumlah Survei: {%value}");
+      }
+      map.geoData(anychart.maps["indonesia"]);
+        map.container("map-container");
+        map.draw();
+    };
+  
+    const loadScripts = async () => {
+      if (scriptsLoaded) return; // Avoid reloading scripts
+      scriptsLoaded = true;
+  
+      const isScriptLoaded = (src) =>
+        !!document.querySelector(`script[src="${src}"]`);
+  
+      const addScript = (src) =>
+        new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.body.appendChild(script);
+        });
+  
+      try {
+        await Promise.all([
+          !isScriptLoaded("https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js")
+            ? addScript("https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js")
+            : Promise.resolve(),
+          !isScriptLoaded("https://cdn.anychart.com/releases/8.13.0/js/anychart-map.min.js")
+            ? addScript("https://cdn.anychart.com/releases/8.13.0/js/anychart-map.min.js")
+            : Promise.resolve(),
+          !isScriptLoaded("https://cdn.anychart.com/geodata/2.2.0/countries/indonesia/indonesia.js")
+            ? addScript("https://cdn.anychart.com/geodata/2.2.0/countries/indonesia/indonesia.js")
+            : Promise.resolve(),
+        ]);
+  
+        console.log("Scripts loaded successfully.");
+
+        const fetchFilteredData = async (ruangLingkup) => {
+          const response = await fetch(
+            `http://localhost:8000/api/survei/count-by-region/?ruang_lingkup=${ruangLingkup}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch data by ruang lingkup");
+          }
+          return await response.json();
+        };
+        
+        const data = await fetchFilteredData(selectedRuangLingkup);
+        anychart.onDocumentReady(() => initializeMap(data));
+      } catch (error) {
+        console.error("Failed to load AnyChart scripts or data:", error);
+      }
+    };
+  
+    loadScripts();
+  }, [selectedRuangLingkup]); // Empty dependency array ensures the effect runs only once  
+
+  const handleToggleChange = (event) => {
+    setSelectedRuangLingkup(event.target.value);
   }
-
-  fetchingData();
-}, [page]);
-// const fetchSurvey = async () => {
-//   const router = useRouter();
-
-//   try {
-//       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei/get-list-survei?page=${page}`, {
-//           method: 'GET', 
-//           headers: {
-//             "Content-Type": "application/json",
-//         },
-//       });
-
-//       if (!response.ok) {
-//           throw new Error('Failed to fetch survey details');
-//       }
-
-//       // Navigate to the survey detail page
-//       router.push(`/survei/get-survei-detail/${surveyId}`);
-//   } catch (error) {
-//       console.error('Error fetching survey details:', error);
-//   }
-//   fetchSurvey();
-// };
-const getLastValidStatus = (statusList) => {
-  const validStatuses = [];
-
-  for (const statusObj of statusList) {
-    const key = Object.keys(statusObj)[0]; // Ambil kunci status (misal: "buat_kontrak")
-    const value = statusObj[key]; // Ambil nilai status (misal: "FINISHED")
-
-    if (value === "NOT_STARTED") break; // Hentikan jika ketemu "NOT_STARTED"
-    validStatuses.push({ key, value });
-  }
-
-  // Jika validStatuses kosong, tampilkan status terakhir yang "FINISHED"
-  if (validStatuses.length === 0) {
-    const lastFinished = statusList.reverse().find(
-      (statusObj) => Object.values(statusObj)[0] === "FINISHED"
-    );
-    if (lastFinished) {
-      const key = Object.keys(lastFinished)[0];
-      const value = lastFinished[key];
-      return `${key}: ${value}`;
-    }
-  }
-
-  // Tampilkan status terakhir dari validStatuses
-  const lastValid = validStatuses[validStatuses.length - 1];
-  return `${lastValid.key}: ${lastValid.value}`;
-};
 
   return (
-    <div className={styles.containerBackground}>
+    <div className={styles.container}>
       <div className={styles.content}>
-        <h1 className={styles.title}>Dashboard Survei</h1>
-
-        <div className={styles.surveyTypeSection}>
-          <label className={styles.label}>Pilih Jenis Survei</label>
-          <div className={styles.radioGroup}>
-            <input
-              type="radio"
-              id="nasional"
-              name="surveyType"
-              value="nasional"
-              checked={surveyType === "nasional"}
-              onChange={handleSurveyTypeChange}
-            />
-            <label htmlFor="nasional">Survei Nasional</label>
-            <input
-              type="radio"
-              id="provinsi"
-              name="surveyType"
-              value="provinsi"
-              checked={surveyType === "provinsi"}
-              onChange={handleSurveyTypeChange}
-            />
-            <label htmlFor="provinsi">Survei Provinsi</label>
-            <input
-              type="radio"
-              id="kota"
-              name="surveyType"
-              value="kota"
-              checked={surveyType === "kota"}
-              onChange={handleSurveyTypeChange}
-            />
-            <label htmlFor="kota">Survei Kota</label>
-          </div>
-        </div>
-
-        {/* Placeholder Diagram */}
-        <div className={styles.diagramPlaceholder}>Diagram Placeholder</div>
-
-        {/* Tabel Data */}
-        <div className={styles.tableContainer}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Nama Klien</th>
-                <th>Judul Survei</th>
-                <th>Tanggal Mulai</th>
-                <th>Tanggal Berakhir</th>
-                <th>Wilayah</th>
-                <th>Jumlah Responden</th>
-                <th>Status</th>
-                <th>Action</th>
-              
+        <h1 className={styles.title}>Dashboard Progres Survei</h1>
+        <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+        <label style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+          <input
+            type="radio"
+            value="Default"
+            checked={selectedRuangLingkup === "Default"}
+            onChange={handleToggleChange}
+          />
+          Default
+        </label>
+        <label style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+          <input
+            type="radio"
+            value="Nasional"
+            checked={selectedRuangLingkup === "Nasional"}
+            onChange={handleToggleChange}
+          />
+          Nasional
+        </label>
+        <label style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+          <input
+            type="radio"
+            value="Provinsi"
+            checked={selectedRuangLingkup === "Provinsi"}
+            onChange={handleToggleChange}
+          />
+          Provinsi
+        </label>
+        <label style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+          <input
+            type="radio"
+            value="Kota"
+            checked={selectedRuangLingkup === "Kota"}
+            onChange={handleToggleChange}
+          />
+          Kota
+        </label>
+      </div>
+        <div id="map-container" style={{ height: "350px", marginBottom: "20px" }}></div>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Judul Survei</th>
+              <th>Tanggal Mulai</th>
+              <th>Wilayah</th>
+              <th>Jumlah Responden</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((row, index) => (
+              <tr key={index}>
+                <td>
+                  <div className={styles.titleCell}>
+                    <img src="/images/user-icon.png" alt="Client" className={styles.icon} />
+                    <div>
+                      <p>{row.client_name}</p>
+                      <span>{row.client_agency}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>{row.survey_title}</td>
+                <td>{row.start_date}</td>
+                <td>{row.region}</td>
+                <td>{row.respondent_count}</td>
+                <td>
+                  <span
+                    className={
+                      row.status === "Completed"
+                        ? styles.statusCompleted
+                        : styles.statusOngoing
+                    }
+                  >
+                    {row.status}
+                  </span>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-                  {survei.map((e) => (
-                      <tr key={e.survei?.id}>
-                          <td><img src="/images/Profile.svg" alt="User Icon" className={styles.icon} /> {e.survei?.nama_klien}</td>
-                          <td>{e.survei?.nama_survei}</td>
-                          <td>{e.survei?.waktu_mulai_survei && formatDateTime(e.survei?.waktu_mulai_survei)}</td>
-                          <td>{e.survei?.waktu_berakhir_survei && formatDateTime(e.survei?.waktu_berakhir_survei)}</td>
-                          <td>{e.survei?.wilayah_survei}</td>
-                          <td>{e.survei?.jumlah_responden}</td>
-                          <td>
-                            {Array.isArray(e.status) ? getLastValidStatus(e.status) : "Tidak ada data"}
-                          </td>
-                          <td className={styles.actions}>
-                            <Link href={`/survei/${e.survei?.id}`}>
-                              <button className={styles.detailButton}>
-                                <img src="/images/Detail.svg" alt="Detail" />
-                              </button>
-                            </Link>
-                            <Link href={`/tracker-survei/${e.survei?.id}`}>
-                            <button 
-                              className={styles.deleteButton} 
-                              onClick={() => handleDeleteClick(e.survei?.id)}
-                            >
-                              <img src="/images/Delete.svg" alt="Delete" />
-                            </button>
-                            </Link>
-                          </td>
-
-                      </tr>
-                  ))}
-              </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className={styles.footer}>
+        @2024 optimasys | Contact optimasys.work@gmail.com
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default SurveyTable;

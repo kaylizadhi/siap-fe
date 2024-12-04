@@ -18,31 +18,31 @@ export default function BuatAkun() {
     const [showNotification, setShowNotification] = useState(false);
     const router = useRouter();
 
-    useEffect(() => {
-        const verifyUser = async () => {
-            const token = localStorage.getItem('authToken');
-            if (!token) {
-                router.push('/login');
-                return;
-            } 
+    // useEffect(() => {
+    //     const verifyUser = async () => {
+    //         const token = localStorage.getItem('authToken');
+    //         if (!token) {
+    //             router.push('/login');
+    //             return;
+    //         } 
 
-            try {
-                const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
-                    headers: { 'Authorization': `Token ${token}` },
-                });
-                const data = await response.json();
+    //         try {
+    //             const response = await fetch('http://localhost:8000/accounts/check_role_admin/', {
+    //                 headers: { 'Authorization': `Token ${token}` },
+    //             });
+    //             const data = await response.json();
 
-                if (data.error || data.role !== 'Admin Sistem') {
-                    router.push('/login');
-                }
-            } catch (error) {
-                console.error('Failed to verify role:', error);
-                router.push('/login');
-            }
-        };
+    //             if (data.error || data.role !== 'Admin Sistem') {
+    //                 router.push('/login');
+    //             }
+    //         } catch (error) {
+    //             console.error('Failed to verify role:', error);
+    //             router.push('/login');
+    //         }
+    //     };
 
-        verifyUser();
-    }, [router]);
+    //     verifyUser();
+    // }, [router]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -123,7 +123,7 @@ export default function BuatAkun() {
                 <h2 className={styles.buatakunHeading}>Buat Akun</h2>
 
                 <form onSubmit={handleSubmit}>
-                    <label className={styles.label}>Username</label>
+                    <label className={styles.label}>Username*</label>
                     <input
                         className={styles.input}
                         type="text"
@@ -132,7 +132,7 @@ export default function BuatAkun() {
                         placeholder="Masukkan Username"
                         required
                     />
-                    <label className={styles.label}>Name</label>
+                    <label className={styles.label}>Name*</label>
                     <input
                         className={styles.input}
                         type="text"
@@ -141,7 +141,7 @@ export default function BuatAkun() {
                         placeholder="Masukkan Nama"
                         required
                     />
-                    <label className={styles.label}>Email</label>
+                    <label className={styles.label}>Email*</label>
                     <input
                         className={styles.input}
                         type="email"
@@ -150,30 +150,34 @@ export default function BuatAkun() {
                         placeholder="Masukkan Email"
                         required
                     />
-                    <label className={styles.label}>Role</label>
+                    <label className={styles.label}>Role*</label>
                     <select
                         className={styles.input}
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
                         required
                     >
-                        <option value="" disabled>Pilih Role</option>
+                        <option value="" disabled>Pilih Role*</option>
                         <option value="Eksekutif">Eksekutif</option>
                         <option value="Administrasi">Administrasi</option>
                         <option value="Admin Sistem">Admin Sistem</option>
                         <option value="Logistik">Logistik</option>
                         <option value="Pengendali Mutu">Pengendali Mutu</option>
                     </select>
-                    <label className={styles.label}>Security Question</label>
-                    <input
+                    <label className={styles.label}>Security Question*</label>
+                    <select
                         className={styles.input}
-                        type="text"  // Perbaikan tipe menjadi "text"
                         value={security_question}
                         onChange={(e) => setSecurityQuestion(e.target.value)}
-                        placeholder="Buat Security Question"
                         required
-                    />
-                    <label className={styles.label}>Security Answer</label>
+                    >
+                        <option value="" disabled>Pilih Security Question</option>
+                        <option value="Apa warna kesukaan Anda?">Apa warna kesukaan Anda?</option>
+                        <option value="Apa makanan kesukaan Anda?">Apa makanan kesukaan Anda?</option>
+                        <option value="Dimana tempat Anda lahir?">Dimana tempat Anda lahir?</option>
+                        <option value="Apa olahraga kesukaan Anda?">Apa olahraga kesukaan Anda?</option>
+                        <option value="Siapa nama orang tua Anda?">Siapa nama orang tua Anda?</option>
+                    </select>
                     <input
                         className={styles.input}
                         type="text"  // Perbaikan tipe menjadi "text"
@@ -182,7 +186,7 @@ export default function BuatAkun() {
                         placeholder="Buat Jawaban dari Security Question"
                         required
                     />
-                    <label className={styles.label}>Password</label>
+                    <label className={styles.label}>Password*</label>
                     <div className={styles.passwordContainer}>
                         <input
                             className={styles.input}
