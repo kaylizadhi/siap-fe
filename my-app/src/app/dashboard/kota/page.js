@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import styles from "../../../styles/dashboard.module.css"; 
+import styles from "../../../../styles/dashboard.module.css"; 
 import Link from "next/link";
 
 const Dashboard = () => {
