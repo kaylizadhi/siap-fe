@@ -1,8 +1,5 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@pages/components/Sidebar";
@@ -23,29 +20,23 @@ const geistMono = localFont({
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  const noSidebar =
-    pathname === "/login" ||
-    pathname === "/forgot-password"
+
+  const noSidebar = ["/login", "/forgot-password"].includes(pathname);
 
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`
+          ${geistSans.variable} 
+          ${geistMono.variable} 
+          antialiased
+        `}
       >
         {!noSidebar && <Sidebar />}
-        <div className={noSidebar ? "" : "content-area"}>{children}</div>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={1500}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <p>{router.pathname}</p>
+
+        <div className={noSidebar ? "w-full" : "content-area"}>{children}</div>
+
+        <ToastContainer position="bottom-right" autoClose={1500} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       </body>
     </html>
   );
