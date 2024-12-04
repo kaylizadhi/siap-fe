@@ -37,6 +37,21 @@ const InvoiceFinal = () => {
   }, [router]);
 
   const handleExport = async () => {
+    // Check if any required fields are empty
+    if (
+      !clientName ||
+      !surveyName ||
+      !respondentCount ||
+      !address ||
+      !amount ||
+      !paidPercentage ||
+      !nominalTertulis ||
+      !date
+    ) {
+      // Display a notification or alert to the user
+      alert("Mohon mengisi semua yang ditandai dengan * sebelum mengekspor.");
+      return; // Stop the export process if fields are not filled
+    }
     console.log("Export button clicked");
     const data = {
       client_name: clientName,
@@ -193,7 +208,7 @@ const InvoiceFinal = () => {
       {/* Form Inputs */}
       <form className={styles.form}>
         <div className={styles.inputGroup}>
-          <label htmlFor="clientName">Nama Klien</label>
+          <label htmlFor="clientName">Nama Klien*</label>
           <input
             type="text"
             id="clientName"
@@ -203,7 +218,7 @@ const InvoiceFinal = () => {
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="surveyName">Nama Survei</label>
+          <label htmlFor="surveyName">Nama Survei*</label>
           <input
             type="text"
             id="surveyName"
@@ -213,7 +228,7 @@ const InvoiceFinal = () => {
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="respondentCount">Jumlah Responden</label>
+          <label htmlFor="respondentCount">Jumlah Responden*</label>
           <input
             type="number"
             id="respondentCount"
@@ -223,7 +238,7 @@ const InvoiceFinal = () => {
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="address">Alamat</label>
+          <label htmlFor="address">Alamat*</label>
           <input
             type="text"
             id="address"
@@ -234,7 +249,7 @@ const InvoiceFinal = () => {
         </div>
         <div className={styles.inputRow}>
           <div className={styles.nominalContainer}>
-            <label htmlFor="amount">Nominal</label>
+            <label htmlFor="amount">Harga Total*</label>
             <div className={styles.nominalInput}>
               <span>Rp</span>
               <input
@@ -248,7 +263,7 @@ const InvoiceFinal = () => {
           </div>
 
           <div className={styles.percentageContainer}>
-            <label htmlFor="paidPercentage">Paid Percentage</label>
+            <label htmlFor="paidPercentage">Persentase Pembayaran*</label>
             <div className={styles.percentageInput}>
               <input
                 type="number"
@@ -262,7 +277,7 @@ const InvoiceFinal = () => {
           </div>
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="nominalTertulis">Nominal Tertulis</label>
+          <label htmlFor="nominalTertulis">Jumlah Pembayaran Tertulis*</label>
           <input
             type="text"
             id="nominalTertulis"
@@ -281,7 +296,7 @@ const InvoiceFinal = () => {
           ></textarea>
         </div>
         <div className={styles.datePicker}>
-          <label>Tanggal</label>
+          <label>Tanggal Pembayaran*</label>
           <input
             type="date"
             id="date"
