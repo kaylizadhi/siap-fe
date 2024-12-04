@@ -1,0 +1,7 @@
+{
+  "/login/page": "app/login/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/survei/page": "app/survei/page.js",
+  "/generator-dokumen/proposal/page": "app/generator-dokumen/proposal/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}

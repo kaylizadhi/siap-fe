@@ -1,4 +1,5 @@
 .container {
+    margin-left: 200px;
     padding: 20px;
     font-family: 'Caudex', serif;
     
@@ -6,37 +7,42 @@
 
 .title {
     font-size: 2em;
-    color: #800000;
-}
-
-.addButton {
-    background-color: #800000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    float: right;
-    cursor: pointer;
+    color: #A62626;
 }
 
 .searchContainer {
-    margin-bottom: 20px;
+    display: flex;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e3e6eb;
+    border-radius: 25px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    position: relative;
+    margin-bottom: 40px;
 }
 
+.searchIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Space between icon and input */
+    color: #666;
+}
 
 .searchInput {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-family: 'Caudex', serif; /* Apply Caudex font to the input text */
+    border: none;
+    background: none;
+    font-family: 'Caudex', serif;
+    font-size: 1.1em;
+    color: #666;
+    outline: none;
+    flex: 1; 
 }
 
 .searchInput::placeholder {
-    font-family: 'Caudex', serif; /* Use the Caudex font for the placeholder */
-    color: #999; /* Optional: Set a color for the placeholder */
-    opacity: 1; /* Ensure full opacity */
+    color: #999;
+    font-size: 1.1em;
 }
 
 /* .modalOverlay - This will cover the entire screen with a semi-transparent background */
@@ -129,14 +135,6 @@
     gap: 10px;
 }
 
-.editButton,
-.deleteButton,
-.moreButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
 .pagination {
     display: flex;
     justify-content: space-between;
@@ -195,4 +193,53 @@
     animation: fadeOutSlideUp 0.2s forwards; 
 }
 
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+.confirmButton {
+    background-color: #A62626;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancelButton {
+    background-color: #666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirmButton:hover {
+    background-color: #800000;
+}
+
+.cancelButton:hover {
+    background-color: #444;
+}
 
