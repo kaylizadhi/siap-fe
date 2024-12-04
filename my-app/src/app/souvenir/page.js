@@ -129,7 +129,7 @@ export default function Index() {
                 </thead>
                 <tbody>
                     {filteredSouvenir.map((element, index) => (
-                        <tr className={styles.trSouvenir} key={element.id}>
+                        <tr key={element.id}>
                             <td>{(page - 1) * 10 + index + 1}</td>
                             <td>{element.nama_souvenir}</td>
                             <td>{element.jumlah_stok}</td>
