@@ -27,7 +27,7 @@ export default function BuatAkun() {
             } 
 
             try {
-                const response = await fetch('https://siap-be-production.up.railway.app/api/accounts/check_role_admin/', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_admin/`, {
                     headers: { 'Authorization': `Token ${token}` },
                 });
                 const data = await response.json();
@@ -69,7 +69,7 @@ export default function BuatAkun() {
         const data = { username, name, email, password, role, security_question, security_answer };
 
         try {
-            const response = await fetch('https://siap-be-production.up.railway.app/buatAkun/api/buatAkun/', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}buatAkun/api/buatAkun/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

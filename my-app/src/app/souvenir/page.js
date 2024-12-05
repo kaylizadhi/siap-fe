@@ -136,6 +136,7 @@ export default function Index() {
 
             <div className={styles.searchBarContainer}>
                 <MagnifyingGlassIcon className={styles.iconSearch}/>
+                <MagnifyingGlassIcon className={styles.iconSearch}/>
                 <input
                     className={styles.searchBar}
                     type='text'
@@ -149,6 +150,7 @@ export default function Index() {
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>No</th>
                         <th>Nama Souvenir</th>
                         <th>Jumlah Stok</th>
                         <th>Action</th>
@@ -157,6 +159,9 @@ export default function Index() {
                 <tbody>
                     {filteredSouvenir.map((element, index) => (
                         <tr className={styles.trSouvenir} key={element.id}>
+                            <td>{(page - 1) * 10 + index + 1}</td>
+                    {filteredSouvenir.map((element, index) => (
+                        <tr key={element.id}>
                             <td>{(page - 1) * 10 + index + 1}</td>
                             <td>{element.nama_souvenir}</td>
                             <td>{element.jumlah_stok}</td>
@@ -189,6 +194,7 @@ export default function Index() {
             </div>
 
             <Link href="/souvenir/buat-souvenir">
+                <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconChevron}/>Tambah Souvenir</button>
                 <button className={styles.buttonTambahSouvenir}><PlusIcon className={styles.iconChevron}/>Tambah Souvenir</button>
             </Link>
         </div>

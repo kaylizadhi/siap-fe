@@ -19,7 +19,7 @@ export default function KlienDetail({ params }) {
   // Fetch client details
   useEffect(() => {
     if (id) {
-      fetch(`https://siap-be-production.up.railway.app/${id}/`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/`)
         .then((response) => response.json())
         .then((data) => setKlien(data))
         .catch((error) => console.error("Error:", error));
@@ -35,7 +35,7 @@ export default function KlienDetail({ params }) {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `https://siap-be-production.up.railway.app/${id}/delete/`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/delete/`,
         {
           method: "DELETE",
         }

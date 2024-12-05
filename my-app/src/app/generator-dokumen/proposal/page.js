@@ -49,7 +49,7 @@ const Proposal = () => {
         }
 
         try {
-            const response = await fetch('https://siap-be-production.up.railway.app/api/accounts/check_role_proposal/', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_proposal/`, {
                 headers: { 'Authorization': `Token ${token}` },
             });
             const data = await response.json();
@@ -64,7 +64,7 @@ const Proposal = () => {
     };
 
     const fetchSlideImage = async () => {
-        const response = await fetch('https://siap-be-production.up.railway.app/dokumen_pendukung/convert_pptx_to_image/');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/convert_pptx_to_image/`);
         if (response.ok) {
             const imageBlob = await response.blob();
             const imageUrl = URL.createObjectURL(imageBlob);
@@ -81,7 +81,7 @@ const Proposal = () => {
 
   const handleExport = async () => {
     try {
-        const response = await fetch('https://siap-be-production.up.railway.app/dokumen_pendukung/download_template_proposal/', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/download_template_kontrak/`, {
           method: 'GET',
         });
   
@@ -150,7 +150,7 @@ const Proposal = () => {
 
       try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch('https://siap-be-production.up.railway.app/dokumen_pendukung/upload_template_proposal/', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/upload_template_proposal/`, {
           method: 'POST',
           headers: { 'Authorization': `Token ${token}` },
           body: formData,

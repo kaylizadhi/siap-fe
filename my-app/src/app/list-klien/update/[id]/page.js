@@ -38,7 +38,7 @@ export default function UpdateKlien({ params }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        `https://siap-be-production.up.railway.app/klien/${id}/update/`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/update/`,
         {
           method: "PUT",
           headers: {

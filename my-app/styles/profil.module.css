@@ -1,4 +1,4 @@
-/* Import Caudex Font */
+
 @import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap');
 
 .containerbackground {
@@ -14,7 +14,7 @@
 .container {
   display: flex;
   min-height: 100vh;
-
+  justify-content: center;
   font-family: 'Caudex', serif;
   background-color:#FFFF;
 }
@@ -26,70 +26,6 @@
   margin-top: 0px;
 }
 
-.sidebar {
-  width: 250px;
-  background-color: #ffffff;
-  border-right: 1px solid #ffffff;
-  padding: 20px;
-  margin-right: 200px;
-}
-
-.logo img {
-  max-width: 100%;
-  padding-bottom: 20px;
-  padding-top: 30px;
-}
-
-.nav {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  height: 500px;
-}
-
-.nav a {
-  display: flex;
-  align-items: center;  
-  margin-bottom: 15px;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 18px;
-  padding-left: 10px;
-  padding-bottom: 10px;
-}
-
-.nav a img {
-  margin-right: 10px;   
-  width: 24px;          
-  height: 24px;         
-  margin-bottom: 0px;
-  margin-left: 0px;
-}
-
-.nav a.active {
-  background-color: #f7d9d9;
-  padding: 10px;
-  border-radius: 4px;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.logout {
-  display: flex;
-  margin-top: 30px;
-  color: #ffffff;
-  font-size: 18px;
-  text-decoration: none;
-  padding-left: 10px;
-}
-
-.logout img {
-  margin-right: 10px;   
-  width: 24px;          
-  height: 24px;         
-  margin-bottom: 0px;
-  margin-left: 0px;
-}
 
 .content {
   width: 68%;
@@ -108,32 +44,29 @@
 }
 
 .fieldGroup {
-  /* display: flex; */
-  align-items: center;
+  position: relative; /* Enables absolute positioning for the icon inside the input field */
   margin-bottom: 20px;
-  margin-right: 0px;
-  padding-right: 10px;
-  width: 1000px;
-  
-}
-
-.fieldGroup label {
-  width: 150px;
-  font-size: 18px;
-  margin-bottom: 10px;
-  display: block;
 }
 
 .fieldGroup input {
   flex: 1;
   padding: 10px;
+  padding-right: 0px; /* Create space on the right side for the pencil icon */
   border: 1px solid #bbc7cd;
   border-radius: 8px;
   font-size: 16px;
   font-family: 'Caudex';
   width: 500px;
-  align-items: center;
 }
+
+.fieldGroup .icon {
+  position: absolute;
+  right: -120px; /* Position the icon 10px from the right */
+  top: 50%;
+   /* Vertically center the icon */
+  cursor: pointer;
+}
+
 
 .disabledInput {
   background-color: #f7f9fc;
@@ -150,7 +83,8 @@
 .passwordFields {
   display: flex;
   justify-content: space-between;
-  /* padding-top: 5px; */
+  width: 500px;
+  
 }
 
 .passwordFields input {
@@ -164,6 +98,7 @@
   width: 200px;
 }
 
+
 .passwordFields label {
   margin-right: 10px;
   margin-bottom: 0px;
@@ -174,6 +109,26 @@
 .passwordFields .fieldGroup {
   width: 55%;
 
+}
+
+.passwordFields .fieldGroup input {
+  flex: 1;
+  padding: 10px;
+  height: 40px;
+  padding-right: 0px; /* Create space on the right side for the pencil icon */
+  border: 1px solid #bbc7cd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Caudex';
+  width: 200px;
+}
+
+.passwordFields .fieldGroup .icon {
+  position: absolute;
+  right: 10px; /* Position the icon 10px from the right */
+  top: 50%;
+  transform: translateY(-5%); /* Vertically center the icon */
+  cursor: pointer;
 }
 
 .buttons {

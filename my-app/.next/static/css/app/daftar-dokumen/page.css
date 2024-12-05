@@ -1,0 +1,208 @@
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./styles/daftar-dokumen.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+.daftar-dokumen_container__0CDR6 {
+    padding: 20px;
+    font-family: 'Caudex', serif;
+    
+}
+/* `text-4xl font-bold text-primary-900` */
+.daftar-dokumen_title__CiV18 {
+    font-size: 2em;
+    color: #800000;
+
+}
+
+.daftar-dokumen_addButton__p7UNh {
+    background-color: #800000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    float: right;
+    cursor: pointer;
+}
+
+.daftar-dokumen_searchContainer__hJz2t {
+    margin-bottom: 20px;
+}
+
+
+.daftar-dokumen_searchInput__zGNqX {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-family: 'Caudex', serif; /* Apply Caudex font to the input text */
+}
+
+.daftar-dokumen_searchInput__zGNqX::placeholder {
+    font-family: 'Caudex', serif; /* Use the Caudex font for the placeholder */
+    color: #999; /* Optional: Set a color for the placeholder */
+    opacity: 1; /* Ensure full opacity */
+}
+
+/* .modalOverlay - This will cover the entire screen with a semi-transparent background */
+.daftar-dokumen_modalOverlay__M6I7O {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure it appears on top of other content */
+}
+
+/* .modal - The actual modal content box */
+.daftar-dokumen_modal__QkeWy {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px; /* You can adjust the width as per your requirement */
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional styles for the buttons */
+.daftar-dokumen_confirmButton__Oux4N, .daftar-dokumen_cancelButton__c2Gzi {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.daftar-dokumen_confirmButton__Oux4N {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.daftar-dokumen_cancelButton__c2Gzi {
+    background-color: #f44336;
+    color: white;
+}
+
+.daftar-dokumen_confirmButton__Oux4N:hover {
+    background-color: #45a049;
+}
+
+.daftar-dokumen_cancelButton__c2Gzi:hover {
+    background-color: #e53935;
+}
+
+
+
+.daftar-dokumen_table__2QVCr {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.daftar-dokumen_table__2QVCr th,
+.daftar-dokumen_table__2QVCr td {
+    padding: 12px;
+    text-align: left;
+    
+}
+
+.daftar-dokumen_header__W5nBy {
+    background-color: #f9f9f9;
+    border-radius: 20px;
+}
+
+.daftar-dokumen_table__2QVCr td {
+    border-bottom: 1px solid #9e0202;
+    
+
+}
+
+
+.daftar-dokumen_table__2QVCr th {
+    
+    
+    font-weight: bold;
+}
+
+.daftar-dokumen_icon__OvP8b {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.daftar-dokumen_actions__KWaUN {
+    display: flex;
+    gap: 10px;
+}
+
+.daftar-dokumen_editButton__yg_Zz,
+.daftar-dokumen_deleteButton__n_J3a,
+.daftar-dokumen_moreButton__S2M7c {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.daftar-dokumen_pagination__U3K1y {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Add some margin on top for spacing */
+}
+
+.daftar-dokumen_pagination__U3K1y button {
+    font-family: 'Caudex', serif; /* Use the Caudex font */
+    color: #800000; /* White text for visibility */
+    border: none; /* No border */
+    padding: 10px 15px; /* Adjust padding for better appearance */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.daftar-dokumen_pagination__U3K1y button:hover {
+    background-color: #990000; /* Darker shade on hover */
+}
+
+.daftar-dokumen_deleteButton__n_J3a {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s, background-color 0.3s;
+}
+
+.daftar-dokumen_deleteButton__n_J3a:hover {
+    opacity: 0.10; /* Makes the button slightly darker on hover */
+}
+
+.daftar-dokumen_deleteButton__n_J3a:active {
+    background-color: rgba(0, 0, 0, 0.1); /* Darkens the background slightly on click */
+    opacity: 0.7; /* Reduces opacity a bit more to indicate click */
+}
+
+.daftar-dokumen_deleteButton__n_J3a img {
+    display: block;
+    width: 45px; 
+    height: 45px; 
+}
+
+/* Fade-out and slide-up animation */
+@keyframes daftar-dokumen_fadeOutSlideUp__RrEEm {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.daftar-dokumen_fadeOut__Sxu65 {
+    animation: daftar-dokumen_fadeOutSlideUp__RrEEm 0.2s forwards; 
+}
+
+
+

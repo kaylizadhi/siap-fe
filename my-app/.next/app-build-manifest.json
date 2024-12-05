@@ -1,0 +1,81 @@
+{
+  "pages": {
+    "/generator-dokumen/proposal/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/generator-dokumen/proposal/page.css",
+      "static/chunks/app/generator-dokumen/proposal/page.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/generator-dokumen/kontrak/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/generator-dokumen/kontrak/page.css",
+      "static/chunks/app/generator-dokumen/kontrak/page.js"
+    ],
+    "/generator-dokumen/invoice-dp/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/generator-dokumen/invoice-dp/page.css",
+      "static/chunks/app/generator-dokumen/invoice-dp/page.js"
+    ],
+    "/daftar-dokumen/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/daftar-dokumen/page.css",
+      "static/chunks/app/daftar-dokumen/page.js"
+    ],
+    "/generator-dokumen/invoice-final/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/generator-dokumen/invoice-final/page.css",
+      "static/chunks/app/generator-dokumen/invoice-final/page.js"
+    ],
+    "/generator-dokumen/kwitansi-dp/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/generator-dokumen/kwitansi-dp/page.css",
+      "static/chunks/app/generator-dokumen/kwitansi-dp/page.js"
+    ],
+    "/generator-dokumen/kwitansi-final/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/generator-dokumen/kwitansi-final/page.css",
+      "static/chunks/app/generator-dokumen/kwitansi-final/page.js"
+    ],
+    "/daftar-dokumen/detail-dokumen/[id]/[doc_type]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/daftar-dokumen/detail-dokumen/[id]/[doc_type]/page.css",
+      "static/chunks/app/daftar-dokumen/detail-dokumen/[id]/[doc_type]/page.js"
+    ],
+    "/tracker-survei/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/tracker-survei/page.css",
+      "static/chunks/app/tracker-survei/page.js"
+    ],
+    "/survei/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/survei/page.css",
+      "static/chunks/app/survei/page.js"
+    ],
+    "/survei/buat-survei/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/survei/buat-survei/page.css",
+      "static/chunks/app/survei/buat-survei/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ]
+  }
+}

@@ -10,6 +10,137 @@
     font-family: caudex;
 }
 
+.buttonTambahSurvei {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    top: 104px;
+    left: 1100px;
+    border-radius: 36px;
+    background-color: #a62626;
+    width: 200px;
+    height: 52px;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+    font-size: 16px;
+    font-family: Caudex;
+    cursor: pointer;
+}
+
+.buttonTambahSurvei:hover {
+    background-color: #D9878D;
+}
+
+.iconChevron{
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.buttonEnabledSebelumnya {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 880px;
+    left: 992px;
+    border: none;
+    background: none;
+    color: #1c1c1c;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.buttonDisabledSebelumnya {
+    display: inline-flex;
+    align-items: center;
+    cursor: not-allowed;
+    position: absolute;
+    top: 880px;
+    left: 992px;
+    border: none;
+    background: none;
+    color: #bbc7cd;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.buttonEnabledSelanjutnya {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 880px;
+    left: 1152px;
+    border: none;
+    background: none;
+    color: #1c1c1c;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.buttonDisabledSelanjutnya {
+    display: inline-flex;
+    align-items: center;
+    cursor: not-allowed;
+    position: absolute;
+    top: 880px;
+    left: 1152px;
+    border: none;
+    background: none;
+    color: #bbc7cd;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.buttonSurvei {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.iconSurvei {
+    margin-top: 4px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.tableContainerSurvei {
+    left: 400px;
+    top: 280px;
+    width: 60%;
+    position: absolute;
+    color: #1c1c1c;
+    text-align: center;
+    font-family: Caudex;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.tableContainerSurvei th {
+    font-weight: bold;
+}
+
+.tableContainerSurvei tbody tr {
+    outline:1px solid #bbc7cd;
+    border-radius: 28px;
+}
+
 .containerSurvei {
     position: absolute;
     top: 200px;
@@ -32,55 +163,105 @@
     margin-bottom: 20px;
 }
 
+.textFieldSurveiDropdown {
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #bbc7cd;
+    padding: 12px 16px;
+    color: #1c1c1c;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: Caudex;
+    width: 572px;
+    margin-bottom: 20px;
+    appearance: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23bbc7cd' d='M2 0L0 2h4z'/%3E%3C/svg%3E") no-repeat right 16px center;
+    background-size: 12px; 
+    cursor: pointer;
+}
+
+.textFieldSurveiDropdown:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 8px; 
+}
+
+.textFieldSurvei:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 8px; 
+}
+
+.textFieldSurvei:disabled {
+    color: #bbc7cd;
+}
+
 .textFieldTitleSurvei {
     color: #1c1c1c;
     margin-bottom: 4px;
+    font-family: caudex;
 }
 
 .primaryButtonSurvei {
     position: absolute;
-    top: 960px;
-    left: 352px;
+    top: 20px;
+    left: 640px;
     border-radius: 32px;
     background-color: #a62626;
-    padding: 20px 280px;
+    padding: 20px 100px;
     color: #ffffff;
     font-family: caudex;
     font-size: 16px;
     border: none;
+    cursor: pointer;
+}
+
+.primaryButtonSurvei:disabled {
+    background-color: #bbc7cd;
+}
+
+.primaryButtonSurvei:hover {
+    background-color: #D9878D;
 }
 
 .secondaryButtonSurvei {
     position: absolute;
-    top: 992px;
-    left: 352px;
+    top: 56px;
+    left: 640px;
     background-color: #ffffff;
     color: #a62626;
     border-radius: 32px;
     border: 1px solid #a62626;
-    padding: 18px 286px;
+    padding: 18px 108px;
     margin-top: 40px; 
     font-family: caudex;
     font-size: 16px;
+    cursor: pointer;
+}
+
+.secondaryButtonSurvei:hover {
+    background-color: #F2CFD5;
 }
 
 .searchBarContainer {
+    position: absolute;
     display: flex;
+    align-items: center;
+    top: 220px;
+    left: 352px;
 }
 
 .iconSearch {
-    width: 16px;
-    height: 16px;
+    position: absolute;
+    left: 16px; /* Jarak ikon dari tepi kiri input */
     color: #5f737f;
-    margin-left: 364px;
-    margin-top: 200px;
-    z-index: 1; 
+    width: 20px; /* Ukuran ikon */
+    height: 20px;
+    z-index: 1;
 }
 
 .searchBar {
     position: absolute;
-    top: 192px;
-    left: 352px;
     border-radius: 20px;
     background-color: #e1e8ec;
     width: 952px;
@@ -94,123 +275,16 @@
     padding-left: 44px;
 }
 
-.searchBar:focus {
+.searchBar:hover {
     outline: none; 
     box-shadow: 0 0 0 2px #5f737f; 
     border-radius: 20px; 
 }
 
-.tableContainerSurvei {
-    left: 400px;
-    top: 280px;
-    width: 60%;
-    position: absolute;
-    color: #1c1c1c;
-    text-align: center;
-    font-family: Caudex;
-}
-
-.tdSurvei {
-    border-radius: 28px;
-    border: 1px solid #bbc7cd;
-}
-
-.buttonSurvei {
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-.iconSurvei {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    padding-right: 8px;
-    padding-left: 8px;
-}
-
-.iconChevron{
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-    padding-right: 8px;
-    padding-left: 8px;
-}
-
-.buttonEnabledSebelumnya {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    position: absolute;
-    top: 892px;
-    left: 992px;
-    border: none;
-    background: none;
-    color: #1c1c1c;
-    font-family: Caudex;
-    font-size: 16px;
-}
-
-.buttonDisabledSebelumnya {
-    display: inline-flex;
-    align-items: center;
-    cursor: not-allowed;
-    position: absolute;
-    top: 892px;
-    left: 992px;
-    border: none;
-    background: none;
-    color: #bbc7cd;
-    font-family: Caudex;
-    font-size: 16px;
-}
-
-.buttonEnabledSelanjutnya {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    position: absolute;
-    top: 892px;
-    left: 1152px;
-    border: none;
-    background: none;
-    color: #1c1c1c;
-    font-family: Caudex;
-    font-size: 16px;
-}
-
-.buttonDisabledSelanjutnya {
-    display: inline-flex;
-    align-items: center;
-    cursor: not-allowed;
-    position: absolute;
-    top: 892px;
-    left: 1152px;
-    border: none;
-    background: none;
-    color: #bbc7cd;
-    font-family: Caudex;
-    font-size: 16px;
-}
-
-.buttonTambahSurvei {
-    display: inline-flex;
-    align-items: center;
-    position: absolute;
-    top: 104px;
-    left: 1100px;
-    border-radius: 36px;
-    background-color: #a62626;
-    width: 192px;
-    height: 52px;
-    padding: 10px 20px;
-    outline: none;
-    border: none;
-    box-shadow: none;
-    color: #fff;
-    font-size: 16px;
-    font-family: Caudex;
-    cursor: pointer;
+.searchBar:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 20px; 
 }
 
 .idContainer {
@@ -218,4 +292,35 @@
     font-size: 20px;
     margin-top: 200px;
     margin-left: 352px;
+}
+
+.radioGroupSurvei {
+    font-family: Caudex;
+    cursor: pointer;
+    padding-bottom: 16px;
+}
+
+.iconEdit {
+    position: absolute;
+    left: 580px;
+    top: 284px;
+    cursor: pointer;
+    color: #1c1c1c; 
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px; 
+}
+
+.iconEdit:hover {
+    background-color: #e1e8ec;
+}
+
+.daerahList {
+    font-family: Caudex;
+    color: #5f737f;
 }

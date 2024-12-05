@@ -1,0 +1,9 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/daftar-dokumen/page": "app/daftar-dokumen/page.js",
+  "/generator-dokumen/invoice-dp/page": "app/generator-dokumen/invoice-dp/page.js",
+  "/tracker-survei/page": "app/tracker-survei/page.js",
+  "/survei/page": "app/survei/page.js",
+  "/survei/buat-survei/page": "app/survei/buat-survei/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}

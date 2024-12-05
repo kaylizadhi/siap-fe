@@ -17,7 +17,7 @@ const KwitansiFinal = () => {
             }
 
             try {
-                const response = await fetch('https://siap-be-production.up.railway.app/api/accounts/check_role_administrasi/', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_administrasi/`, {
                     headers: { 'Authorization': `Token ${token}` },
                 });
                 const data = await response.json();
@@ -38,6 +38,19 @@ const KwitansiFinal = () => {
 
 
     const handleExport = async () => {
+        // Check if any required fields are empty
+        // if (
+        //     !pembayar ||
+        //     !nominalPembayaran ||
+        //     !tujuanPembayaran ||
+        //     !amount ||
+        //     !nominalTertulis ||
+        //     !date
+        // ) {
+        //     // Display a notification or alert to the user
+        //     alert("Mohon mengisi semua yang ditandai dengan * sebelum mengekspor.");
+        //     return; // Stop the export process if fields are not filled
+        // }
         const data = {
             pembayar,
             nominal_pembayaran: nominalPembayaran,
@@ -49,7 +62,7 @@ const KwitansiFinal = () => {
         };
 
         try {
-            const response = await fetch('https://siap-be-production.up.railway.app/dokumen_pendukung/generate-kwitansi-dp/', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/generate-kwitansi-final/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -101,6 +114,7 @@ const KwitansiFinal = () => {
         const selectedDocType = e.target.value;
         setDocType(selectedDocType);
         if (selectedDocType === 'proposal') router.push('/generator-dokumen/proposal');
+        else if (selectedDocType === 'invoiceDP') router.push('/generator-dokumen/invoice-dp');
         else if (selectedDocType === 'invoiceFinal') router.push('/generator-dokumen/invoice-final');
         else if (selectedDocType === 'kontrak') router.push('/generator-dokumen/kontrak');
         else if (selectedDocType === 'kwitansiDP') router.push('/generator-dokumen/kwitansi-dp');
@@ -182,15 +196,15 @@ const KwitansiFinal = () => {
 
                     <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="pembayar">Pembayar</label>
+                            <label htmlFor="pembayar">Pembayar*</label>
                             <input type="text" id="pembayar" placeholder="Masukkan nama pembayar" value={pembayar} onChange={(e) => setPembayar(e.target.value)} />
                         </div>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="tujuanPembayaran">Tujuan Pembayaran</label>
+                            <label htmlFor="tujuanPembayaran">Tujuan Pembayaran*</label>
                             <input type="text" id="tujuanPembayaran" placeholder="Masukkan tujuan pembayaran" value={tujuanPembayaran} onChange={(e) => setTujuanPembayaran(e.target.value)} />
                         </div>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="nominalTertulis">Nominal Tertulis</label>
+                            <label htmlFor="nominalTertulis">Nominal Tertulis*</label>
                             <input type="text" id="nominalTertulis" placeholder="Masukkan nominal tertulis" value={nominalTertulis} onChange={(e) => setNominalTertulis(e.target.value)} />
                         </div>
                         <div className={styles.inputGroup}>
@@ -198,11 +212,11 @@ const KwitansiFinal = () => {
                             <textarea id="additionalInfo" placeholder="Tambah keterangan" value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)}></textarea>
                         </div>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="amount">Amount</label>
+                            <label htmlFor="amount">Jumlah Pembayaran*</label>
                             <input type="number" id="amount" placeholder="Masukkan jumlah" value={amount} onChange={(e) => setAmount(e.target.value)} />
                         </div>
                         <div className={styles.datePicker}>
-                            <label htmlFor="date">Tanggal</label>
+                            <label htmlFor="date">Tanggal Pembayaran*</label>
                             <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} />
                         </div>
                         <div className={styles.buttonGroup}>

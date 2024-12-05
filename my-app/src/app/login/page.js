@@ -35,7 +35,7 @@ export default function Login() {
       setError(null);
   
       try {
-        const res = await fetch('https://siap-be-production.up.railway.app/api/login/', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

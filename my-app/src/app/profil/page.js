@@ -39,7 +39,7 @@ export default function Profil() {
         }
       
         try {
-          const res = await fetch('https://siap-be-production.up.railway.app/api/profil/', {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}profil/`, {
             method: 'GET',
             headers: {
               'Authorization': `Token ${token}`,  
@@ -85,7 +85,7 @@ export default function Profil() {
 
     try {
       // Update profile details (name, email, etc.)
-      const res = await fetch('https://siap-be-production.up.railway.app/api/profil/', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}profil/`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Token ${token}`,
@@ -105,7 +105,7 @@ export default function Profil() {
 
       // If both passwords are provided, update the password
       if (oldPassword && newPassword) {
-        const passwordRes = await fetch('https://siap-be-production.up.railway.app/api/change-password/', {
+        const passwordRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}change-password/`, {
           method: 'PATCH',
           headers: {
             'Authorization': `Token ${token}`,
@@ -140,45 +140,6 @@ export default function Profil() {
   return (
     <div className={styles.containerbackground}>
       <div className={styles.container}>
-        <aside className={styles.sidebar}>
-          <div className={styles.logo}>
-            <img src="/images/siap-logo-2.svg" alt="siap-logo-2" />
-          </div>
-          <nav className={styles.nav}>
-            <a href="/dashboard">
-              <img src="/images/Home.svg" alt="Dashboard Icon" className={styles.icon} />Dashboard
-            </a>
-            <a href="/profil">
-              <img src="/images/ProfileRed.svg" alt="Profile Icon" className={styles.active} />Profil
-            </a>
-            <a href="/create-account">
-              <img src="/images/Add.svg" alt="Create Icon" className={styles.icon} />Buat Akun
-            </a>
-            <a href="/generator-dokumen/invoice-final">
-              <img src="/images/Create.svg" alt="Buat Dokumen Icon" className={styles.icon} />Buat Dokumen
-            </a>
-            <a href="/documents">
-              <img src="/images/Document.svg" alt="Daftar Dokumen Icon" className={styles.icon} />Daftar Dokumen
-            </a>
-            <a href="/souvenir-tracker">
-              <img src="/images/Inventory.svg" alt="Tracker Souvenir Icon" className={styles.icon} />Tracker Souvenir
-            </a>
-            <a href="/survey-tracker">
-              <img src="/images/Status.svg" alt="Tracker Status Icon" className={styles.icon} />Tracker Status Survei
-            </a>
-            <a href="/clients">
-              <img src="/images/Client.svg" alt="Daftar Klien Icon" className={styles.icon} />Daftar Klien
-            </a>
-            <a href="/surveys">
-              <img src="/images/Survey.svg" alt="Daftar Survey Icon" className={styles.icon} />Daftar Survei
-            </a>
-          </nav>
-          <a href="/login" onClick={handleLogout} className={styles.logout}>
-            <img src="/images/Out.svg" alt="Logout Icon" className={styles.icon} />Logout
-          </a>
-        </aside>
-
-
         <div className={styles.content}>
           <h1 className={styles.title}>Profil {firstName}</h1>
           <h2 className={styles.roleHeader}>{role}</h2>
