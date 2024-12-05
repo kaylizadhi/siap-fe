@@ -33,16 +33,24 @@ export default function SurveyTrackerDetail({ params }) {
           { url: `${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_eksekutif/`, role: "Eksekutif" },
         ];
 
-        for (const endpoint of roleEndpoints) {
-          const response = await fetch(endpoint.url, {
-            headers: { Authorization: `Token ${token}` },
-          });
+        // Execute all role checks concurrently
+        const responses = await Promise.all(
+          roleEndpoints.map((endpoint) =>
+            fetch(endpoint.url, {
+              headers: { Authorization: `Token ${token}` },
+            }).then((response) => ({
+              ok: response.ok,
+              role: endpoint.role,
+            }))
+          )
+        );
 
-          if (response.ok) {
-            setUserRole(endpoint.role);
-            return;
-          }
-        }
+        // Find the first successful response
+        const successfulResponse = responses.find((res) => res.ok);
+        if (successfulResponse) {
+          setUserRole(successfulResponse.role); // Set the role based on the successful response
+          return;
+        } 
 
         router.push("/login");
       } catch (error) {

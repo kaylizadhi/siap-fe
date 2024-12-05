@@ -30,9 +30,9 @@ export default function DaftarDokumen() {
                 const data = await response.json();
                 console.log("Fetched documents:", data);
                 // Sort the documents by 'id' in descending order right after fetching
-                const sortedData = data.sort((a, b) => {
-                    return b.id.localeCompare(a.id); // Sorting by 'id' in descending order
-                });
+                const sortedData = data.sort((a, b) => 
+                     b.id.localeCompare(a.id) // Sorting by 'id' in descending order
+                );
 
                 setDokumen(sortedData);
                 // setDokumen(data);
@@ -91,7 +91,8 @@ export default function DaftarDokumen() {
         setSortOrder(newSortOrder);
 
         const sortedDokumen = [...dokumen].sort((a, b) => {
-            let aValue, bValue;
+            let aValue; let 
+bValue;
 
             if (column === "id") {
                 // Extract the numeric part of the ID
