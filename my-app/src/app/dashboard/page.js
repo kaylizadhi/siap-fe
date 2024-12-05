@@ -30,6 +30,14 @@ const Dashboard = () => {
         const data = await response.json();
 
         if (
+          data.role === "Admin Sistem"
+        ) {
+          router.push("/buat-akun");
+        } else if (
+          data.role === "Pengendali Mutu"
+        ) {
+          router.push("/tracker-survei");
+        } else if (
           data.error ||
           !["Administrasi", "Eksekutif", "Logistik"].includes(data.role)
         ) {
