@@ -69,7 +69,7 @@ export default function BuatAkun() {
         const data = { username, name, email, password, role, security_question, security_answer };
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}buatAkun/api/buatAkun/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}buatAkun/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
