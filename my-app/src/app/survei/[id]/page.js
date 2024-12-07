@@ -14,6 +14,14 @@ export default function Detail() {
         router.push("/survei"); 
     };
 
+    function formatRupiah(number) {
+        const formatted = new Intl.NumberFormat('id-ID', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(number);
+        return `Rp${formatted},-`;
+    }
+
     function formatDateTime(dateTimeString){
         const options = {
             day: "numeric",
@@ -61,18 +69,47 @@ export default function Detail() {
 
     return (
         <div>
-            <b className={styles.headingSurvei}>Daftar Klien</b>
+            <b className={styles.headingSurvei}>Detail Survei</b>
             <div className={styles.idContainer}>
-                <div>Judul Survei : {survei.nama_survei}</div>
-                <div>Nama Klien : {survei.nama_klien}</div>
-                {/* <div>Daerah : {survei.wilayah_survei}</div> */}
-                <div>Jumlah Responden : {survei.jumlah_responden}</div>
-                <div>Harga Survei : {survei.harga_survei}</div>
-                <div>Tanggal Mulai : {survei.waktu_mulai_survei && formatDateTime(survei.waktu_mulai_survei)}</div>
-                <div>Tanggal Selesai : {survei.waktu_berakhir_survei && formatDateTime(survei.waktu_berakhir_survei)}</div>
-                <div>Tipe Survei : {survei.tipe_survei}</div>
-                <button onClick={handleBackToSurvei} className={styles.secondaryButtonSurvei}>Kembali</button>
+                <div className={styles.row}>
+                    <div className={styles.label}>Judul Survei</div>
+                    <div className={styles.value}>{survei.nama_survei}</div>
+                </div>
+                <div className={styles.row}>
+                    <div className={styles.label}>Nama Klien</div>
+                    <div className={styles.value}>{survei.nama_klien}</div>
+                </div>
+                {/* <div className={styles.row}>
+                    <div className={styles.label}>Daerah</div>
+                    <div className={styles.value}>{survei.wilayah_survei}</div>
+                </div> */}
+                <div className={styles.row}>
+                    <div className={styles.label}>Jumlah Responden</div>
+                    <div className={styles.value}>{survei.jumlah_responden}</div>
+                </div>
+                <div className={styles.row}>
+                    <div className={styles.label}>Harga Survei</div>
+                    <div className={styles.value}>{survei.harga_survei && formatRupiah(survei.harga_survei)}</div>
+                </div>
+                <div className={styles.row}>
+                    <div className={styles.label}>Tanggal Mulai</div>
+                    <div className={styles.value}>
+                        {survei.waktu_mulai_survei && formatDateTime(survei.waktu_mulai_survei)}
+                    </div>
+                </div>
+                <div className={styles.row}>
+                    <div className={styles.label}>Tanggal Selesai</div>
+                    <div className={styles.value}>
+                        {survei.waktu_berakhir_survei && formatDateTime(survei.waktu_berakhir_survei)}
+                    </div>
+                </div>
+                <div className={styles.row}>
+                    <div className={styles.label}>Tipe Survei</div>
+                    <div className={styles.value}>{survei.tipe_survei}</div>
+                </div>
+                <button onClick={handleBackToSurvei} className={styles.secondaryButtonSurvei2}>Kembali</button>
             </div>
         </div>
     );
+    
 }
