@@ -303,10 +303,10 @@ bValue;
                         </tr>
                     </thead>
                     <tbody>
-                        {currentDokumen.map((dokumen, index) => (
+                        {currentDokumen.map((dokumen) => (
                             <tr
                                 key={dokumen.id}
-                                className={index + indexOfFirstDokumen === deletingIndex ? styles.fadeOut : ""}
+                                // className={index + indexOfFirstDokumen === deletingIndex ? styles.fadeOut : ""}
                             >
                                 <td>{dokumen.id}</td>
                                 <td>{dokumen.survey_name}</td>
@@ -323,7 +323,7 @@ bValue;
                                         className="text-red-800 hover:text-gray-600 transition-colors" 
                                         onClick={() => handleExport(dokumen.id, dokumen.doc_type)}
                                     >
-                                        <img src="/images/Delete.svg" alt="Delete" />
+                                        <img src="/images/Create.svg" alt="Create" />
                                     </button>
                                 </td>
                             </tr>
