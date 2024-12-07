@@ -150,8 +150,10 @@ bValue;
     //     }
     // };
 
-    const handleExport = async (dokumenId, doc_type) => {
+    const handleExport = async (e, dokumenId, doc_type) => {
+        e.preventDefault();
         console.log(`Export button clicked for `);
+
         const encodedId = encodeURIComponent(dokumenId);
         if (dokumenId) {
             fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/detailDokumen/${encodedId}/`)
@@ -321,7 +323,7 @@ bValue;
                                     </button>
                                     <button 
                                         className="text-red-800 hover:text-gray-600 transition-colors" 
-                                        onClick={() => handleExport(dokumen.id, dokumen.doc_type)}
+                                        onClick={(e) => handleExport(e, dokumen.id, dokumen.doc_type)}
                                     >
                                         <img src="/images/Create.svg" alt="Create" />
                                     </button>
