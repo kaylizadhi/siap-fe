@@ -28,8 +28,8 @@ export default function BuatSurvei() {
       const data = await response.json();
 
       // Pastikan respons adalah array
-      if (Array.isArray(data)) {
-        setKlien(data);
+      if (Array.isArray(data.results)) {
+        setKlien(data.results);
       } else {
         console.error("Respons klien bukan array:", data);
         setKlien([]);
@@ -40,11 +40,10 @@ export default function BuatSurvei() {
     }
   };
 
-  // Fungsi untuk mengambil data daerah berdasarkan ruang lingkup
   const fetchDaerah = async (param) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/survei/lokasi?param=${param.toLowerCase()}`,
+        `http://127.0.0.1:8000/api/survei/count-by-region?ruang_lingkup=${param}`,
         {
           method: "GET",
           headers: {
@@ -52,28 +51,49 @@ export default function BuatSurvei() {
           },
         }
       );
+      
+      // Pastikan respons berhasil
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
       const data = await response.json();
-  
+      
+      // Periksa jika data adalah array
       if (Array.isArray(data)) {
-        // Filter data berdasarkan ruang lingkup yang dipilih
-        if (param === "Provinsi" && wilayahSurvei.some(item => item.id.includes("Kota"))) {
-          setDaerahOptions([]);
-          alert("Tidak bisa memilih Kota jika sudah memilih Provinsi.");
-        } else if (param === "Kota" && wilayahSurvei.some(item => item.id.includes("Provinsi"))) {
-          setDaerahOptions([]);
-          alert("Tidak bisa memilih Provinsi jika sudah memilih Kota.");
-        } else {
-          setDaerahOptions(data);
-        }
+        // Mengambil opsi yang sesuai untuk dropdown
+        const daerahOptions = data.map(item => ({
+          label: item.value,  // Menampilkan 'value' sebagai label
+          value: item.id,     // Menyimpan 'id' sebagai value
+        }));
+        setDaerahOptions(daerahOptions);
       } else {
-        console.error("Response daerah tidak sesuai:", data);
-        setDaerahOptions([]);
+        console.error("Response daerah tidak sesuai format: ", data);
+        setDaerahOptions([]);  // Kosongkan jika format tidak sesuai
       }
     } catch (error) {
       console.error("Error fetching daerah:", error);
-      setDaerahOptions([]);
+      setDaerahOptions([]);  // Kosongkan jika terjadi error
     }
   };
+  
+
+  const resetRuangLingkup = () => {
+    const confirmReset = confirm(
+      "Reset ruang lingkup akan menghapus daftar wilayah yang sudah ditambahkan. Lanjutkan?"
+    );
+    if (confirmReset) {
+      setWilayahSurvei([]);
+      setSurvei({ ...survei, ruang_lingkup: null });
+      setDaerahOptions([]);
+  
+      // Aktifkan kembali pilihan ruang lingkup
+      document
+        .querySelectorAll("input[name='ruanglingkup']")
+        .forEach((input) => (input.disabled = false));
+    }
+  };
+  
   
   
 
@@ -83,14 +103,25 @@ export default function BuatSurvei() {
 
   const handleRuangLingkupChange = (event) => {
     const value = event.target.value;
+  
+    // Cek apakah sudah ada wilayah survei yang ditambahkan
+    if (wilayahSurvei.length > 0) {
+      const confirmReset = confirm(
+        "Mengubah ruang lingkup akan menghapus daftar wilayah yang sudah ditambahkan. Lanjutkan?"
+      );
+      if (!confirmReset) return;
+  
+      // Reset wilayah survei jika pengguna setuju
+      setWilayahSurvei([]);
+    }
+  
+    // Set ruang lingkup baru
     setSurvei({ ...survei, ruang_lingkup: value });
   
-    // Reset daftar daerah yang sudah dipilih jika ruang lingkup berubah
-    setWilayahSurvei([]);
-  
-    // Ambil data daerah sesuai dengan ruang lingkup yang dipilih
+    // Ambil data daerah berdasarkan ruang lingkup baru
     fetchDaerah(value);
   };
+  
   
   
 
@@ -106,6 +137,11 @@ export default function BuatSurvei() {
           ...wilayahSurvei,
           { id: selectedId, name: selectedName },
         ]);
+  
+        // Set ruang lingkup sebagai "final" setelah menambahkan daerah
+        document
+          .querySelectorAll("input[name='ruanglingkup']")
+          .forEach((input) => (input.disabled = true));
       } else {
         alert(`${selectedName} sudah ada dalam daftar.`);
       }
@@ -113,6 +149,7 @@ export default function BuatSurvei() {
       alert("Pilih daerah terlebih dahulu.");
     }
   };
+  
   
   
 
@@ -191,46 +228,56 @@ export default function BuatSurvei() {
         </select>
 
         <b className={styles.textFieldTitleSurvei}>Ruang Lingkup Survei</b>
-        <div className={styles.radioGroupSurvei}>
-          {["Nasional", "Provinsi", "Kota"].map((scope) => (
-            <label key={scope}>
-              <input
-                type="radio"
-                name="ruanglingkup"
-                value={scope}
-                onChange={handleRuangLingkupChange}
-              />
-              {scope}
-            </label>
-          ))}
-        </div>
+<div className={styles.radioGroupSurvei}>
+  {["Nasional", "Provinsi", "Kota"].map((scope) => (
+    <label key={scope}>
+      <input
+        type="radio"
+        name="ruanglingkup"
+        value={scope}
+        onChange={handleRuangLingkupChange}
+      />
+      {scope}
+    </label>
+  ))}
+</div>
+{survei.ruang_lingkup && (
+  <button
+    type="button"
+    className={styles.resetButtonSurvei}
+    onClick={resetRuangLingkup}
+  >
+    Reset Ruang Lingkup
+  </button>
+)}
 
-        <b className={styles.textFieldTitleSurvei}>Daerah</b>
-        <ul className={styles.daerahList}>
-          {wilayahSurvei.map((daerah) => (
-            <li key={daerah.id}>
-              {daerah.name}
-              <button
-                style={{ marginLeft: "10px" }}
-                type="button"
-                onClick={() => removeDaerah(daerah.id)}
-              >
-                Hapus
-              </button>
-            </li>
-          ))}
-        </ul>
+<b className={styles.textFieldTitleSurvei}>Daerah</b>
+<ul className={styles.daerahList}>
+  {wilayahSurvei.map((daerah) => (
+    <li key={daerah.id}>
+      {daerah.name}
+      <button
+        style={{ marginLeft: "10px" }}
+        type="button"
+        onClick={() => removeDaerah(daerah.id)}
+      >
+        Hapus
+      </button>
+    </li>
+  ))}
+</ul>
 
+<select id="daerahSelect" className={styles.textFieldSurveiDropdown}>
+    <option value="">Pilih Daerah</option>
+    {daerahOptions.map((daerah) => (
+        <option key={daerah.id} value={daerah.id}>
+            {daerah.value} {/* Pastikan nama yang benar */}
+        </option>
+    ))}
+</select>
 
-        <select id="daerahSelect" className={styles.textFieldSurveiDropdown}>
-          <option value="">Pilih Daerah</option>
-          {daerahOptions.map((daerah) => (
-            <option key={daerah.id} value={daerah.id}>
-              {daerah.name}
-            </option>
-          ))}
-        </select>
-        <PlusIcon className={styles.iconPlus} onClick={addDaerah} />
+<PlusIcon className={styles.iconPlus} onClick={addDaerah} />
+
 
         <b className={styles.textFieldTitleSurvei}>Harga</b>
         <input

@@ -1,0 +1,380 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/app/survei/index.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+@import url('https://fonts.googleapis.com/css2?family=Caudex:wght@400&display=swap');
+
+.survei_headingSurvei__hWzo8 {
+    position: absolute;
+    top: 116px;
+    left: 352px;
+    font-size: 40px;
+    line-height: 40px;
+    color: #a62626;
+    font-family: caudex;
+}
+
+.survei_buttonTambahSurvei__gJe_e {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    top: 104px;
+    left: 1100px;
+    border-radius: 36px;
+    background-color: #a62626;
+    width: 200px;
+    height: 52px;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+    font-size: 16px;
+    font-family: Caudex;
+    cursor: pointer;
+}
+
+.survei_buttonTambahSurvei__gJe_e:hover {
+    background-color: #D9878D;
+}
+
+.survei_iconChevron__FydQC{
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.survei_buttonEnabledSebelumnya__Cz3nY {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 880px;
+    left: 992px;
+    border: none;
+    background: none;
+    color: #1c1c1c;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.survei_buttonDisabledSebelumnya__gqkct {
+    display: inline-flex;
+    align-items: center;
+    cursor: not-allowed;
+    position: absolute;
+    top: 880px;
+    left: 992px;
+    border: none;
+    background: none;
+    color: #bbc7cd;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.survei_buttonEnabledSelanjutnya__oqIC6 {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 880px;
+    left: 1152px;
+    border: none;
+    background: none;
+    color: #1c1c1c;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.survei_buttonDisabledSelanjutnya__2WOb3 {
+    display: inline-flex;
+    align-items: center;
+    cursor: not-allowed;
+    position: absolute;
+    top: 880px;
+    left: 1152px;
+    border: none;
+    background: none;
+    color: #bbc7cd;
+    font-family: Caudex;
+    font-size: 16px;
+    padding-bottom: 100px;
+}
+
+.survei_buttonSurvei__hdXsX {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.survei_iconSurvei__uE6hZ {
+    margin-top: 4px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.survei_tableContainerSurvei__DWZrT {
+    left: 400px;
+    top: 280px;
+    width: 60%;
+    position: absolute;
+    color: #1c1c1c;
+    text-align: center;
+    font-family: Caudex;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.survei_tableContainerSurvei__DWZrT th {
+    font-weight: bold;
+}
+
+.survei_tableContainerSurvei__DWZrT tbody tr {
+    outline:1px solid #bbc7cd;
+    border-radius: 28px;
+}
+
+.survei_containerSurvei__htfRQ {
+    position: absolute;
+    top: 200px;
+    left: 352px;
+    display: flex;
+    flex-direction: column;
+    color: #1c1c1c;
+}
+
+.survei_textFieldSurvei__UJ9hf {
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #bbc7cd;
+    padding: 12px 16px;
+    color: #1c1c1c;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: Caudex;
+    width: 572px;
+    margin-bottom: 20px;
+}
+
+.survei_textFieldSurveiDropdown__Gy6zJ {
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #bbc7cd;
+    padding: 12px 16px;
+    color: #1c1c1c;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: Caudex;
+    width: 572px;
+    margin-bottom: 20px;
+    appearance: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23bbc7cd' d='M2 0L0 2h4z'/%3E%3C/svg%3E") no-repeat right 16px center;
+    background-size: 12px; 
+    cursor: pointer;
+}
+
+.survei_textFieldSurveiDropdown__Gy6zJ:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 8px; 
+}
+
+.survei_textFieldSurvei__UJ9hf:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 8px; 
+}
+
+.survei_textFieldSurvei__UJ9hf:disabled {
+    color: #bbc7cd;
+}
+
+.survei_textFieldTitleSurvei__Wb5nm {
+    color: #1c1c1c;
+    margin-bottom: 4px;
+    font-family: caudex;
+}
+
+.survei_primaryButtonSurvei__jrQF0 {
+    position: absolute;
+    top: 20px;
+    left: 640px;
+    border-radius: 32px;
+    background-color: #a62626;
+    padding: 20px 100px;
+    color: #ffffff;
+    font-family: caudex;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.survei_primaryButtonSurvei__jrQF0:disabled {
+    background-color: #bbc7cd;
+}
+
+.survei_primaryButtonSurvei__jrQF0:hover {
+    background-color: #D9878D;
+}
+
+.survei_secondaryButtonSurvei__ZwVxE {
+    position: absolute;
+    top: 56px;
+    left: 640px;
+    background-color: #ffffff;
+    color: #a62626;
+    border-radius: 32px;
+    border: 1px solid #a62626;
+    padding: 18px 108px;
+    margin-top: 40px; 
+    font-family: caudex;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.survei_secondaryButtonSurvei__ZwVxE:hover {
+    background-color: #F2CFD5;
+}
+
+.survei_secondaryButtonSurvei2__O7Qif {
+    position: absolute;
+    top: 520px;
+    left: 360px;
+    background-color: #ffffff;
+    color: #a62626;
+    border-radius: 32px;
+    border: 1px solid #a62626;
+    padding: 18px 286px;
+    margin-top: 40px; 
+    font-family: caudex;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.survei_secondaryButtonSurvei2__O7Qif:hover {
+    background-color: #F2CFD5;
+}
+
+.survei_searchBarContainer__ZnWTU {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 220px;
+    left: 352px;
+}
+
+.survei_iconSearch__ySMWd {
+    position: absolute;
+    left: 16px; /* Jarak ikon dari tepi kiri input */
+    color: #5f737f;
+    width: 20px; /* Ukuran ikon */
+    height: 20px;
+    z-index: 1;
+}
+
+.survei_searchBar__RDH9p {
+    position: absolute;
+    border-radius: 20px;
+    background-color: #e1e8ec;
+    width: 952px;
+    height: 52px;
+    box-sizing: border-box;
+    gap: 12px;
+    color: #5f737f;
+    border: none;
+    font-size: 16px;
+    font-family: Caudex;
+    padding-left: 44px;
+}
+
+.survei_searchBar__RDH9p:hover {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 20px; 
+}
+
+.survei_searchBar__RDH9p:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #5f737f; 
+    border-radius: 20px; 
+}
+
+.survei_idContainer__G8hnp {
+    font-family: caudex;
+    font-size: 20px;
+    margin-top: 180px;
+    margin-left: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Jarak antar item */
+    max-width: 600px;
+}
+
+.survei_row__RmVpf {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.survei_label__T6qsc {
+    text-align: left;
+    flex: 1; /* Agar label mengambil ruang yang cukup */
+    font-weight: bold;
+}
+
+.survei_value__ysFxQ {
+    text-align: right;
+    flex: 1; /* Agar nilai juga mengambil ruang yang cukup */
+}
+
+
+.survei_radioGroupSurvei__NNY3u {
+    font-family: Caudex;
+    cursor: pointer;
+    padding-bottom: 16px;
+}
+
+/* Tambahkan ini di file CSS (index.module.css) */
+.survei_radioGroupSurvei__NNY3u label {
+    margin-right: 15px; /* Mengatur jarak antar radio button */
+    display: inline-block; /* Memastikan setiap label berada dalam satu baris */
+  }
+  
+.survei_radioGroupSurvei__NNY3u input {
+margin-right: 5px; /* Menambah jarak antara radio button dan teks label */
+}
+  
+
+.survei_iconPlus__J3bp0 {
+    position: absolute;
+    left: 580px;
+    top: 288px;
+    color: #1c1c1c; 
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px; 
+}
+
+.survei_iconPlus__J3bp0:hover {
+    background-color: #e1e8ec;
+}
+
+.survei_daerahList__7Yweb {
+    font-family: Caudex;
+    color: #5f737f;
+}

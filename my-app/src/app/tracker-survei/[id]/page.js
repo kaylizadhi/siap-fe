@@ -94,7 +94,7 @@ export default function SurveyTrackerDetail({ params }) {
     const administrasiAwalFields = ["buat_kontrak", "buat_invoice_dp", "pembayaran_dp", "pembuatan_kwitansi_dp"];
     const logistikFields = ["terima_request_souvenir", "ambil_souvenir"];
     const pengendaliMutuFields = ["terima_info_survei", "lakukan_survei", "pantau_responden", "pantau_data_cleaning"];
-    const administrasiAkhirFields = ["buat_invoice_final", "pembayaran_lunas", "pembuatan_kwitansi_final"];
+    const administrasiAkhirFields = ["pembuatan_laporan", "buat_invoice_final", "pembayaran_lunas", "pembuatan_kwitansi_final", "penyerahan_laporan"];
 
     if (administrasiAwalFields.includes(field)) {
       endpoint = `http://localhost:8000/api/survei-status/${id}/administrasi-awal/`;
@@ -141,7 +141,7 @@ export default function SurveyTrackerDetail({ params }) {
 
   const isFieldEditable = (field) => {
     const roleMapping = {
-      Administrasi: ["buat_kontrak", "buat_invoice_dp", "pembayaran_dp", "pembuatan_kwitansi_dp", "buat_invoice_final", "pembayaran_lunas", "pembuatan_kwitansi_final"],
+      Administrasi: ["buat_kontrak", "buat_invoice_dp", "pembayaran_dp", "pembuatan_kwitansi_dp", "pembuatan_laporan", "buat_invoice_final", "pembayaran_lunas", "pembuatan_kwitansi_final", "penyerahan_laporan"],
       Logistik: ["terima_request_souvenir", "ambil_souvenir"],
       "Pengendali Mutu": ["terima_info_survei", "lakukan_survei", "pantau_responden", "pantau_data_cleaning"],
       Eksekutif: [],
@@ -202,9 +202,11 @@ export default function SurveyTrackerDetail({ params }) {
         {/* Administrasi Akhir Section */}
         <div>
           <h3 className="font-semibold text-lg mb-4">Administrasi Akhir</h3>
+          <StatusBox label="Pembuatan Laporan" status={surveyData.status.pembuatan_laporan} onStatusChange={handleStatusChange} fieldKey="pembuatan_laporan" isLoading={updatingField === "pembuatan_laporan"} isEditable={isFieldEditable("pembuatan_laporan")} />
           <StatusBox label="Buat Invoice Final" status={surveyData.status.buat_invoice_final} onStatusChange={handleStatusChange} fieldKey="buat_invoice_final" isLoading={updatingField === "buat_invoice_final"} isEditable={isFieldEditable("buat_invoice_final")} />
           <StatusBox label="Pembayaran Lunas" status={surveyData.status.pembayaran_lunas} onStatusChange={handleStatusChange} fieldKey="pembayaran_lunas" isLoading={updatingField === "pembayaran_lunas"} isEditable={isFieldEditable("pembayaran_lunas")} />
           <StatusBox label="Pembuatan Kwitansi Final" status={surveyData.status.pembuatan_kwitansi_final} onStatusChange={handleStatusChange} fieldKey="pembuatan_kwitansi_final" isLoading={updatingField === "pembuatan_kwitansi_final"} isEditable={isFieldEditable("pembuatan_kwitansi_final")} />
+          <StatusBox label="Penyerahan Laporan" status={surveyData.status.penyerahan_laporan} onStatusChange={handleStatusChange} fieldKey="penyerahan_laporan" isLoading={updatingField === "penyerahan_laporan"} isEditable={isFieldEditable("penyerahan_laporan")} />
         </div>
       </div>
     </div>

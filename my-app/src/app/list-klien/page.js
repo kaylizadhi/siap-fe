@@ -28,7 +28,7 @@ export default function DaftarKlien() {
   const fetchKliens = async (page = 1, search = "") => {
     try {
       setLoading(true);
-      let url = `http://localhost:8000/klien/?page=${page}&page_size=${pageSize}`;
+      let url = `http://localhost:8000/api/klien/?page=${page}&page_size=${pageSize}`;
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
       }
