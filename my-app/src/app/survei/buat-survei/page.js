@@ -44,7 +44,7 @@ export default function BuatSurvei() {
   const fetchDaerah = async (param) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/survei/lokasi?param=${param}`,
+        `http://127.0.0.1:8000/api/survei/lokasi?param=${param.toLowerCase()}`,
         {
           method: "GET",
           headers: {
@@ -53,12 +53,29 @@ export default function BuatSurvei() {
         }
       );
       const data = await response.json();
-      setDaerahOptions(data);
+  
+      if (Array.isArray(data)) {
+        // Filter data berdasarkan ruang lingkup yang dipilih
+        if (param === "Provinsi" && wilayahSurvei.some(item => item.id.includes("Kota"))) {
+          setDaerahOptions([]);
+          alert("Tidak bisa memilih Kota jika sudah memilih Provinsi.");
+        } else if (param === "Kota" && wilayahSurvei.some(item => item.id.includes("Provinsi"))) {
+          setDaerahOptions([]);
+          alert("Tidak bisa memilih Provinsi jika sudah memilih Kota.");
+        } else {
+          setDaerahOptions(data);
+        }
+      } else {
+        console.error("Response daerah tidak sesuai:", data);
+        setDaerahOptions([]);
+      }
     } catch (error) {
       console.error("Error fetching daerah:", error);
       setDaerahOptions([]);
     }
   };
+  
+  
 
   useEffect(() => {
     fetchKlien(); // Ambil data klien saat pertama kali render
@@ -67,15 +84,23 @@ export default function BuatSurvei() {
   const handleRuangLingkupChange = (event) => {
     const value = event.target.value;
     setSurvei({ ...survei, ruang_lingkup: value });
+  
+    // Reset daftar daerah yang sudah dipilih jika ruang lingkup berubah
+    setWilayahSurvei([]);
+  
+    // Ambil data daerah sesuai dengan ruang lingkup yang dipilih
     fetchDaerah(value);
   };
+  
+  
 
   const addDaerah = () => {
     const daerahSelect = document.getElementById("daerahSelect");
     const selectedId = daerahSelect.value;
     const selectedName = daerahSelect.options[daerahSelect.selectedIndex].text;
-
+  
     if (selectedId) {
+      // Cek apakah daerah sudah ada dalam daftar
       if (!wilayahSurvei.some((item) => item.id === selectedId)) {
         setWilayahSurvei([
           ...wilayahSurvei,
@@ -88,6 +113,8 @@ export default function BuatSurvei() {
       alert("Pilih daerah terlebih dahulu.");
     }
   };
+  
+  
 
   const removeDaerah = (id) => {
     setWilayahSurvei(wilayahSurvei.filter((item) => item.id !== id));
@@ -194,6 +221,7 @@ export default function BuatSurvei() {
           ))}
         </ul>
 
+
         <select id="daerahSelect" className={styles.textFieldSurveiDropdown}>
           <option value="">Pilih Daerah</option>
           {daerahOptions.map((daerah) => (
@@ -202,7 +230,7 @@ export default function BuatSurvei() {
             </option>
           ))}
         </select>
-        <PlusIcon className={styles.iconEdit} onClick={addDaerah} />
+        <PlusIcon className={styles.iconPlus} onClick={addDaerah} />
 
         <b className={styles.textFieldTitleSurvei}>Harga</b>
         <input

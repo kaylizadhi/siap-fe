@@ -341,10 +341,21 @@
     padding-bottom: 16px;
 }
 
-.iconEdit {
+/* Tambahkan ini di file CSS (index.module.css) */
+.radioGroupSurvei label {
+    margin-right: 15px; /* Mengatur jarak antar radio button */
+    display: inline-block; /* Memastikan setiap label berada dalam satu baris */
+  }
+  
+.radioGroupSurvei input {
+margin-right: 5px; /* Menambah jarak antara radio button dan teks label */
+}
+  
+
+.iconPlus {
     position: absolute;
     left: 580px;
-    top: 284px;
+    top: 288px;
     cursor: pointer;
     color: #1c1c1c; 
     width: 36px;
@@ -357,7 +368,7 @@
     padding-bottom: 8px; 
 }
 
-.iconEdit:hover {
+.iconPlus:hover {
     background-color: #e1e8ec;
 }
 
