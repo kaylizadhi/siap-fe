@@ -18,6 +18,7 @@ export default function DaftarDokumen() {
     const [sortOrder, setSortOrder] = useState("desc"); // 'asc' or 'desc'
     const [sortColumn, setSortColumn] = useState("id"); // Column to sort by
     const [docTypeFilter, setDocTypeFilter] = useState(""); // Filter by doc_type
+    const [docDetail, setDocDetail] = useState(""); // Detailed data of dokumen
 
     // Fetch document data from backend
     useEffect(() => {
@@ -68,10 +69,11 @@ export default function DaftarDokumen() {
     verifyUser();
 }, [searchQuery], [router]);     
 
-    const handleDeleteClick = (index) => {
-        setCurrentDokumenIndex(index);
-        setShowDeleteModal(true);
-    };
+    // const handleDeleteClick = (index) => {
+    //     setCurrentDokumenIndex(index);
+    //     setShowDeleteModal(true);
+    // };
+
 
     const filteredDokumen = dokumen.filter(dokumen => {
         const matchesSearch = dokumen.survey_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -128,25 +130,133 @@ bValue;
         router.push(`/daftar-dokumen/detail-dokumen/${encodedId}/${doc_type}`);
       };
 
-    const handleDelete = async (index, dokumenId) => {
-        const dokumenIndex = index + indexOfFirstDokumen;
-        const encodedId = encodeURIComponent(dokumenId);
-        setDeletingIndex(dokumenIndex);
-        try {
-            await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/${encodedId}/delete/`, {
-                method: 'DELETE',
+    // const handleDelete = async (index, dokumenId) => {
+    //     const dokumenIndex = index + indexOfFirstDokumen;
+    //     const encodedId = encodeURIComponent(dokumenId);
+    //     setDeletingIndex(dokumenIndex);
+    //     try {
+    //         await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/${encodedId}/delete/`, {
+    //             method: 'DELETE',
                 
-            });
-            setShowDeleteModal(false);
-            console.log("dokumen deleted");
-            const updatedDokumen = dokumen.filter((_, i) => i !== dokumenIndex);
-            setDokumen(updatedDokumen);
-        } catch (error) {
-            console.error("Error deleting dokumen:", error);
-        } finally {
-            setDeletingIndex(null);
-        }
-    };
+    //         });
+    //         setShowDeleteModal(false);
+    //         console.log("dokumen deleted");
+    //         const updatedDokumen = dokumen.filter((_, i) => i !== dokumenIndex);
+    //         setDokumen(updatedDokumen);
+    //     } catch (error) {
+    //         console.error("Error deleting dokumen:", error);
+    //     } finally {
+    //         setDeletingIndex(null);
+    //     }
+    // };
+
+    const handleExport = async (dokumenId, doc_type) => {
+        console.log(`Export button clicked for `);
+        const encodedId = encodeURIComponent(dokumenId);
+        if (dokumenId) {
+            fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/detailDokumen/${encodedId}/`)
+              .then((response) => response.json())
+              .then((data) => setDocDetail(data))
+              .catch((error) => console.error("Error:", error));
+          }
+      
+        // Set up configurations for each document type
+        const config = {
+          invoiceDP: {
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_invoice_dp/`,
+            fileNameFallback: `invoiceDP_${docDetail.survey_name}.xlsx`,
+            data: {
+              client_name: docDetail.client_name,
+              survey_name: docDetail.survey_name,
+              respondent_count: docDetail.respondent_count,
+              address: docDetail.address,
+              amount: parseFloat(docDetail.amount).toString(),
+              paid_percentage: parseFloat(docDetail.paid_percentage).toString(),
+              nominal_tertulis: docDetail.nominal_tertulis,
+              additional_info: docDetail.additional_info,
+              date: docDetail.date,
+            },
+          },
+          invoiceFinal: {
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_invoice_final/`,
+            fileNameFallback: `invoiceFinal_${dokumen.survey_name}.xlsx`,
+            data: {
+                client_name: docDetail.client_name,
+                survey_name: docDetail.survey_name,
+                respondent_count: docDetail.respondent_count,
+                address: docDetail.address,
+                amount: parseFloat(docDetail.amount).toString(),
+                paid_percentage: parseFloat(docDetail.paid_percentage).toString(),
+                nominal_tertulis: docDetail.nominal_tertulis,
+                additional_info: docDetail.additional_info,
+                date: docDetail.date,
+            },
+          },
+          kwitansiDP: {
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_kwitansi_dp/`,
+            fileNameFallback: `kwitansiDP_${dokumen.survey_name}.xlsx`,
+            data: {
+              client_name: docDetail.client_name,
+              survey_name: docDetail.survey_name,
+              amount: parseFloat(docDetail.amount).toString(),
+              nominal_tertulis: docDetail.nominal_tertulis,
+              additional_info: docDetail.additional_info,
+              date: docDetail.date,
+            },
+          },
+          kwitansiFinal: {
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_kwitansi_final/`,
+            fileNameFallback: `kwitansiFinal_${dokumen.survey_name}.xlsx`,
+            data: {
+                client_name: docDetail.client_name,
+                survey_name: docDetail.survey_name,
+                amount: parseFloat(docDetail.amount).toString(),
+                nominal_tertulis: docDetail.nominal_tertulis,
+                additional_info: docDetail.additional_info,
+                date: docDetail.date,
+            },
+          },
+        };
+        // Select configuration based on doc_type
+    const { url, fileNameFallback, data } = config[doc_type];
+  
+    if (!url || !data) {
+      console.error("Invalid document type specified");
+      return;
+    }
+  
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to export document");
+      }
+  
+      const blob = await response.blob();
+      const urlBlob = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = urlBlob;
+  
+      // Use filename from server response headers or fallback
+      const filename = response.headers
+        .get("Content-Disposition")
+        ?.split("filename=")[1] || fileNameFallback;
+  
+      a.download = filename.replace(/"/g, ""); // Remove quotes around filename
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(urlBlob); // Free up memory
+    } catch (error) {
+      console.error("Error exporting document:", error);
+    }
+  };
 
 
     return (
@@ -210,8 +320,8 @@ bValue;
                                         <img src="/images/eye-icon.png" alt="Details"/>
                                     </button>
                                     <button 
-                                        className={styles.deleteButton} 
-                                        onClick={() => handleDeleteClick(index)}
+                                        className="text-red-800 hover:text-gray-600 transition-colors" 
+                                        onClick={() => handleExport(dokumen.id, dokumen.doc_type)}
                                     >
                                         <img src="/images/Delete.svg" alt="Delete" />
                                     </button>
@@ -235,7 +345,7 @@ bValue;
                     )}
                 </div>
             </div>
-            {showDeleteModal && (
+            {/* {showDeleteModal && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modal}>
                         <p>Apakah Anda yakin ingin menghapus dokumen ini?</p>
@@ -243,7 +353,7 @@ bValue;
                         <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Tidak</button>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

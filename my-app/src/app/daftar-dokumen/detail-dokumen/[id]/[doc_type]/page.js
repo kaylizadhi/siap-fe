@@ -31,7 +31,7 @@ export default function DokumenDetail({ params }) {
     // Set up configurations for each document type
     const config = {
       invoiceDP: {
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/dokumen_pendukung/export_existing_invoice_dp/`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_invoice_dp/`,
         fileNameFallback: `invoiceDP_${dokumen.survey_name}.xlsx`,
         data: {
           client_name: dokumen.client_name,
