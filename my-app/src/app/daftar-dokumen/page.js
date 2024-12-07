@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { toast } from "react-toastify";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+// import { toast } from "react-toastify";
+// import { Eye, Pencil, Trash2 } from "lucide-react";
 import styles from '../../../styles/daftar-dokumen.module.css';
 
 export default function DaftarDokumen() {
@@ -12,9 +12,9 @@ export default function DaftarDokumen() {
     const [currentPage, setCurrentPage] = useState(1);
     const dokumenPerPage = 10;
     const [dokumen, setDokumen] = useState([]);
-    const [deletingIndex, setDeletingIndex] = useState(null);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [currentDokumenIndex, setCurrentDokumenIndex] = useState(null);
+    // const [deletingIndex, setDeletingIndex] = useState(null);
+    // const [showDeleteModal, setShowDeleteModal] = useState(false);
+    // const [currentDokumenIndex, setCurrentDokumenIndex] = useState(null);
     const [sortOrder, setSortOrder] = useState("desc"); // 'asc' or 'desc'
     const [sortColumn, setSortColumn] = useState("id"); // Column to sort by
     const [docTypeFilter, setDocTypeFilter] = useState(""); // Filter by doc_type
@@ -36,7 +36,7 @@ export default function DaftarDokumen() {
                 );
 
                 setDokumen(sortedData);
-                // setDokumen(data);
+                
             } catch (error) {
                 console.error("Error fetching documents:", error);
             }
@@ -150,8 +150,7 @@ bValue;
     //     }
     // };
 
-    const handleExport = async (e, dokumenId, doc_type) => {
-        e.preventDefault();
+    const handleExport = async (dokumenId, doc_type) => {
         console.log(`Export button clicked for `);
 
         const encodedId = encodeURIComponent(dokumenId);
@@ -220,45 +219,45 @@ bValue;
           },
         };
         // Select configuration based on doc_type
-    const { url, fileNameFallback, data } = config[doc_type];
-  
-    if (!url || !data) {
-      console.error("Invalid document type specified");
-      return;
-    }
-  
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-  
-      if (!response.ok) {
-        throw new Error("Failed to export document");
-      }
-  
-      const blob = await response.blob();
-      const urlBlob = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = urlBlob;
-  
-      // Use filename from server response headers or fallback
-      const filename = response.headers
-        .get("Content-Disposition")
-        ?.split("filename=")[1] || fileNameFallback;
-  
-      a.download = filename.replace(/"/g, ""); // Remove quotes around filename
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(urlBlob); // Free up memory
-    } catch (error) {
-      console.error("Error exporting document:", error);
-    }
-  };
+        const { url, fileNameFallback, data } = config[doc_type];
+    
+        if (!url || !data) {
+        console.error("Invalid document type specified");
+        return;
+        }
+    
+        try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+    
+        if (!response.ok) {
+            throw new Error("Failed to export document");
+        }
+    
+        const blob = await response.blob();
+        const urlBlob = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = urlBlob;
+    
+        // Use filename from server response headers or fallback
+        const filename = response.headers
+            .get("Content-Disposition")
+            ?.split("filename=")[1] || fileNameFallback;
+    
+        a.download = filename.replace(/"/g, ""); // Remove quotes around filename
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(urlBlob); // Free up memory
+        } catch (error) {
+        console.error("Error exporting document:", error);
+        }
+    };
 
 
     return (
@@ -322,8 +321,8 @@ bValue;
                                         <img src="/images/eye-icon.png" alt="Details"/>
                                     </button>
                                     <button 
-                                        className="text-red-800 hover:text-gray-600 transition-colors" 
-                                        onClick={(e) => handleExport(e, dokumen.id, dokumen.doc_type)}
+                                        className="text-gray-800 hover:text-gray-600 transition-colors" 
+                                        onClick={(e) => handleExport(e.dokumen.id, e.dokumen.doc_type)}
                                     >
                                         <img src="/images/Create.svg" alt="Create" />
                                     </button>
