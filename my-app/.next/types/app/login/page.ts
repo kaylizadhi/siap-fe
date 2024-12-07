@@ -1,4 +1,4 @@
-// File: C:\Users\kayli\OneDrive\Documents\09\IS Development Project\siap\fe\siap-fe\my-app\src\app\login\page.js
+// File: /Users/mathildadellanova/siap-fe/my-app/src/app/login/page.js
 import * as entry from '../../../../src/app/login/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

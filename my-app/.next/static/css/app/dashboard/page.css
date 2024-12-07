@@ -1,95 +1,122 @@
-/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./styles/survey-table.module.css ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************/
-.survey-table_container__iTnU7 {
-    padding: 20px;
-    font-family: 'Caudex', serif;
+/*!***********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./styles/dashboard.module.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************/
+/* Umum */
+.dashboard_containerBackground___FMAG {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Caudex', serif;
+  background-color:#FFFF;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard_container__UvVTH {
+  display: flex;
+  min-height: 100vh;
+  width: 1000px;
+  font-family: 'Caudex', serif;
+  background-color:#FFFF;
   }
-  .survey-table_content__qI1Px {
-    margin-top: 50px;
+
+.dashboard_content__SfbXD {
+  width: 80%;
+  padding: 40px;
+  }
+
+.dashboard_title__S4EtT {
+  font-size: 36px;
+  color: #A62626;
+  margin-bottom: 10px;
+}
+
+.dashboard_label__SgCdD {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dashboard_diagramPlaceholder__183tN {
+  min-height: 40vh;
+}
+
+.dashboard_chartContainer__c4zUU {
+  width: 80%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Tabel */
+.dashboard_tableContainer__ZnNcP {
+  width: 140vh;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.dashboard_table__Tg8SY {
+  width: 100%; /* Ensure the table takes up the entire container width */
+  max-width: 100%; /* Prevent the table from exceeding the container width */
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: auto;
+}
+
+.dashboard_table__Tg8SY th,
+
+.dashboard_table__Tg8SY td {
+  padding: 12px 16px;
+  word-wrap: break-word;
+}
+
+.dashboard_table__Tg8SY th {
+  background-color: #8b0000; /* Merah tua */
+  color: #fff;
+  text-align: left;
+}
+
+.dashboard_table__Tg8SY tr:hover {
+  background-color: #f9f9f9;
+}
+
+.dashboard_badge__nmimx {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #ffd700; /* Kuning */
+  border-radius: 4px;
+  color: #8b0000; /* Merah tua */
+  font-weight: bold;
+}
+
+.dashboard_iconContainer__BgqBP {
+  text-align: center;
+  font-size: 16px;
+}
+
+.dashboard_radioGroup__dMK_9 input {
+  margin-right: 8px;
+  cursor: pointer;
   }
   
-  .survey-table_title__kM6hf {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #A62626;
-    text-align: left;
-    margin-bottom: 10px;
+  .dashboard_radioGroup__dMK_9 label {
+  margin-right: 16px;
+  cursor: pointer;
   }
-  
-  .survey-table_subtitle__QF7zF {
-    text-align: left;
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 30px;
-  }
-  
-  .survey-table_table__xXNq5 {
-    margin-top: 350px;
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .survey-table_table__xXNq5 th {
-    background-color: #D9878D;
-    color: black;
-    padding: 12px 15px;
-    text-align: left;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-  }
-  
-  .survey-table_table__xXNq5 td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .survey-table_titleCell__E2Aue {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .survey-table_icon__JTfK6 {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  
-  .survey-table_titleCell__E2Aue p {
-    margin: 0;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .survey-table_titleCell__E2Aue span {
-    font-size: 0.85rem;
-    color: #888;
-  }
-  
-  .survey-table_statusCompleted__A6dX_ {
-    background-color: #4caf50;
+
+  .dashboard_actionButton__Zrwfx {
+    padding: 8px 12px;
+    margin: 0 5px;
+    background-color:#A62626; 
     color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Caudex';
   }
-  
-  .survey-table_statusOngoing__MRSY3 {
-    background-color: #ff9800;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-  }
-  
-  .survey-table_footer__ftp5A {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 12px;
-    color: #A62626; 
-  }
-  
+

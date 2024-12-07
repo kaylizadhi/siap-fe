@@ -1,7 +1,9 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/survei/buat-survei/page": "app/survei/buat-survei/page.js",
   "/login/page": "app/login/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/list-klien/page": "app/list-klien/page.js",
   "/survei/page": "app/survei/page.js",
-  "/generator-dokumen/proposal/page": "app/generator-dokumen/proposal/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js"
 }

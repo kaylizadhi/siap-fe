@@ -458,23 +458,43 @@ video {
     max-width: 1536px;
   }
 }
+.pointer-events-none{
+  pointer-events: none;
+}
 .visible{
   visibility: visible;
 }
 .fixed{
   position: fixed;
 }
+.absolute{
+  position: absolute;
+}
+.relative{
+  position: relative;
+}
 .inset-0{
   inset: 0px;
 }
+.inset-y-0{
+  top: 0px;
+  bottom: 0px;
+}
 .bottom-4{
   bottom: 1rem;
+}
+.left-6{
+  left: 1.5rem;
 }
 .right-4{
   right: 1rem;
 }
 .z-50{
   z-index: 50;
+}
+.mx-4{
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 .mx-auto{
   margin-left: auto;
@@ -507,6 +527,9 @@ video {
 .mt-6{
   margin-top: 1.5rem;
 }
+.mt-auto{
+  margin-top: auto;
+}
 .block{
   display: block;
 }
@@ -522,6 +545,9 @@ video {
 .grid{
   display: grid;
 }
+.h-12{
+  height: 3rem;
+}
 .h-20{
   height: 5rem;
 }
@@ -531,8 +557,14 @@ video {
 .h-48{
   height: 12rem;
 }
+.h-5{
+  height: 1.25rem;
+}
 .h-8{
   height: 2rem;
+}
+.h-screen{
+  height: 100vh;
 }
 .min-h-screen{
   min-height: 100vh;
@@ -540,8 +572,14 @@ video {
 .w-1\/2{
   width: 50%;
 }
+.w-12{
+  width: 3rem;
+}
 .w-4{
   width: 1rem;
+}
+.w-5{
+  width: 1.25rem;
 }
 .w-8{
   width: 2rem;
@@ -557,6 +595,9 @@ video {
 }
 .max-w-sm{
   max-width: 24rem;
+}
+.flex-grow{
+  flex-grow: 1;
 }
 .transform{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -613,15 +654,20 @@ video {
 .gap-8{
   gap: 2rem;
 }
+.space-x-1 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
 .space-x-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
-.space-x-6 > :not([hidden]) ~ :not([hidden]){
+.space-x-8 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
-  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+  margin-right: calc(2rem * var(--tw-space-x-reverse));
+  margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .space-y-3 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
@@ -653,6 +699,10 @@ video {
 .rounded-md{
   border-radius: 0.375rem;
 }
+.rounded-t-lg{
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
 .border{
   border-width: 1px;
 }
@@ -661,6 +711,9 @@ video {
 }
 .border-b{
   border-bottom-width: 1px;
+}
+.border-b-2{
+  border-bottom-width: 2px;
 }
 .border-none{
   border-style: none;
@@ -677,6 +730,10 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
+.border-primary-900{
+  --tw-border-opacity: 1;
+  border-color: rgb(165 37 37 / var(--tw-border-opacity));
+}
 .border-red-600{
   --tw-border-opacity: 1;
   border-color: rgb(220 38 38 / var(--tw-border-opacity));
@@ -692,6 +749,10 @@ video {
 .bg-gray-200{
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+.bg-gray-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 .bg-green-200{
   --tw-bg-opacity: 1;
@@ -730,6 +791,9 @@ video {
 .p-2{
   padding: 0.5rem;
 }
+.p-4{
+  padding: 1rem;
+}
 .p-6{
   padding: 1.5rem;
 }
@@ -760,10 +824,6 @@ video {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
-.py-3\.5{
-  padding-top: 0.875rem;
-  padding-bottom: 0.875rem;
-}
 .py-6{
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -775,11 +835,14 @@ video {
 .pb-4{
   padding-bottom: 1rem;
 }
+.pl-14{
+  padding-left: 3.5rem;
+}
+.pr-6{
+  padding-right: 1.5rem;
+}
 .text-center{
   text-align: center;
-}
-.font-\[sans-serif\]{
-  font-family: sans-serif;
 }
 .text-3xl{
   font-size: 1.875rem;
@@ -813,6 +876,10 @@ video {
 .uppercase{
   text-transform: uppercase;
 }
+.text-\[\#A52524\]{
+  --tw-text-opacity: 1;
+  color: rgb(165 37 36 / var(--tw-text-opacity));
+}
 .text-\[\#B31312\]{
   --tw-text-opacity: 1;
   color: rgb(179 19 18 / var(--tw-text-opacity));
@@ -821,9 +888,21 @@ video {
   --tw-text-opacity: 1;
   color: rgb(166 38 38 / var(--tw-text-opacity));
 }
+.text-amber-600{
+  --tw-text-opacity: 1;
+  color: rgb(217 119 6 / var(--tw-text-opacity));
+}
 .text-black{
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.text-gray-300{
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+.text-gray-400{
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 .text-gray-500{
   --tw-text-opacity: 1;
@@ -852,6 +931,10 @@ video {
 .text-red-600{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+.text-red-700{
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 .text-white{
   --tw-text-opacity: 1;
@@ -938,6 +1021,16 @@ body {
   background-color: rgb(242 242 242 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-amber-50:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 251 235 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-100:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-300:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
@@ -948,9 +1041,19 @@ body {
   background-color: rgb(241 206 212 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-red-50:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-red-700:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
+.hover\:text-gray-500:hover{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .hover\:text-gray-600:hover{
@@ -963,10 +1066,25 @@ body {
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
+.hover\:text-primary-900:hover{
+  --tw-text-opacity: 1;
+  color: rgb(165 37 37 / var(--tw-text-opacity));
+}
+
 .hover\:shadow-sm:hover{
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.focus\:border-\[\#B31312\]:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(179 19 18 / var(--tw-border-opacity));
+}
+
+.focus\:border-primary-900:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(165 37 37 / var(--tw-border-opacity));
 }
 
 .focus\:bg-primary-100:focus{
@@ -1001,6 +1119,11 @@ body {
   --tw-ring-color: rgb(165 37 37 / var(--tw-ring-opacity));
 }
 
+.group:hover .group-hover\:text-\[\#A52524\]{
+  --tw-text-opacity: 1;
+  color: rgb(165 37 36 / var(--tw-text-opacity));
+}
+
 @media (min-width: 768px){
   .md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1011,6 +1134,48 @@ body {
   .lg\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
+
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[2].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[2].use[2]!./node_modules/next/font/google/target.css?{"path":"src/components/SidebarButtons.js","import":"Caudex","arguments":[{"weight":"700","subsets":["latin"]}],"variableName":"caudex"} ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/* greek-ext */
+@font-face {
+  font-family: '__Caudex_ebaa45';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/_next/static/media/dbad1af2ddbb5a13-s.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: '__Caudex_ebaa45';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/_next/static/media/624da2a9776cd47e-s.woff2) format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* latin-ext */
+@font-face {
+  font-family: '__Caudex_ebaa45';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/_next/static/media/fe891a0abd44d19f-s.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: '__Caudex_ebaa45';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/_next/static/media/2574d7cc3c06a2be-s.p.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}@font-face {font-family: '__Caudex_Fallback_ebaa45';src: local("Times New Roman");ascent-override: 88.47%;descent-override: 26.36%;line-gap-override: 0.00%;size-adjust: 112.26%
+}.__className_ebaa45 {font-family: '__Caudex_ebaa45', '__Caudex_Fallback_ebaa45';font-weight: 700;font-style: normal
 }
 
 /*!*************************************************************************************************************************************************************************************************************************************************************************!*\
@@ -1159,48 +1324,6 @@ body {
   .Sidebar_nav__WxTMM ul {
     gap: 4px;
   }
-}
-
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[2].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[2].use[2]!./node_modules/next/font/google/target.css?{"path":"src\\components\\SidebarButtons.js","import":"Caudex","arguments":[{"weight":"700","subsets":["latin"]}],"variableName":"caudex"} ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/* greek-ext */
-@font-face {
-  font-family: '__Caudex_ebaa45';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(/_next/static/media/dbad1af2ddbb5a13-s.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: '__Caudex_ebaa45';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(/_next/static/media/624da2a9776cd47e-s.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* latin-ext */
-@font-face {
-  font-family: '__Caudex_ebaa45';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(/_next/static/media/fe891a0abd44d19f-s.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: '__Caudex_ebaa45';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(/_next/static/media/2574d7cc3c06a2be-s.p.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}@font-face {font-family: '__Caudex_Fallback_ebaa45';src: local("Times New Roman");ascent-override: 88.47%;descent-override: 26.36%;line-gap-override: 0.00%;size-adjust: 112.26%
-}.__className_ebaa45 {font-family: '__Caudex_ebaa45', '__Caudex_Fallback_ebaa45';font-weight: 700;font-style: normal
 }
 
 /*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
@@ -1910,9 +2033,9 @@ body {
 }
 
 /*# sourceMappingURL=ReactToastify.css.map */
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[3].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[3].use[2]!./node_modules/next/font/local/target.css?{"path":"src\\app\\layout.js","import":"","arguments":[{"src":"./fonts/GeistVF.woff","variable":"--font-geist-sans","weight":"100 900"}],"variableName":"geistSans"} ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[3].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[3].use[2]!./node_modules/next/font/local/target.css?{"path":"src/app/layout.js","import":"","arguments":[{"src":"./fonts/GeistVF.woff","variable":"--font-geist-sans","weight":"100 900"}],"variableName":"geistSans"} ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 @font-face {
 font-family: '__geistSans_1e4310';
 src: url(/_next/static/media/4473ecc91f70f139-s.p.woff) format('woff');
@@ -1923,9 +2046,9 @@ font-weight: 100 900;
 }.__variable_1e4310 {--font-geist-sans: '__geistSans_1e4310', '__geistSans_Fallback_1e4310'
 }
 
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[3].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[3].use[2]!./node_modules/next/font/local/target.css?{"path":"src\\app\\layout.js","import":"","arguments":[{"src":"./fonts/GeistMonoVF.woff","variable":"--font-geist-mono","weight":"100 900"}],"variableName":"geistMono"} ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[3].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[3].use[2]!./node_modules/next/font/local/target.css?{"path":"src/app/layout.js","import":"","arguments":[{"src":"./fonts/GeistMonoVF.woff","variable":"--font-geist-mono","weight":"100 900"}],"variableName":"geistMono"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 @font-face {
 font-family: '__geistMono_c3aa02';
 src: url(/_next/static/media/463dafcda517f24f-s.p.woff) format('woff');
