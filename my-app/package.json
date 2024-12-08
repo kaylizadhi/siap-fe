@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.2.0",
     "@shadcn/ui": "^0.0.4",
     "axios": "^1.7.7",
+    "cross-spawn": "^7.0.6",
     "heroicons": "^2.2.0",
     "install": "^0.13.0",
     "lucide-react": "^0.453.0",
