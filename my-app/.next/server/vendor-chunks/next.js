@@ -373,16 +373,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({\n    value: true\n}));
 
 /***/ }),
 
-/***/ "(ssr)/./node_modules/next/font/google/target.css?{\"path\":\"src/app/list-klien/page.js\",\"import\":\"Caudex\",\"arguments\":[{\"weight\":\"700\",\"subsets\":[\"latin\"]}],\"variableName\":\"caudex\"}":
-/*!*************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/next/font/google/target.css?{"path":"src/app/list-klien/page.js","import":"Caudex","arguments":[{"weight":"700","subsets":["latin"]}],"variableName":"caudex"} ***!
-  \*************************************************************************************************************************************************************************************/
-/***/ ((module) => {
-
-eval("// Exports\nmodule.exports = {\n\t\"style\": {\"fontFamily\":\"'__Caudex_ebaa45', '__Caudex_Fallback_ebaa45'\",\"fontWeight\":700,\"fontStyle\":\"normal\"},\n\t\"className\": \"__className_ebaa45\"\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbmV4dC9mb250L2dvb2dsZS90YXJnZXQuY3NzP3tcInBhdGhcIjpcInNyYy9hcHAvbGlzdC1rbGllbi9wYWdlLmpzXCIsXCJpbXBvcnRcIjpcIkNhdWRleFwiLFwiYXJndW1lbnRzXCI6W3tcIndlaWdodFwiOlwiNzAwXCIsXCJzdWJzZXRzXCI6W1wibGF0aW5cIl19XSxcInZhcmlhYmxlTmFtZVwiOlwiY2F1ZGV4XCJ9IiwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQSxXQUFXLG1HQUFtRztBQUM5RztBQUNBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vbXktYXBwLy4vbm9kZV9tb2R1bGVzL25leHQvZm9udC9nb29nbGUvdGFyZ2V0LmNzcz85ZDM2Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIEV4cG9ydHNcbm1vZHVsZS5leHBvcnRzID0ge1xuXHRcInN0eWxlXCI6IHtcImZvbnRGYW1pbHlcIjpcIidfX0NhdWRleF9lYmFhNDUnLCAnX19DYXVkZXhfRmFsbGJhY2tfZWJhYTQ1J1wiLFwiZm9udFdlaWdodFwiOjcwMCxcImZvbnRTdHlsZVwiOlwibm9ybWFsXCJ9LFxuXHRcImNsYXNzTmFtZVwiOiBcIl9fY2xhc3NOYW1lX2ViYWE0NVwiXG59O1xuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/next/font/google/target.css?{\"path\":\"src/app/list-klien/page.js\",\"import\":\"Caudex\",\"arguments\":[{\"weight\":\"700\",\"subsets\":[\"latin\"]}],\"variableName\":\"caudex\"}\n");
-
-/***/ }),
-
 /***/ "(ssr)/./node_modules/next/font/google/target.css?{\"path\":\"src/components/SidebarButtons.js\",\"import\":\"Caudex\",\"arguments\":[{\"weight\":\"700\",\"subsets\":[\"latin\"]}],\"variableName\":\"caudex\"}":
 /*!*******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/next/font/google/target.css?{"path":"src/components/SidebarButtons.js","import":"Caudex","arguments":[{"weight":"700","subsets":["latin"]}],"variableName":"caudex"} ***!

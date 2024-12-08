@@ -12,29 +12,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/survei/buat-survei/page": [
+    "/survei/edit/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/survei/buat-survei/page.css",
-      "static/chunks/app/survei/buat-survei/page.js"
+      "static/css/app/survei/edit/[id]/page.css",
+      "static/chunks/app/survei/edit/[id]/page.js"
     ],
-    "/list-klien/page": [
+    "/survei/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/list-klien/page.css",
-      "static/chunks/app/list-klien/page.js"
-    ],
-    "/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/login/page.css",
-      "static/chunks/app/login/page.js"
-    ],
-    "/dashboard/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/dashboard/page.css",
-      "static/chunks/app/dashboard/page.js"
+      "static/css/app/survei/[id]/page.css",
+      "static/chunks/app/survei/[id]/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
