@@ -19,7 +19,7 @@ export default function KlienDetail({ params }) {
   // Fetch client details
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/klien/${id}/`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/${id}/`)
         .then((response) => response.json())
         .then((data) => setKlien(data))
         .catch((error) => console.error("Error:", error));
@@ -34,12 +34,9 @@ export default function KlienDetail({ params }) {
   // Handle delete logic
   const handleDelete = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/klien/${id}/delete/`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`http://localhost:8000/klien/${id}/delete/`, {
+        method: "DELETE",
+      });
 
       if (response.ok) {
         toast.success("Klien berhasil dihapus!"); // Show success toast
@@ -59,45 +56,19 @@ export default function KlienDetail({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1
-        className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}
-      >
-        Detail Klien
-      </h1>
+      <h1 className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}>Detail Klien</h1>
       <div className="bg-white rounded-lg max-w-lg">
         <div className="mb-4">
-          <label
-            className={`block text-sm font-medium text-gray-700 ${caudex.className}`}
-          >
-            Nama Klien:
-          </label>
-          <p
-            className={`mt-1 text-lg font-bold text-gray-800 ${caudex.className}`}
-          >
-            {klien.nama_klien}
-          </p>
+          <label className={`block text-sm font-medium text-gray-700 ${caudex.className}`}>Nama Klien:</label>
+          <p className={`mt-1 text-lg font-bold text-gray-800 ${caudex.className}`}>{klien.nama_klien}</p>
         </div>
         <div className="mb-4">
-          <label
-            className={`block text-sm font-medium text-gray-700 ${caudex.className}`}
-          >
-            Nama Perusahaan:
-          </label>
-          <p
-            className={`mt-1 text-lg font-semibold text-gray-800 ${caudex.className}`}
-          >
-            {klien.nama_perusahaan}
-          </p>
+          <label className={`block text-sm font-medium text-gray-700 ${caudex.className}`}>Nama Perusahaan:</label>
+          <p className={`mt-1 text-lg font-semibold text-gray-800 ${caudex.className}`}>{klien.nama_perusahaan}</p>
         </div>
         <div className="mb-4">
-          <label
-            className={`block text-sm font-medium text-gray-700 ${caudex.className}`}
-          >
-            Daerah:
-          </label>
-          <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-            {klien.daerah}
-          </p>
+          <label className={`block text-sm font-medium text-gray-700 ${caudex.className}`}>Daerah:</label>
+          <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{klien.daerah}</p>
         </div>
         <div className="flex justify-between items-center mb-4">
           {/* Back Button */}
@@ -140,10 +111,7 @@ export default function KlienDetail({ params }) {
               &quot;? Tindakan ini tidak dapat dibatalkan.
             </p>
             <div className="flex justify-end gap-4">
-              <Button
-                onClick={() => setIsModalOpen(false)}
-                variant="modalCancel"
-              >
+              <Button onClick={() => setIsModalOpen(false)} variant="modalCancel">
                 Batal
               </Button>
               <Button

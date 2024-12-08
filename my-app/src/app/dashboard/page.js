@@ -105,7 +105,7 @@ const Dashboard = () => {
     const fetchSurveys = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await fetch(`http://localhost:8000/api/dashboard/survei/${surveyType}/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/survei/${surveyType}/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

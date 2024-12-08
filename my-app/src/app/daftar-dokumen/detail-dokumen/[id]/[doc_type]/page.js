@@ -18,7 +18,7 @@ export default function DokumenDetail({ params }) {
   // Fetch document details
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/api/daftarDokumen/detailDokumen/${id}/`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/daftarDokumen/detailDokumen/${id}/`)
         .then((response) => response.json())
         .then((data) => setDokumen(data))
         .catch((error) => console.error("Error:", error));
@@ -27,7 +27,7 @@ export default function DokumenDetail({ params }) {
 
   const handleExport = async () => {
     console.log(`Export button clicked for `);
-  
+
     // Set up configurations for each document type
     const config = {
       invoiceDP: {
@@ -85,15 +85,15 @@ export default function DokumenDetail({ params }) {
         },
       },
     };
-  
+
     // Select configuration based on doc_type
     const { url, fileNameFallback, data } = config[dokumen.doc_type];
-  
+
     if (!url || !data) {
       console.error("Invalid document type specified");
       return;
     }
-  
+
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -102,21 +102,19 @@ export default function DokumenDetail({ params }) {
         },
         body: JSON.stringify(data),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to export document");
       }
-  
+
       const blob = await response.blob();
       const urlBlob = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = urlBlob;
-  
+
       // Use filename from server response headers or fallback
-      const filename = response.headers
-        .get("Content-Disposition")
-        ?.split("filename=")[1] || fileNameFallback;
-  
+      const filename = response.headers.get("Content-Disposition")?.split("filename=")[1] || fileNameFallback;
+
       a.download = filename.replace(/"/g, ""); // Remove quotes around filename
       document.body.appendChild(a);
       a.click();
@@ -130,12 +128,9 @@ export default function DokumenDetail({ params }) {
   // Handle delete logic
   const handleDelete = async (dokumenId) => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/daftarDokumen/${dokumenId}/delete/`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/daftarDokumen/${dokumenId}/delete/`, {
+        method: "DELETE",
+      });
 
       if (response.ok) {
         toast.success("Dokumen berhasil dihapus!"); // Show success toast
@@ -159,72 +154,40 @@ export default function DokumenDetail({ params }) {
       return (
         <>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Alamat:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.address || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Alamat:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.address || "N/A"}</p>
           </div>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Jumlah Responden:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.respondent_count || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Jumlah Responden:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.respondent_count || "N/A"}</p>
           </div>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-            Harga Total:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-            {new Intl.NumberFormat("id-ID").format(dokumen.amount) || "N/A"}
-            </p>
-          </div>
-        
-          <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Persentase Dibayar:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.paid_percentage || "N/A"}%
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Harga Total:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{new Intl.NumberFormat("id-ID").format(dokumen.amount) || "N/A"}</p>
           </div>
 
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-            Jumlah Dibayarkan:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-            {new Intl.NumberFormat("id-ID").format(dokumen.amount*dokumen.paid_percentage/100) || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Persentase Dibayar:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.paid_percentage || "N/A"}%</p>
           </div>
 
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Jumlah Dibayarkan Tertulis:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.nominal_tertulis || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Jumlah Dibayarkan:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{new Intl.NumberFormat("id-ID").format((dokumen.amount * dokumen.paid_percentage) / 100) || "N/A"}</p>
           </div>
 
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Tenggat Pembayaran:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.date || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Jumlah Dibayarkan Tertulis:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.nominal_tertulis || "N/A"}</p>
+          </div>
+
+          <div className="mb-4">
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Tenggat Pembayaran:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.date || "N/A"}</p>
           </div>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Keterangan Tambahan:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.additional_info || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Keterangan Tambahan:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.additional_info || "N/A"}</p>
           </div>
         </>
       );
@@ -232,36 +195,20 @@ export default function DokumenDetail({ params }) {
       return (
         <>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-            Jumlah Dibayarkan:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-            {new Intl.NumberFormat("id-ID").format(dokumen.amount) || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Jumlah Dibayarkan:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{new Intl.NumberFormat("id-ID").format(dokumen.amount) || "N/A"}</p>
           </div>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Jumlah Dibayarkan Tertulis:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.nominal_tertulis || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Jumlah Dibayarkan Tertulis:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.nominal_tertulis || "N/A"}</p>
           </div>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Tenggat Pembayaran:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.date || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Tenggat Pembayaran:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.date || "N/A"}</p>
           </div>
           <div className="mb-4">
-            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-              Keterangan Tambahan:
-            </label>
-            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-              {dokumen.additional_info || "N/A"}
-            </p>
+            <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Keterangan Tambahan:</label>
+            <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.additional_info || "N/A"}</p>
           </div>
         </>
       );
@@ -271,67 +218,36 @@ export default function DokumenDetail({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1 className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}>
-        Detail Dokumen
-      </h1>
+      <h1 className={`text-4xl font-bold mb-6 text-primary-900 ${caudex.className}`}>Detail Dokumen</h1>
       <div className="bg-white rounded-lg max-w-lg">
         <div className="mb-4">
-          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-            Kode Dokumen:
-          </label>
-          <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-            {dokumen.id}
-          </p>
+          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Kode Dokumen:</label>
+          <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.id}</p>
         </div>
         <div className="mb-4">
-          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-            Jenis Dokumen:
-          </label>
-          <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>
-            {dokumen.doc_type}
-          </p>
+          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Jenis Dokumen:</label>
+          <p className={`mt-1 text-lg text-gray-800 ${caudex.className}`}>{dokumen.doc_type}</p>
         </div>
         <div className="mb-4">
-          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-            Judul:
-          </label>
-          <p className={`mt-1 text-lg font-bold text-gray-800 ${caudex.className}`}>
-            {dokumen.survey_name}
-          </p>
+          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Judul:</label>
+          <p className={`mt-1 text-lg font-bold text-gray-800 ${caudex.className}`}>{dokumen.survey_name}</p>
         </div>
         <div className="mb-4">
-          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>
-            Nama Klien:
-          </label>
-          <p className={`mt-1 text-lg font-semibold text-gray-800 ${caudex.className}`}>
-            {dokumen.client_name}
-          </p>
+          <label className={`block text-sm font-medium text-red-700 ${caudex.className}`}>Nama Klien:</label>
+          <p className={`mt-1 text-lg font-semibold text-gray-800 ${caudex.className}`}>{dokumen.client_name}</p>
         </div>
-        
         {renderFields()} {/* Render dynamic fields */}
         <div className="flex justify-between items-center mb-4">
-          <Button
-            variant="primary"
-            onClick={() => router.push("/daftar-dokumen")}
-            className="flex items-center px-6 py-3"
-          >
+          <Button variant="primary" onClick={() => router.push("/daftar-dokumen")} className="flex items-center px-6 py-3">
             <span className={`text-sm ${caudex.className}`}>Kembali</span>
           </Button>
           <div className="flex space-x-4">
-            <Button
-              variant="primary"
-              onClick={(e) => handleExport(e)}
-              className="flex items-center px-6 py-3"
-            >
+            <Button variant="primary" onClick={(e) => handleExport(e)} className="flex items-center px-6 py-3">
               <span className={`text-sm ${caudex.className}`}>Export</span>
             </Button>
           </div>
           <div className="flex space-x-4">
-            <Button
-              variant="secondary"
-              onClick={() => setIsModalOpen(true)}
-              className="px-3 py-2"
-            >
+            <Button variant="secondary" onClick={() => setIsModalOpen(true)} className="px-3 py-2">
               <span className={`${caudex.className}`}>Delete</span>
             </Button>
           </div>
@@ -346,10 +262,7 @@ export default function DokumenDetail({ params }) {
               &quot;? Tindakan ini tidak dapat dibatalkan.
             </p>
             <div className="flex justify-end gap-4">
-              <Button
-                onClick={() => setIsModalOpen(false)}
-                variant="modalCancel"
-              >
+              <Button onClick={() => setIsModalOpen(false)} variant="modalCancel">
                 Batal
               </Button>
               <Button
@@ -368,4 +281,3 @@ export default function DokumenDetail({ params }) {
     </div>
   );
 }
-

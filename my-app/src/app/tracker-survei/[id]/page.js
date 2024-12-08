@@ -60,7 +60,7 @@ export default function SurveyTrackerDetail({ params }) {
   const fetchSurveyData = async () => {
     const token = localStorage.getItem("authToken");
     try {
-      const response = await fetch(`http://localhost:8000/api/survei-status/${id}/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei-status/${id}/`, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -97,13 +97,13 @@ export default function SurveyTrackerDetail({ params }) {
     const administrasiAkhirFields = ["pembuatan_laporan", "buat_invoice_final", "pembayaran_lunas", "pembuatan_kwitansi_final", "penyerahan_laporan"];
 
     if (administrasiAwalFields.includes(field)) {
-      endpoint = `http://localhost:8000/api/survei-status/${id}/administrasi-awal/`;
+      endpoint = `${process.env.NEXT_PUBLIC_BASE_URL}/survei-status/${id}/administrasi-awal/`;
     } else if (logistikFields.includes(field)) {
-      endpoint = `http://localhost:8000/api/survei-status/${id}/logistik/`;
+      endpoint = `${process.env.NEXT_PUBLIC_BASE_URL}/survei-status/${id}/logistik/`;
     } else if (pengendaliMutuFields.includes(field)) {
-      endpoint = `http://localhost:8000/api/survei-status/${id}/pengendali-mutu/`;
+      endpoint = `${process.env.NEXT_PUBLIC_BASE_URL}/survei-status/${id}/pengendali-mutu/`;
     } else if (administrasiAkhirFields.includes(field)) {
-      endpoint = `http://localhost:8000/api/survei-status/${id}/administrasi-akhir/`;
+      endpoint = `${process.env.NEXT_PUBLIC_BASE_URL}/survei-status/${id}/administrasi-akhir/`;
     }
 
     try {
