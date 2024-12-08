@@ -243,6 +243,25 @@
     background-color: #F2CFD5;
 }
 
+.secondaryButtonSurvei2 {
+    position: absolute;
+    top: 520px;
+    left: 360px;
+    background-color: #ffffff;
+    color: #a62626;
+    border-radius: 32px;
+    border: 1px solid #a62626;
+    padding: 18px 286px;
+    margin-top: 40px; 
+    font-family: caudex;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.secondaryButtonSurvei2:hover {
+    background-color: #F2CFD5;
+}
+
 .searchBarContainer {
     position: absolute;
     display: flex;
@@ -290,9 +309,31 @@
 .idContainer {
     font-family: caudex;
     font-size: 20px;
-    margin-top: 200px;
-    margin-left: 352px;
+    margin-top: 180px;
+    margin-left: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Jarak antar item */
+    max-width: 600px;
 }
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    text-align: left;
+    flex: 1; /* Agar label mengambil ruang yang cukup */
+    font-weight: bold;
+}
+
+.value {
+    text-align: right;
+    flex: 1; /* Agar nilai juga mengambil ruang yang cukup */
+}
+
 
 .radioGroupSurvei {
     font-family: Caudex;
@@ -300,10 +341,21 @@
     padding-bottom: 16px;
 }
 
-.iconEdit {
+/* Tambahkan ini di file CSS (index.module.css) */
+.radioGroupSurvei label {
+    margin-right: 15px; /* Mengatur jarak antar radio button */
+    display: inline-block; /* Memastikan setiap label berada dalam satu baris */
+  }
+  
+.radioGroupSurvei input {
+margin-right: 5px; /* Menambah jarak antara radio button dan teks label */
+}
+  
+
+.iconPlus {
     position: absolute;
     left: 580px;
-    top: 284px;
+    top: 288px;
     cursor: pointer;
     color: #1c1c1c; 
     width: 36px;
@@ -316,7 +368,7 @@
     padding-bottom: 8px; 
 }
 
-.iconEdit:hover {
+.iconPlus:hover {
     background-color: #e1e8ec;
 }
 
