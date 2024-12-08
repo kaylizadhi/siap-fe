@@ -81,7 +81,7 @@ export default function Profil() {
 
     try {
       // Update profile details (name, email, etc.)
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profil/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}profil/`, {
         method: "PATCH",
         headers: {
           Authorization: `Token ${token}`,
