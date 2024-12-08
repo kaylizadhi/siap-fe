@@ -51,7 +51,7 @@ export default function EditSurvei() {
 
   const fetchDaerah = async (param) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/survei/count-by-region?ruang_lingkup=${param}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei/count-by-region?ruang_lingkup=${param}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

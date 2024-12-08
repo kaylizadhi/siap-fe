@@ -42,13 +42,16 @@ export default function BuatSurvei() {
 
   const fetchDaerah = async (param) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/survei/count-by-region?ruang_lingkup=${param}`, {
+      const token = localStorage.getItem("authToken");
+
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}/survei/count-by-region?ruang_lingkup=${param}`;
+      const response = await fetch(url, {
         method: "GET",
         headers: {
+          Authorization: token ? `Token ${token}` : "",
           "Content-Type": "application/json",
         },
       });
-
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
