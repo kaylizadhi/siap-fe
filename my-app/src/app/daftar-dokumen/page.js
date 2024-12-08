@@ -123,16 +123,25 @@ bValue;
 
 
     const handleExport = async (dokumenId, doc_type) => {
-        console.log(`Export button clicked for `);
+        console.log(`Export button clicked for ${dokumenId}`);
 
         const encodedId = encodeURIComponent(dokumenId);
+        let docDetail = null;
+
         if (dokumenId) {
-            fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/detailDokumen/${encodedId}/`)
-              .then((response) => response.json())
-              .then((data) => setDocDetail(data))
-              .catch((error) => console.error("Error:", error));
-          }
-        console.log(data);
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/detailDokumen/${encodedId}/`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch document details");
+                }
+                docDetail = await response.json();
+                setDocDetail(docDetail); // Set the fetched document details in state
+            } catch (error) {
+                console.error("Error fetching document details:", error);
+                return;
+            }
+        }
+        
       
         // Set up configurations for each document type
         const config = {
@@ -153,7 +162,7 @@ bValue;
           },
           invoiceFinal: {
             url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_invoice_final/`,
-            fileNameFallback: `invoiceFinal_${dokumen.survey_name}.xlsx`,
+            fileNameFallback: `invoiceFinal_${docDetail.survey_name}.xlsx`,
             data: {
                 client_name: docDetail.client_name,
                 survey_name: docDetail.survey_name,
@@ -168,7 +177,7 @@ bValue;
           },
           kwitansiDP: {
             url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_kwitansi_dp/`,
-            fileNameFallback: `kwitansiDP_${dokumen.survey_name}.xlsx`,
+            fileNameFallback: `kwitansiDP_${docDetail.survey_name}.xlsx`,
             data: {
               client_name: docDetail.client_name,
               survey_name: docDetail.survey_name,
@@ -180,7 +189,7 @@ bValue;
           },
           kwitansiFinal: {
             url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_kwitansi_final/`,
-            fileNameFallback: `kwitansiFinal_${dokumen.survey_name}.xlsx`,
+            fileNameFallback: `kwitansiFinal_${docDetail.survey_name}.xlsx`,
             data: {
                 client_name: docDetail.client_name,
                 survey_name: docDetail.survey_name,
