@@ -69,10 +69,6 @@ export default function DaftarDokumen() {
     verifyUser();
 }, [searchQuery], [router]);     
 
-    // const handleDeleteClick = (index) => {
-    //     setCurrentDokumenIndex(index);
-    //     setShowDeleteModal(true);
-    // };
 
 
   const filteredDokumen = dokumen.filter((dokumen) => {
@@ -125,25 +121,6 @@ bValue;
     router.push(`/daftar-dokumen/detail-dokumen/${encodedId}/${doc_type}`);
   };
 
-    // const handleDelete = async (index, dokumenId) => {
-    //     const dokumenIndex = index + indexOfFirstDokumen;
-    //     const encodedId = encodeURIComponent(dokumenId);
-    //     setDeletingIndex(dokumenIndex);
-    //     try {
-    //         await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/${encodedId}/delete/`, {
-    //             method: 'DELETE',
-                
-    //         });
-    //         setShowDeleteModal(false);
-    //         console.log("dokumen deleted");
-    //         const updatedDokumen = dokumen.filter((_, i) => i !== dokumenIndex);
-    //         setDokumen(updatedDokumen);
-    //     } catch (error) {
-    //         console.error("Error deleting dokumen:", error);
-    //     } finally {
-    //         setDeletingIndex(null);
-    //     }
-    // };
 
     const handleExport = async (dokumenId, doc_type) => {
         console.log(`Export button clicked for `);
@@ -155,6 +132,7 @@ bValue;
               .then((data) => setDocDetail(data))
               .catch((error) => console.error("Error:", error));
           }
+        console.log(data);
       
         // Set up configurations for each document type
         const config = {
