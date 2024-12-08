@@ -56,10 +56,7 @@ export default function DaftarAkun() {
     fetchAccounts();
     verifyUser();
 }, [searchQuery], [router]);
-
-
-        
-            
+ 
 
     const handleDeleteClick = (index) => {
         setCurrentAccountIndex(index);
