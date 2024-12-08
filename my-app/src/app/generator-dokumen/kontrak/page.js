@@ -252,7 +252,7 @@ const Kontrak = () => {
             <div className={styles.buttonGroup}>
                 <button type="button" onClick={handleUploadClick} className={styles.uploadButton}>Upload Template Baru</button>
                 <button type="button" className={styles.exportButton} onClick={handleExport}>
-                <img src="/images/AddItem.svg" alt="Export Icon" />Export
+                <img src="/images/additem.svg" alt="Export Icon" />Export
                 </button>
             </div>
             <div>

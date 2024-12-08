@@ -222,7 +222,7 @@ const KwitansiFinal = () => {
                         <div className={styles.buttonGroup}>
                             <button type="button" className={styles.cancelButton} onClick={handleClearInputs}>Batal</button>
                             <button type="button" className={styles.exportButton} onClick={handleExport}>
-                                <img src="/images/AddItem.svg" alt="Export Icon" />Export
+                                <img src="/images/additem.svg" alt="Export Icon" />Export
                             </button>
                         </div>
                     </form>

@@ -307,9 +307,9 @@ bValue;
                                     </button>
                                     <button 
                                         className="text-gray-800 hover:text-gray-600 transition-colors" 
-                                        onClick={(e) => handleExport(e.dokumen.id, e.dokumen.doc_type)}
+                                        onClick={() => handleExport(dokumen.id, dokumen.doc_type)}
                                     >
-                                        <img src="/images/Create.svg" alt="Create" />
+                                        <img src="/images/Download 01.svg" alt="Download" />
                                     </button>
                                 </td>
                             </tr>

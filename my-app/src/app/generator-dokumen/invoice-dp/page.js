@@ -319,7 +319,7 @@ const InvoiceDP = () => {
               className={styles.exportButton}
               onClick={(e) => handleExport(e)}
             >
-              <img src="/images/AddItem.svg" alt="Export Icon" />
+              <img src="/images/additem.svg" alt="Export Icon" />
               Export
             </button>
           </div>
