@@ -75,60 +75,55 @@ export default function DaftarDokumen() {
     // };
 
 
-    const filteredDokumen = dokumen.filter(dokumen => {
-        const matchesSearch = dokumen.survey_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            dokumen.client_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            dokumen.doc_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            dokumen.id.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredDokumen = dokumen.filter((dokumen) => {
+    const matchesSearch = dokumen.survey_name.toLowerCase().includes(searchQuery.toLowerCase()) || dokumen.client_name.toLowerCase().includes(searchQuery.toLowerCase()) || dokumen.doc_type.toLowerCase().includes(searchQuery.toLowerCase()) || dokumen.id.toLowerCase().includes(searchQuery.toLowerCase());
 
-        const matchesDocType = docTypeFilter ? dokumen.doc_type.toLowerCase() === docTypeFilter.toLowerCase() : true;
+    const matchesDocType = docTypeFilter ? dokumen.doc_type.toLowerCase() === docTypeFilter.toLowerCase() : true;
 
-        return matchesSearch && matchesDocType;
-    });
+    return matchesSearch && matchesDocType;
+  });
 
-
-    const handleSort = (column) => {
-        const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-        setSortColumn(column);
-        setSortOrder(newSortOrder);
+  const handleSort = (column) => {
+    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortColumn(column);
+    setSortOrder(newSortOrder);
 
         const sortedDokumen = [...dokumen].sort((a, b) => {
             let aValue; let 
 bValue;
 
-            if (column === "id") {
-                // Extract the numeric part of the ID
-                aValue = parseInt(a.id.slice(0, 3));
-                bValue = parseInt(b.id.slice(0, 3));
-            } else {
-                aValue = a[column].toLowerCase();
-                bValue = b[column].toLowerCase();
-            }
+      if (column === "id") {
+        // Extract the numeric part of the ID
+        aValue = parseInt(a.id.slice(0, 3));
+        bValue = parseInt(b.id.slice(0, 3));
+      } else {
+        aValue = a[column].toLowerCase();
+        bValue = b[column].toLowerCase();
+      }
 
-            if (aValue < bValue) return newSortOrder === "asc" ? -1 : 1;
-            if (aValue > bValue) return newSortOrder === "asc" ? 1 : -1;
-            return 0;
-        });
+      if (aValue < bValue) return newSortOrder === "asc" ? -1 : 1;
+      if (aValue > bValue) return newSortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
 
-        setDokumen(sortedDokumen);
-    };
+    setDokumen(sortedDokumen);
+  };
 
+  const indexOfLastDokumen = currentPage * dokumenPerPage;
+  const indexOfFirstDokumen = indexOfLastDokumen - dokumenPerPage;
+  const currentDokumen = filteredDokumen.slice(indexOfFirstDokumen, indexOfLastDokumen);
 
-    const indexOfLastDokumen = currentPage * dokumenPerPage;
-    const indexOfFirstDokumen = indexOfLastDokumen - dokumenPerPage;
-    const currentDokumen = filteredDokumen.slice(indexOfFirstDokumen, indexOfLastDokumen);
+  const totalPages = Math.ceil(filteredDokumen.length / dokumenPerPage);
 
-    const totalPages = Math.ceil(filteredDokumen.length / dokumenPerPage);
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
 
-    const handleSearch = (e) => {
-        setSearchQuery(e.target.value);
-        setCurrentPage(1);
-    };
-
-    const handleDetail = (id, doc_type) => {
-        const encodedId = encodeURIComponent(id);
-        router.push(`/daftar-dokumen/detail-dokumen/${encodedId}/${doc_type}`);
-      };
+  const handleDetail = (id, doc_type) => {
+    const encodedId = encodeURIComponent(id);
+    router.push(`/daftar-dokumen/detail-dokumen/${encodedId}/${doc_type}`);
+  };
 
     // const handleDelete = async (index, dokumenId) => {
     //     const dokumenIndex = index + indexOfFirstDokumen;
@@ -260,36 +255,26 @@ bValue;
     };
 
 
-    return (
-        <div className={styles.mainContainer}>
-            {/* Main Document List Content */}
-            <div className={styles.container}>
-                <h1 className={`text-4xl font-weight-700 text-primary-900`}>Daftar Dokumen Pendukung</h1>
+  return (
+    <div className={styles.mainContainer}>
+      {/* Main Document List Content */}
+      <div className={styles.container}>
+        <h1 className={`text-4xl font-weight-700 text-primary-900`}>Daftar Dokumen Pendukung</h1>
 
-                <div className="w-full flex px-6 py-3 mb-6 rounded-full border-2 border overflow-hidden mx-auto">
-                    <input
-                        type="text"
-                        placeholder="Cari dokumen..."
-                        value={searchQuery}
-                        onChange={handleSearch}
-                        className={'w-full outline-none bg-transparent text-gray-600 text-sm'}
-                    />
-                </div>
+        <div className="w-full flex px-6 py-3 mb-6 rounded-full border-2 border overflow-hidden mx-auto">
+          <input type="text" placeholder="Cari dokumen..." value={searchQuery} onChange={handleSearch} className={"w-full outline-none bg-transparent text-gray-600 text-sm"} />
+        </div>
 
-                {/* Filter by Doc Type */}
-                <div className={styles.filterContainer}>
-                    <select
-                        value={docTypeFilter}
-                        onChange={(e) => setDocTypeFilter(e.target.value)}
-                        className={styles.filterSelect}
-                    >
-                        <option value="">Filter Jenis Dokumen</option>
-                        <option value="invoiceDP">Invoice DP</option>
-                        <option value="invoiceFinal">Invoice Final</option>
-                        <option value="kwitansiDP">Kwitansi DP</option>
-                        <option value="kwitansiFinal">Kwitansi Final</option>
-                    </select>
-                </div>
+        {/* Filter by Doc Type */}
+        <div className={styles.filterContainer}>
+          <select value={docTypeFilter} onChange={(e) => setDocTypeFilter(e.target.value)} className={styles.filterSelect}>
+            <option value="">Filter Jenis Dokumen</option>
+            <option value="invoiceDP">Invoice DP</option>
+            <option value="invoiceFinal">Invoice Final</option>
+            <option value="kwitansiDP">Kwitansi DP</option>
+            <option value="kwitansiFinal">Kwitansi Final</option>
+          </select>
+        </div>
 
                 <table className={styles.table}>
                     <thead>

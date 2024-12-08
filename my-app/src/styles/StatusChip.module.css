@@ -1,0 +1,30 @@
+/* StatusChip.module.css */
+.statusChip {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  min-width: 100px;
+  font-weight: 500;
+}
+
+.statusChip_gray {
+  background-color: #e0e0e0;
+  color: #333333;
+}
+
+.statusChip_yellow {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.statusChip_green {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.statusChip_red {
+  background-color: #f8d7da;
+  color: #721c24;
+}

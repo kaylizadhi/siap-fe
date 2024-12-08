@@ -104,7 +104,12 @@
     "comma-spacing": "off",
     "no-underscore-dangle": "off",
     "prefer-destructuring": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "arrow-body-style": "off",
+    "no-return-await": "off",
+    "prefer-const": "off",
+    "no-return-assign": "off",
+    "no-param-reassign": "off"
   },
   "settings": {
     "react": {

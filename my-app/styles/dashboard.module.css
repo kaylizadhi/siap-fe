@@ -1,118 +1,442 @@
-/* Umum */
+/* Dashboard.module.css */
 .containerBackground {
   display: flex;
   min-height: 100vh;
-  font-family: 'Caudex', serif;
-  background-color:#FFFF;
+  font-family: "Caudex", serif;
+  background-color: #ffff;
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
 }
 
 .container {
   display: flex;
-  min-height: 100vh;
-  width: 1000px;
-  font-family: 'Caudex', serif;
-  background-color:#FFFF;
-  }
+  width: 100%;
+  max-width: 1400px;
+  font-family: "Caudex", serif;
+  background-color: #ffff;
+  justify-content: center;
+}
 
 .content {
-  width: 80%;
-  padding: 40px;
-  }
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 .title {
   font-size: 36px;
-  color: #A62626;
-  margin-bottom: 10px;
+  color: #a62626;
+  margin-bottom: 20px;
+}
+
+.surveyTypeSection {
+  margin-bottom: 30px;
 }
 
 .label {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  display: block;
 }
 
-.diagramPlaceholder {
-  min-height: 40vh;
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.chartContainer {
-  width: 80%;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+.radioGroup input[type="radio"] {
+  margin-right: 8px;
+  cursor: pointer;
 }
 
-/* Tabel */
+.radioGroup label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
 .tableContainer {
-  width: 140vh;
+  width: 100%;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.tableScrollContainer {
+  min-width: 1600px;
+  padding-bottom: 16px;
 }
 
 .table {
-  width: 100%; /* Ensure the table takes up the entire container width */
-  max-width: 100%; /* Prevent the table from exceeding the container width */
-  border-collapse: collapse;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 14px;
-  table-layout: auto;
+  table-layout: fixed; /* Added for consistent column widths */
 }
 
-.table th,
-
-.table td {
+.columnHeader {
   padding: 12px 16px;
-  word-wrap: break-word;
+  background-color: #a62626;
+  color: #fff;
+  position: relative;
+  top: 0;
+  z-index: 1;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  position: relative;
+}
+
+.filterContainer {
+  position: static;
+  display: inline-block;
+}
+
+.filterButton {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+  position: relative;
+  z-index: 2;
+}
+
+.filterButton:hover {
+  opacity: 0.8;
+}
+
+.filterDropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 4px;
+  /* z-index is now handled dynamically in React */
+}
+
+/* Special case for first column dropdown */
+th:first-child .filterDropdown {
+  left: 0;
+  transform: none;
+}
+
+/* Special case for last column dropdown */
+th:last-child .filterDropdown {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  gap: 8px;
+  color: #333;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.filterOption:hover {
+  background-color: #f5f5f5;
+}
+
+.filterOption input[type="radio"] {
+  margin: 0;
 }
 
 .table th {
-  background-color: #8b0000; /* Merah tua */
+  padding: 12px 16px;
+  background-color: #a62626;
   color: #fff;
+  font-weight: 600;
   text-align: left;
+  border-bottom: 2px solid #8b1e1e;
+  position: relative;
 }
 
-.table tr:hover {
-  background-color: #f9f9f9;
+/* Column width specifications */
+.table th:nth-child(1) {
+  /* Nama Klien */
+  width: 230px;
 }
 
-.badge {
-  display: inline-block;
-  padding: 4px 8px;
-  background-color: #ffd700; /* Kuning */
+.table th:nth-child(2) {
+  /* Judul Survei */
+  width: 300px;
+}
+
+.table th:nth-child(3) {
+  /* Tanggal Mulai */
+  width: 180px;
+}
+
+.table th:nth-child(4) {
+  /* Tanggal Berakhir */
+  width: 180px;
+}
+
+.table th:nth-child(5) {
+  /* Wilayah */
+  width: 200px;
+}
+
+.table th:nth-child(6) {
+  /* Jumlah Responden */
+  width: 180px;
+}
+
+.table th:nth-child(7) {
+  /* Status */
+  width: 160px;
+}
+
+.table th:nth-child(8) {
+  /* Action */
+  width: 160px;
+}
+
+.table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  word-wrap: break-word; /* Allow text to wrap */
+  overflow-wrap: break-word;
+}
+
+.table tr:hover td {
+  background-color: #f8f8f8;
+}
+
+.clientCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.actions {
+  width: 150px;
+}
+
+.actionButtonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actionButton {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
   border-radius: 4px;
-  color: #8b0000; /* Merah tua */
-  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Caudex", serif;
+  background-color: #a62626;
+  color: white;
 }
 
-.iconContainer {
+.actionButton:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.detailButton,
+.trackerButton {
+  background-color: #a62626;
+  color: white;
+}
+
+/* Add these new styles to your existing CSS */
+.dateFilterSection {
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.dateFilterGroup {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dateFilter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dateFilter label {
+  font-weight: 500;
+  color: #333;
+  min-width: 100px;
+}
+
+.dateInput {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: #a62626;
+  box-shadow: 0 0 0 2px rgba(166, 38, 38, 0.1);
+}
+
+@media (max-width: 768px) {
+  .dateFilterGroup {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .dateFilter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dateFilter label {
+    margin-bottom: 4px;
+  }
+}
+
+/* Scrollbar styling */
+.tableScrollContainer::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tableScrollContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.tableScrollContainer::-webkit-scrollbar-thumb {
+  background: #a62626;
+  border-radius: 4px;
+}
+
+.tableScrollContainer::-webkit-scrollbar-thumb:hover {
+  background: #8b1e1e;
+}
+
+.filterDropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.filterDropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.filterDropdown::-webkit-scrollbar-thumb {
+  background: #a62626;
+  border-radius: 4px;
+}
+
+.filterDropdown::-webkit-scrollbar-thumb:hover {
+  background: #8b1e1e;
+}
+
+/* Empty state */
+.emptyState {
   text-align: center;
-  font-size: 16px;
+  padding: 40px;
+  color: #666;
 }
 
-.radioGroup input {
-  margin-right: 8px;
-  cursor: pointer;
-  }
-  
-  .radioGroup label {
-  margin-right: 16px;
-  cursor: pointer;
+/* Loading state */
+.loadingState {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .content {
+    padding: 15px;
   }
 
-  .actionButton {
-    padding: 8px 12px;
-    margin: 0 5px;
-    background-color:#A62626; 
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-family: 'Caudex';
+  .title {
+    font-size: 28px;
   }
+}
+
+@media (max-width: 768px) {
+  .radioGroup {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .tableContainer {
+    margin: 0 -15px;
+    border-radius: 0;
+  }
+}
+
+/* Print styles */
+@media print {
+  .containerBackground {
+    padding: 0;
+    background: white;
+  }
+
+  .content {
+    box-shadow: none;
+  }
+
+  .actionButtonGroup,
+  .filterButton {
+    display: none;
+  }
+
+  .table th {
+    background-color: #f5f5f5 !important;
+    color: black;
+  }
+}

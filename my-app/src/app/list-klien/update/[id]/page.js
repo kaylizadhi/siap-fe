@@ -22,7 +22,7 @@ export default function UpdateKlien({ params }) {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://siap-be-production.up.railway.app/klien/${id}/`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/${id}/`)
         .then((response) => response.json())
         .then((data) => setFormData(data))
         .catch((error) => console.error("Error:", error));
@@ -37,16 +37,13 @@ export default function UpdateKlien({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/update/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${id}/update/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -90,48 +87,21 @@ export default function UpdateKlien({ params }) {
           <label className="mb-1 font-semibold" htmlFor="nama_klien">
             Nama Klien
           </label>
-          <input
-            type="text"
-            id="nama_klien"
-            name="nama_klien"
-            placeholder="Masukkan nama klien"
-            className="border rounded-md p-2"
-            value={formData.nama_klien}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" id="nama_klien" name="nama_klien" placeholder="Masukkan nama klien" className="border rounded-md p-2" value={formData.nama_klien} onChange={handleChange} required />
         </div>
 
         <div className="flex flex-col w-1/2 mb-4">
           <label className="mb-1 font-semibold" htmlFor="nama_perusahaan">
             Nama Perusahaan
           </label>
-          <input
-            type="text"
-            id="nama_perusahaan"
-            name="nama_perusahaan"
-            placeholder="Masukkan nama perusahaan"
-            className="border rounded-md p-2"
-            value={formData.nama_perusahaan}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" id="nama_perusahaan" name="nama_perusahaan" placeholder="Masukkan nama perusahaan" className="border rounded-md p-2" value={formData.nama_perusahaan} onChange={handleChange} required />
         </div>
 
         <div className="flex flex-col w-1/2 mb-4">
           <label className="mb-1 font-semibold" htmlFor="daerah">
             Daerah
           </label>
-          <input
-            type="text"
-            id="daerah"
-            name="daerah"
-            placeholder="Masukkan daerah"
-            className="border rounded-md p-2"
-            value={formData.daerah}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" id="daerah" name="daerah" placeholder="Masukkan daerah" className="border rounded-md p-2" value={formData.daerah} onChange={handleChange} required />
         </div>
 
         <div className="flex flex-col w-1/2 mt-6">

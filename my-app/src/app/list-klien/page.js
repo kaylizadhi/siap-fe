@@ -4,12 +4,19 @@ import { useRouter } from "next/navigation";
 import { Caudex } from "next/font/google";
 import { toast } from "react-toastify";
 import { Eye, Pencil, Trash2, Search } from "lucide-react";
+import { PencilIcon, TrashIcon, EyeIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Button from "components/Button";
 
 const caudex = Caudex({
   weight: "700",
   subsets: ["latin"],
 });
+
+const styles = {
+  tableContainerSurvei: "w-full text-center font-[Caudex] border-collapse border-spacing-0 border-separate border-spacing-y-2",
+  buttonSurvei: "border-none bg-none cursor-pointer",
+  iconSurvei: "mt-1 w-8 h-8 cursor-pointer px-2 rounded-[20px] py-2",
+};
 
 export default function DaftarKlien() {
   const [kliens, setKliens] = useState([]);
@@ -28,7 +35,7 @@ export default function DaftarKlien() {
   const fetchKliens = async (page = 1, search = "") => {
     try {
       setLoading(true);
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}klien/?page=${page}&page_size=${pageSize}`;
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}/klien/?page=${page}&page_size=${pageSize}`;
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
       }
@@ -89,12 +96,9 @@ export default function DaftarKlien() {
   const handleDelete = async () => {
     if (selectedKlien) {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}klien/${selectedKlien.id}/delete/`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/${selectedKlien.id}/delete/`, {
+          method: "DELETE",
+        });
 
         if (response.ok) {
           // Refresh the current page after deletion
@@ -114,9 +118,7 @@ export default function DaftarKlien() {
 
   if (loading && !kliens.length) {
     return (
-      <div
-        className={`${caudex.className} flex justify-center items-center min-h-screen`}
-      >
+      <div className={`${caudex.className} flex justify-center items-center min-h-screen`}>
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-900"></div>
       </div>
     );
@@ -124,9 +126,7 @@ export default function DaftarKlien() {
 
   if (error) {
     return (
-      <div
-        className={`${caudex.className} flex justify-center items-center min-h-screen`}
-      >
+      <div className={`${caudex.className} flex justify-center items-center min-h-screen`}>
         <div className="text-red-500">Error: {error}</div>
       </div>
     );
@@ -142,11 +142,7 @@ export default function DaftarKlien() {
             Total {totalItems} klien {searchQuery && "ditemukan"}
           </p>
         </div>
-        <Button
-          onClick={handleTambahKlien}
-          variant="primary"
-          className="flex items-center"
-        >
+        <Button onClick={handleTambahKlien} variant="primary" className="flex items-center">
           <span className="text-3xl mr-2">+</span>
           <span className="text-sm">Tambah Klien</span>
         </Button>
@@ -157,97 +153,69 @@ export default function DaftarKlien() {
         <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-gray-400" />
         </div>
-        <input
-          type="text"
-          placeholder="Cari berdasarkan nama klien, perusahaan, atau daerah..."
-          className={`w-full pl-14 pr-6 py-3 rounded-full border-2 border-gray-200 outline-none bg-transparent text-gray-600 text-sm ${caudex.className} focus:border-primary-900 transition-colors`}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <input type="text" placeholder="Cari berdasarkan nama klien, perusahaan, atau daerah..." className={`w-full pl-14 pr-6 py-3 rounded-full border-2 border-gray-200 outline-none bg-transparent text-gray-600 text-sm ${caudex.className} focus:border-primary-900 transition-colors`} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       </div>
 
-      {/* Table Header */}
-      <div className="grid grid-cols-4 gap-4 px-8 py-3 text-xs text-gray-500 uppercase font-medium bg-gray-50 rounded-t-lg">
-        <div>Nama Klien</div>
-        <div>Nama Perusahaan</div>
-        <div>Daerah</div>
-        <div className="text-center">Action</div>
-      </div>
+      {/* Table */}
+      <table className={styles.tableContainerSurvei}>
+        <thead>
+          <tr>
+            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[10%]">No</th>
+            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[25%]">Nama Klien</th>
+            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[25%]">Nama Perusahaan</th>
+            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[25%]">Daerah</th>
+            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[15%]">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {kliens.length === 0 ? (
+            <tr>
+              <td colSpan={5} className="text-center py-8 text-gray-500">
+                {searchQuery ? "Tidak ada klien yang ditemukan" : "Belum ada klien yang ditambahkan"}
+              </td>
+            </tr>
+          ) : (
+            kliens.map((klien, index) => (
+              <tr key={klien.id} className="outline-[1px] outline outline-[#bbc7cd] rounded-[28px] bg-white">
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{(currentPage - 1) * pageSize + index + 1}</td>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{klien.nama_klien}</td>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{klien.nama_perusahaan}</td>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{klien.daerah}</td>
+                <td className="p-4">
+                  <div className="flex justify-center space-x-1">
+                    <button onClick={() => handleDetail(klien.id)} className={styles.buttonSurvei} title="View Details">
+                      <EyeIcon className={styles.iconSurvei} />
+                    </button>
+                    <button onClick={() => handleUpdate(klien.id)} className={styles.buttonSurvei} title="Edit">
+                      <PencilIcon className={styles.iconSurvei} />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSelectedKlien(klien);
+                        setIsModalOpen(true);
+                      }}
+                      className={styles.buttonSurvei}
+                      title="Delete"
+                    >
+                      <TrashIcon className={styles.iconSurvei} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
 
-      {/* Table Body */}
-      <div className="space-y-3">
-        {kliens.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            {searchQuery
-              ? "Tidak ada klien yang ditemukan"
-              : "Belum ada klien yang ditambahkan"}
-          </div>
-        ) : (
-          kliens.map((klien) => (
-            <div
-              key={klien.id}
-              className="grid grid-cols-4 gap-4 px-8 py-3 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200"
-            >
-              <div>
-                <p className="font-bold text-gray-700">{klien.nama_klien}</p>
-              </div>
-              <div className="text-gray-500">{klien.nama_perusahaan}</div>
-              <div className="text-gray-500">{klien.daerah}</div>
-              <div className="flex justify-center space-x-4">
-                <button
-                  onClick={() => handleDetail(klien.id)}
-                  className="p-2 text-primary-700 hover:bg-primary-50 rounded-full transition-colors"
-                  title="View Details"
-                >
-                  <Eye size={18} />
-                </button>
-                <button
-                  onClick={() => handleUpdate(klien.id)}
-                  className="p-2 text-amber-600 hover:bg-amber-50 rounded-full transition-colors"
-                  title="Edit"
-                >
-                  <Pencil size={18} />
-                </button>
-                <button
-                  onClick={() => {
-                    setSelectedKlien(klien);
-                    setIsModalOpen(true);
-                  }}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                  title="Delete"
-                >
-                  <Trash2 size={18} />
-                </button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-6 flex justify-end items-center space-x-8 px-8">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={`flex items-center space-x-1 ${
-              currentPage === 1
-                ? "text-gray-300 cursor-not-allowed"
-                : "text-gray-700 hover:text-gray-500"
-            }`}
-          >
+          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} className={`flex items-center space-x-1 ${currentPage === 1 ? "text-gray-300 cursor-not-allowed" : "text-gray-700 hover:text-gray-500"}`}>
             <span>&lt;</span>
             <span>Sebelumnya</span>
           </button>
 
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`flex items-center space-x-1 ${
-              currentPage === totalPages
-                ? "text-gray-300 cursor-not-allowed"
-                : "text-gray-700 hover:text-gray-500"
-            }`}
-          >
+          <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} className={`flex items-center space-x-1 ${currentPage === totalPages ? "text-gray-300 cursor-not-allowed" : "text-gray-700 hover:text-gray-500"}`}>
             <span>Selanjutnya</span>
             <span>&gt;</span>
           </button>
@@ -274,11 +242,7 @@ export default function DaftarKlien() {
               >
                 Batal
               </Button>
-              <Button
-                onClick={handleDelete}
-                variant="danger"
-                className="px-4 py-2"
-              >
+              <Button onClick={handleDelete} variant="danger" className="px-4 py-2">
                 Hapus
               </Button>
             </div>
