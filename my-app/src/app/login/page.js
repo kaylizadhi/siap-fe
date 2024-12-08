@@ -32,7 +32,7 @@ export default function Login() {
     setError(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login/`, {
+      const res = await fetch(`https://considerate-trust-production.up.railway.app/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
