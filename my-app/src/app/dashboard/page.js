@@ -1,4 +1,3 @@
-// Dashboard.js
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
@@ -8,10 +7,13 @@ import FilterIcon from "../../components/FilterIcon";
 
 const Dashboard = () => {
   const router = useRouter();
+
+  // State management
   const [surveyType, setSurveyType] = useState("keseluruhan");
   const [survei, setSurvei] = useState([]);
   const [activeFilter, setActiveFilter] = useState(null);
   const [filterOpenTime, setFilterOpenTime] = useState(null);
+  const [selectedRuangLingkup, setSelectedRuangLingkup] = useState("Nasional");
   const [dateFilters, setDateFilters] = useState({
     startDate: "",
     endDate: "",
@@ -23,8 +25,10 @@ const Dashboard = () => {
     jumlah_responden: "",
     last_status: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Get unique values for each column for dropdowns
+  // Memoized unique values for filters
   const uniqueValues = useMemo(() => {
     return {
       nama_klien: [...new Set(survei.map((e) => e?.klien).filter(Boolean))],
@@ -35,6 +39,7 @@ const Dashboard = () => {
     };
   }, [survei]);
 
+  // Filtered data computation
   const filteredData = useMemo(() => {
     if (!Array.isArray(survei)) return [];
 
@@ -52,16 +57,142 @@ const Dashboard = () => {
       // Other filters
       return Object.keys(filters).every((key) => {
         if (!filters[key]) return true;
-
         if (key === "nama_klien") {
           return item.klien?.toString() === filters[key]?.toString();
         }
-
         return item[key]?.toString() === filters[key]?.toString();
       });
     });
   }, [survei, filters, dateFilters]);
 
+  // Map initialization effect
+  useEffect(() => {
+    let scriptsLoaded = false;
+    let mapInitialized = false;
+
+    const initializeMap = (data) => {
+      if (mapInitialized) return;
+      mapInitialized = true;
+
+      if (typeof anychart === "undefined" || !anychart.map) {
+        console.error("AnyChart or map module is not loaded properly.");
+        return;
+      }
+
+      const mapContainer = document.getElementById("map-container");
+      if (!mapContainer) {
+        console.error("Map container not found.");
+        return;
+      }
+
+      mapContainer.innerHTML = "";
+      const map = anychart.map();
+
+      if (selectedRuangLingkup === "Nasional" && data.length === 1 && data[0].id === "ID") {
+        // For national view, create data points for all provinces with the same value
+        const nationalValue = data[0].value;
+        const allProvincesData = [
+          { id: "ID.AC", value: nationalValue },
+          { id: "ID.KI", value: nationalValue },
+          { id: "ID.JR", value: nationalValue },
+          { id: "ID.JT", value: nationalValue },
+          { id: "ID.BE", value: nationalValue },
+          { id: "ID.BT", value: nationalValue },
+          { id: "ID.JK", value: nationalValue },
+          { id: "ID.KB", value: nationalValue },
+          { id: "ID.LA", value: nationalValue },
+          { id: "ID.SL", value: nationalValue },
+          { id: "ID.BB", value: nationalValue },
+          { id: "ID.BA", value: nationalValue },
+          { id: "ID.JI", value: nationalValue },
+          { id: "ID.KS", value: nationalValue },
+          { id: "ID.NT", value: nationalValue },
+          { id: "ID.SE", value: nationalValue },
+          { id: "ID.SR", value: nationalValue },
+          { id: "ID.KR", value: nationalValue },
+          { id: "ID.GO", value: nationalValue },
+          { id: "ID.JA", value: nationalValue },
+          { id: "ID.KT", value: nationalValue },
+          { id: "ID.IB", value: nationalValue },
+          { id: "ID.SU", value: nationalValue },
+          { id: "ID.RI", value: nationalValue },
+          { id: "ID.SW", value: nationalValue },
+          { id: "ID.133", value: nationalValue },
+          { id: "ID.SB", value: nationalValue },
+          { id: "ID.YO", value: nationalValue },
+          { id: "ID.MA", value: nationalValue },
+          { id: "ID.NB", value: nationalValue },
+          { id: "ID.SG", value: nationalValue },
+          { id: "ID.ST", value: nationalValue },
+          { id: "ID.PA", value: nationalValue },
+        ];
+        const dataSet = anychart.data.set(allProvincesData);
+        const series = map.choropleth(dataSet);
+        series.geoIdField("id");
+        series.colorScale(anychart.scales.linearColor("#D9878D", "#A62626"));
+        series.stroke(null);
+        series.tooltip().title("Indonesia").format("Jumlah Survei Nasional: {%value}");
+      } else {
+        // For provincial view, use the data as is
+        const dataSet = anychart.data.set(data);
+        const series = map.choropleth(dataSet);
+        series.geoIdField("id");
+        series.colorScale(anychart.scales.linearColor("#D9878D", "#A62626"));
+        series.tooltip().format("Jumlah Survei: {%value}");
+      }
+
+      map.geoData(anychart.maps["indonesia"]);
+      map.container("map-container");
+      map.draw();
+    };
+
+    const loadScripts = async () => {
+      if (scriptsLoaded) return;
+      scriptsLoaded = true;
+
+      const isScriptLoaded = (src) => !!document.querySelector(`script[src="${src}"]`);
+
+      const addScript = (src) =>
+        new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.body.appendChild(script);
+        });
+
+      try {
+        setIsLoading(true);
+        await Promise.all([!isScriptLoaded("https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js") ? addScript("https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js") : Promise.resolve(), !isScriptLoaded("https://cdn.anychart.com/releases/8.13.0/js/anychart-map.min.js") ? addScript("https://cdn.anychart.com/releases/8.13.0/js/anychart-map.min.js") : Promise.resolve(), !isScriptLoaded("https://cdn.anychart.com/geodata/2.2.0/countries/indonesia/indonesia.js") ? addScript("https://cdn.anychart.com/geodata/2.2.0/countries/indonesia/indonesia.js") : Promise.resolve()]);
+
+        const fetchFilteredData = async (ruangLingkup) => {
+          const token = localStorage.getItem("authToken");
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei/count-dashboard/?ruang_lingkup=${ruangLingkup}`, {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error("Failed to fetch data by ruang lingkup");
+          }
+          return await response.json();
+        };
+
+        const data = await fetchFilteredData(selectedRuangLingkup);
+        anychart.onDocumentReady(() => initializeMap(data));
+        setError(null);
+      } catch (error) {
+        console.error("Failed to load AnyChart scripts or data:", error);
+        setError("Failed to load map data. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadScripts();
+  }, [selectedRuangLingkup]);
+
+  // Click outside filter effect
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (activeFilter && !event.target.closest(`.${styles.filterContainer}`)) {
@@ -75,6 +206,7 @@ const Dashboard = () => {
     };
   }, [activeFilter]);
 
+  // User verification effect
   useEffect(() => {
     const verifyUser = async () => {
       const token = localStorage.getItem("authToken");
@@ -84,7 +216,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:8000/accounts/check_role_dashboard/", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/accounts/check_role_dashboard/`, {
           headers: { Authorization: `Token ${token}` },
         });
         const data = await response.json();
@@ -101,9 +233,11 @@ const Dashboard = () => {
     verifyUser();
   }, [router]);
 
+  // Fetch surveys effect
   useEffect(() => {
     const fetchSurveys = async () => {
       try {
+        setIsLoading(true);
         const token = localStorage.getItem("authToken");
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/survei/${surveyType}/`, {
           method: "GET",
@@ -120,15 +254,20 @@ const Dashboard = () => {
 
         const data = await response.json();
         setSurvei(Array.isArray(data) ? data : []);
+        setError(null);
       } catch (error) {
         console.error("Failed to fetch surveys:", error);
+        setError("Failed to fetch survey data. Please try again later.");
         setSurvei([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchSurveys();
   }, [surveyType]);
 
+  // Event handlers
   const handleDateFilterChange = (e) => {
     const { name, value } = e.target;
     setDateFilters((prev) => ({
@@ -144,9 +283,12 @@ const Dashboard = () => {
     }));
   };
 
-  const formatDateTime = (dateTimeString) => {
-    const options = { day: "numeric", month: "long", year: "numeric" };
-    return new Date(dateTimeString).toLocaleDateString("id-ID", options);
+  const handleSurveyTypeChange = (e) => {
+    setSurveyType(e.target.value);
+  };
+
+  const handleRuangLingkupChange = (event) => {
+    setSelectedRuangLingkup(event.target.value);
   };
 
   const handleSeeTrackerClick = (id) => {
@@ -157,8 +299,9 @@ const Dashboard = () => {
     router.push(`/survei/${id}`);
   };
 
-  const handleSurveyTypeChange = (e) => {
-    setSurveyType(e.target.value);
+  const formatDateTime = (dateTimeString) => {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return new Date(dateTimeString).toLocaleDateString("id-ID", options);
   };
 
   const renderColumnFilter = (column, options) => (
@@ -225,6 +368,27 @@ const Dashboard = () => {
         <div className={styles.content}>
           <h1 className={styles.title}>Dashboard Progres Survei</h1>
 
+          {/* Map Type Selection */}
+          <div className={styles.mapTypeSection}>
+            <label className={styles.label}>Pilih Tipe Peta</label>
+            <div className={styles.radioGroup}>
+              {["Nasional", "Provinsi"].map((type) => (
+                <React.Fragment key={type}>
+                  <input type="radio" id={`map-${type}`} name="mapType" value={type} checked={selectedRuangLingkup === type} onChange={handleRuangLingkupChange} />
+                  <label htmlFor={`map-${type}`}>{type}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Map Container */}
+          <div className={styles.mapContainer}>
+            {isLoading && <div className={styles.loading}>Loading map...</div>}
+            {error && <div className={styles.error}>{error}</div>}
+            <div id="map-container" style={{ height: "350px", marginBottom: "20px", width: "100%" }}></div>
+          </div>
+
+          {/* Survey Type Selection */}
           <div className={styles.surveyTypeSection}>
             <label className={styles.label}>Pilih Jenis Survei</label>
             <div className={styles.radioGroup}>
@@ -237,6 +401,7 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* Date Filters */}
           <div className={styles.dateFilterSection}>
             <div className={styles.dateFilterGroup}>
               <div className={styles.dateFilter}>
@@ -250,7 +415,10 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* Survey Table */}
           <div className={styles.tableContainer}>
+            {isLoading && <div className={styles.loading}>Loading surveys...</div>}
+            {error && <div className={styles.error}>{error}</div>}
             <div className={styles.tableScrollContainer}>
               <table className={styles.table}>
                 <thead>
