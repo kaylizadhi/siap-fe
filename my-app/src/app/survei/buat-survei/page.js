@@ -19,7 +19,7 @@ export default function BuatSurvei() {
   // Fungsi untuk mengambil data klien dari API
   const fetchKlien = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/?page=1&page_size=10000`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/?page=1&page_size=10000`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export default function BuatSurvei() {
     try {
       const token = localStorage.getItem("authToken");
 
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}/survei/count-by-region?ruang_lingkup=${param}`;
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}survei/count-by-region?ruang_lingkup=${param}`;
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -150,7 +150,7 @@ export default function BuatSurvei() {
 
     try {
       const surveiData = { ...survei, wilayah_survei: wilayahSurvei };
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei/add-survei/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei/add-survei/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

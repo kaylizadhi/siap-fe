@@ -50,7 +50,7 @@ export default function BuatAkun() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/buatAkun/api/buatAkun/`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}buatAkun/api/buatAkun/`,
         {
           method: "POST",
           headers: {

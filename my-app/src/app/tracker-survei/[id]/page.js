@@ -68,7 +68,7 @@ export default function SurveyTrackerDetail({ params }) {
   const fetchSurveyData = async () => {
     const token = localStorage.getItem("authToken");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei-status/${id}/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei-status/${id}/`, {
         headers: {
           Authorization: `Token ${token}`,
         },

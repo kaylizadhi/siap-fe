@@ -18,7 +18,7 @@ export default function DokumenDetail({ params }) {
   // Fetch document details
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/daftarDokumen/detailDokumen/${id}/`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/detailDokumen/${id}/`)
         .then((response) => response.json())
         .then((data) => setDokumen(data))
         .catch((error) => console.error("Error:", error));
@@ -129,7 +129,7 @@ export default function DokumenDetail({ params }) {
   const handleDelete = async (dokumenId) => {
     const encodedId = encodeURIComponent(dokumenId);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/daftarDokumen/${dokumenId}/delete/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarDokumen/${dokumenId}/delete/`, {
         method: "DELETE",
       });
 

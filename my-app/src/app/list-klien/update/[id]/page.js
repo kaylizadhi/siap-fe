@@ -22,7 +22,7 @@ export default function UpdateKlien({ params }) {
 
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/${id}/`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/`)
         .then((response) => response.json())
         .then((data) => setFormData(data))
         .catch((error) => console.error("Error:", error));
@@ -37,7 +37,7 @@ export default function UpdateKlien({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${id}/update/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${id}/update/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

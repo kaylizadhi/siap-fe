@@ -31,7 +31,7 @@ export default function DaftarAkun() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const url = searchQuery ? `${process.env.NEXT_PUBLIC_BASE_URL}/daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}` : `${process.env.NEXT_PUBLIC_BASE_URL}/daftarAkun/api/daftarAkun/`;
+        const url = searchQuery ? `${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}` : `${process.env.NEXT_PUBLIC_BASE_URL}/daftarAkun/api/daftarAkun/`;
         const response = await fetch(url);
         const data = await response.json();
         setAccounts(data);
@@ -50,7 +50,7 @@ export default function DaftarAkun() {
       }
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/accounts/check_role_admin/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_admin/`, {
           headers: { Authorization: `Token ${token}` },
         });
         const data = await response.json();
@@ -89,7 +89,7 @@ export default function DaftarAkun() {
     const accountIndex = index + indexOfFirstAccount;
     setDeletingIndex(accountIndex);
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/daftarAkun/${accountId}/delete/`, {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/${accountId}/delete/`, {
         method: "DELETE",
       });
       setShowDeleteModal(false);

@@ -20,7 +20,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:8000/accounts/check_role_dashboard/", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_dashboard/`, {
           headers: { Authorization: `Token ${token}` },
         });
         const data = await response.json();
@@ -80,7 +80,7 @@ const Dashboard = () => {
     async function fetchingData() {
       try {
         const validSurveyType = surveyType || "keseluruhan";
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/survei/nasional/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}dashboard/survei/nasional/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

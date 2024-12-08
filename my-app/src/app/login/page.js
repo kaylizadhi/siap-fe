@@ -32,7 +32,7 @@ export default function Login() {
     setError(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export default function Login() {
       }
 
       try {
-        const roleRes = await fetch("http://localhost:8000/accounts/get_sidebar_role/", {
+        const roleRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/get_sidebar_role/`, {
           headers: { Authorization: `Token ${data.token}` },
         });
 

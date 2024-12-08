@@ -19,7 +19,7 @@ export default function KlienDetail({ params }) {
   // Fetch client details
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/${id}/`)
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/`)
         .then((response) => response.json())
         .then((data) => setKlien(data))
         .catch((error) => console.error("Error:", error));
@@ -34,7 +34,7 @@ export default function KlienDetail({ params }) {
   // Handle delete logic
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/${id}/delete/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/delete/`, {
         method: "DELETE",
       });
 

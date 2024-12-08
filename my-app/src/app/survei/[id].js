@@ -21,7 +21,7 @@ export default function Detail() {
   useEffect(() => {
     async function fetchingData() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei/get-survei-detail/${id}/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei/get-survei-detail/${id}/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

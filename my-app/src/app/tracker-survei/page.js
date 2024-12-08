@@ -29,7 +29,7 @@ const SurveyList = () => {
     setLoading(true);
 
     try {
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}/survei-status/?page=${page}&page_size=${pageSize}`;
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}survei-status/?page=${page}&page_size=${pageSize}`;
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
       }

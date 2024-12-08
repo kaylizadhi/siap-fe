@@ -17,7 +17,7 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchUserRole = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/accounts/get_sidebar_role/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/get_sidebar_role/`, {
           headers: {
             Authorization: `Token ${localStorage.getItem("authToken")}`,
           },

@@ -35,7 +35,7 @@ export default function DaftarKlien() {
   const fetchKliens = async (page = 1, search = "") => {
     try {
       setLoading(true);
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}/klien/?page=${page}&page_size=${pageSize}`;
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}klien/?page=${page}&page_size=${pageSize}`;
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
       }
@@ -96,7 +96,7 @@ export default function DaftarKlien() {
   const handleDelete = async () => {
     if (selectedKlien) {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/${selectedKlien.id}/delete/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/${selectedKlien.id}/delete/`, {
           method: "DELETE",
         });
 

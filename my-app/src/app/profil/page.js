@@ -37,7 +37,7 @@ export default function Profil() {
       }
 
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profil/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}profil/`, {
           method: "GET",
           headers: {
             Authorization: `Token ${token}`,
@@ -101,7 +101,7 @@ export default function Profil() {
 
       // If both passwords are provided, update the password
       if (oldPassword && newPassword) {
-        const passwordRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/change-password/`, {
+        const passwordRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}change-password/`, {
           method: "PATCH",
           headers: {
             Authorization: `Token ${token}`,

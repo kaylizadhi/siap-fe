@@ -167,7 +167,7 @@ const Dashboard = () => {
 
         const fetchFilteredData = async (ruangLingkup) => {
           const token = localStorage.getItem("authToken");
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei/count-dashboard/?ruang_lingkup=${ruangLingkup}`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei/count-dashboard/?ruang_lingkup=${ruangLingkup}`, {
             headers: {
               Authorization: `Token ${token}`,
             },
@@ -216,7 +216,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/accounts/check_role_dashboard/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_dashboard/`, {
           headers: { Authorization: `Token ${token}` },
         });
         const data = await response.json();
@@ -239,7 +239,7 @@ const Dashboard = () => {
       try {
         setIsLoading(true);
         const token = localStorage.getItem("authToken");
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/survei/${surveyType}/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}dashboard/survei/${surveyType}/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

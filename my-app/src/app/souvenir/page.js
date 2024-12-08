@@ -219,7 +219,7 @@ export default function Index() {
   useEffect(() => {
     async function fetchingData() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/souvenir/get-list-souvenir?page=${page}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}souvenir/get-list-souvenir?page=${page}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

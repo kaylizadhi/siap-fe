@@ -18,7 +18,7 @@ export default function ForgotPassword() {
   // Fetch the security question for the username from the backend
   const handleGetSecurityQuestion = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-security-question/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}get-security-question/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export default function ForgotPassword() {
   // Verify the answer and reset the password
   const handleVerifyAnswer = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-security-answer/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}verify-security-answer/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

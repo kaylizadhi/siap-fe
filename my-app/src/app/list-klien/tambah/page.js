@@ -27,7 +27,7 @@ export default function DaftarKlien() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/create/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/create/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
