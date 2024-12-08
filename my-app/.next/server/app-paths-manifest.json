@@ -1,9 +1,7 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/survei/buat-survei/page": "app/survei/buat-survei/page.js",
-  "/login/page": "app/login/page.js",
-  "/list-klien/page": "app/list-klien/page.js",
   "/survei/page": "app/survei/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/survei/[id]/page": "app/survei/[id]/page.js",
+  "/survei/edit/[id]/page": "app/survei/edit/[id]/page.js"
 }

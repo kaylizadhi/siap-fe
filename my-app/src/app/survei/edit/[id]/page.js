@@ -64,7 +64,7 @@ export default function EditSurvei(){
           },
         });
         const data = await response.json();
-        setKlien(data);
+        setKlien(data.results);
       } catch (error) {
         console.error("Error fetching klien:", error);
         setKlien([]);
