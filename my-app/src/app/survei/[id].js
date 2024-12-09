@@ -47,14 +47,14 @@ export default function Detail() {
       <div className={styles.idContainer}>
         <div>Judul Survei : {survei.nama_survei}</div>
         <div>Nama Klien : {survei.nama_klien}</div>
-        {/* <div>Daerah : {survei.wilayah_survei}</div> */}
+        <div>Daerah : {survei.wilayah_survei}</div>
         <div>Jumlah Responden : {survei.jumlah_responden}</div>
         <div>Harga Survei : {survei.harga_survei}</div>
         <div>Tanggal Mulai : {survei.waktu_mulai_survei && formatDateTime(survei.waktu_mulai_survei)}</div>
         <div>Tanggal Selesai : {survei.waktu_berakhir_survei && formatDateTime(survei.waktu_berakhir_survei)}</div>
         <div>Tipe Survei : {survei.tipe_survei}</div>
-        <div>Tingkat Survei : {survei.ruang_lingkup}</div>
-        <div>Wilayah Survei : {survei.wilayah_survei}</div>
+        {/* <div>Tingkat Survei : {survei.ruang_lingkup}</div>
+        <div>Wilayah Survei : {survei.wilayah_survei}</div> */}
       </div>
     </div>
   );
