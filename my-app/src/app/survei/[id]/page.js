@@ -101,13 +101,13 @@ export default function Detail() {
           <div className={styles.label}>Tipe Survei</div>
           <div className={styles.value}>{survei.tipe_survei}</div>
         </div>
-        {/* <div className={styles.row}>
+        <div className={styles.row}>
           <div className={styles.label}>Tingkat Survei</div>
           <div className={styles.value}>{survei.ruang_lingkup}</div>
-        </div> */}
+        </div>
         <div className={styles.row}>
           <div className={styles.label}>Wilayah Survei</div>
-          <div className={styles.value}>{survei.wilayah_survei}</div>
+          <div className={styles.value}>{survei.wilayah_survei_names}</div>
         </div>
         <button onClick={handleBackToSurvei} className={styles.secondaryButtonSurvei2}>
           Kembali
