@@ -149,6 +149,7 @@ bValue;
             url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_invoice_dp/`,
             fileNameFallback: `invoiceDP_${docDetail.survey_name}.xlsx`,
             data: {
+              id: dokumenId,
               client_name: docDetail.client_name,
               survey_name: docDetail.survey_name,
               respondent_count: docDetail.respondent_count,
@@ -164,6 +165,7 @@ bValue;
             url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_invoice_final/`,
             fileNameFallback: `invoiceFinal_${docDetail.survey_name}.xlsx`,
             data: {
+                id: dokumenId,
                 client_name: docDetail.client_name,
                 survey_name: docDetail.survey_name,
                 respondent_count: docDetail.respondent_count,
@@ -179,6 +181,7 @@ bValue;
             url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_kwitansi_dp/`,
             fileNameFallback: `kwitansiDP_${docDetail.survey_name}.xlsx`,
             data: {
+              id: dokumenId,
               client_name: docDetail.client_name,
               survey_name: docDetail.survey_name,
               amount: parseFloat(docDetail.amount).toString(),
@@ -191,6 +194,7 @@ bValue;
             url: `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/export_existing_kwitansi_final/`,
             fileNameFallback: `kwitansiFinal_${docDetail.survey_name}.xlsx`,
             data: {
+                id: dokumenId,
                 client_name: docDetail.client_name,
                 survey_name: docDetail.survey_name,
                 amount: parseFloat(docDetail.amount).toString(),
