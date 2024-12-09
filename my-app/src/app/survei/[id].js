@@ -53,6 +53,8 @@ export default function Detail() {
         <div>Tanggal Mulai : {survei.waktu_mulai_survei && formatDateTime(survei.waktu_mulai_survei)}</div>
         <div>Tanggal Selesai : {survei.waktu_berakhir_survei && formatDateTime(survei.waktu_berakhir_survei)}</div>
         <div>Tipe Survei : {survei.tipe_survei}</div>
+        <div>Tingkat Survei : {survei.ruang_lingkup}</div>
+        <div>Wilayah Survei : {survei.wilayah_survei}</div>
       </div>
     </div>
   );
