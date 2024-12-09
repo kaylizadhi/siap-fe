@@ -17,7 +17,7 @@ export default function EditSurvei() {
   useEffect(() => {
     async function fetchingData() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei/get-survei-detail/${id}/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei/get-survei-detail/${id}/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export default function EditSurvei() {
 
   const fetchDaerah = async (param) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/survei/count-by-region?ruang_lingkup=${param}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei/count-by-region?ruang_lingkup=${param}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default function EditSurvei() {
 
   const fetchKlien = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/klien/?page=1&page_size=10000`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/?page=1&page_size=10000`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
