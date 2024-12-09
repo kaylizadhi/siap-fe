@@ -31,7 +31,7 @@ export default function DaftarAkun() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const url = searchQuery ? `${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}` : `${process.env.NEXT_PUBLIC_BASE_URL}/daftarAkun/api/daftarAkun/`;
+        const url = searchQuery ? `${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}` : `${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/api/daftarAkun/`;
         const response = await fetch(url);
         const data = await response.json();
         setAccounts(data);
