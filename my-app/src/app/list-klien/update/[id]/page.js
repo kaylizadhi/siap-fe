@@ -37,7 +37,7 @@ export default function UpdateKlien({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${id}/update/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}klien/${id}/update/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
