@@ -66,7 +66,7 @@ export default function Detail() {
   }
 
   return (
-    <div>
+    <div className={styles.containerOuter}>
       <b className={styles.headingSurvei}>Detail Survei</b>
       <div className={styles.idContainer}>
         <div className={styles.row}>
