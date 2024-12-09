@@ -81,7 +81,7 @@ export default function BuatAkun() {
       setShowNotification(true);
       setTimeout(() => {
         setShowNotification(false);
-        router.push("/dashboard");
+        router.push("/daftar-akun");
       }, 1000);
     } catch (error) {
       console.error(error);
