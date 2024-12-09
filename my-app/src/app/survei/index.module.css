@@ -244,7 +244,7 @@
 }
 
 .secondaryButtonSurvei2 {
-    position: absolute;
+    position: relative;
     top: 560px;
     left: 360px;
     background-color: #ffffff;
