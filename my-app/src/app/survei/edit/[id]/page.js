@@ -3,7 +3,15 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import styles from "../../index.module.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Button from "components/Button";
+import { Caudex } from "next/font/google";
+
+const caudex = Caudex({
+  weight: "700",
+  subsets: ["latin"],
+});
 
 export default function EditSurvei() {
   const router = useRouter();
@@ -13,6 +21,8 @@ export default function EditSurvei() {
   const id = params.id;
   const [survei, setSurvei] = useState({});
   const [wilayahSurvei, setWilayahSurvei] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchingData() {
@@ -31,17 +41,20 @@ export default function EditSurvei() {
         const listSurvei = await res.json();
         setSurvei(listSurvei);
 
-        // If wilayah_survei is a string, convert it to an array for consistency
-        if (listSurvei.wilayah_survei && typeof listSurvei.wilayah_survei === "string") {
+        // Update this part to handle wilayah_survei_names
+        if (listSurvei.wilayah_survei_names) {
           setWilayahSurvei([
             {
-              id: listSurvei.wilayah_survei,
-              name: listSurvei.wilayah_survei,
+              id: listSurvei.wilayah_survei_names,
+              name: listSurvei.wilayah_survei_names,
+              province: null,
+              type: listSurvei.ruang_lingkup.toLowerCase(),
             },
           ]);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
+        toast.error("Gagal memuat data survei");
       }
     }
     if (id) {
@@ -68,10 +81,12 @@ export default function EditSurvei() {
       } else {
         console.error("Response daerah tidak sesuai format: ", data);
         setDaerahOptions([]);
+        toast.error("Format data daerah tidak sesuai");
       }
     } catch (error) {
       console.error("Error fetching daerah:", error);
       setDaerahOptions([]);
+      toast.error("Gagal memuat data daerah");
     }
   };
 
@@ -88,6 +103,7 @@ export default function EditSurvei() {
     } catch (error) {
       console.error("Error fetching klien:", error);
       setKlien([]);
+      toast.error("Gagal memuat data klien");
     }
   };
 
@@ -98,12 +114,9 @@ export default function EditSurvei() {
   const handleRuangLingkupChange = (event) => {
     const value = event.target.value;
 
-    // If wilayah_survei already has items, confirm reset
     if (wilayahSurvei.length > 0) {
-      const confirmReset = confirm("Mengubah ruang lingkup akan menghapus daftar wilayah yang sudah ditambahkan. Lanjutkan?");
+      const confirmReset = window.confirm("Mengubah ruang lingkup akan menghapus daftar wilayah yang sudah ditambahkan. Lanjutkan?");
       if (!confirmReset) return;
-
-      // Reset wilayah survei if user agrees
       setWilayahSurvei([]);
     }
 
@@ -118,39 +131,39 @@ export default function EditSurvei() {
     if (selectedId) {
       const selectedDaerah = daerahOptions.find((d) => d.id === selectedId);
       if (!selectedDaerah) {
-        alert("Data daerah tidak ditemukan.");
+        toast.error("Data daerah tidak ditemukan");
         return;
       }
 
       if (!wilayahSurvei.some((item) => item.id === selectedId)) {
         setWilayahSurvei([...wilayahSurvei, selectedDaerah]);
         document.querySelectorAll("input[name='ruanglingkup']").forEach((input) => (input.disabled = true));
+        toast.success("Daerah berhasil ditambahkan");
       } else {
-        alert(`${selectedDaerah.name} sudah ada dalam daftar.`);
+        toast.warning(`${selectedDaerah.name} sudah ada dalam daftar`);
       }
     } else {
-      alert("Pilih daerah terlebih dahulu.");
+      toast.error("Pilih daerah terlebih dahulu");
     }
   };
 
   const removeDaerah = (id) => {
     setWilayahSurvei(wilayahSurvei.filter((item) => item.id !== id));
+    toast.success("Daerah berhasil dihapus");
 
-    // Re-enable radio buttons if no regions are selected
     if (wilayahSurvei.length <= 1) {
       document.querySelectorAll("input[name='ruanglingkup']").forEach((input) => (input.disabled = false));
     }
   };
 
   const resetRuangLingkup = () => {
-    const confirmReset = confirm("Reset ruang lingkup akan menghapus daftar wilayah yang sudah ditambahkan. Lanjutkan?");
+    const confirmReset = window.confirm("Reset ruang lingkup akan menghapus daftar wilayah yang sudah ditambahkan. Lanjutkan?");
     if (confirmReset) {
       setWilayahSurvei([]);
       setSurvei({ ...survei, ruang_lingkup: null });
       setDaerahOptions([]);
-
-      // Enable radio buttons
       document.querySelectorAll("input[name='ruanglingkup']").forEach((input) => (input.disabled = false));
+      toast.info("Ruang lingkup telah direset");
     }
   };
 
@@ -158,26 +171,37 @@ export default function EditSurvei() {
     router.push("/survei");
   };
 
-  const handleSubmit = async () => {
-    // Validation
-    if (!survei.nama_survei) {
-      alert("Judul survei tidak boleh kosong.");
-      return;
-    }
-    if (!survei.harga_survei || isNaN(survei.harga_survei)) {
-      alert("Harga survei tidak boleh kosong.");
-      return;
-    }
-    if (!survei.jumlah_responden || isNaN(survei.jumlah_responden)) {
-      alert("Jumlah responden tidak boleh kosong.");
-      return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Validation checks remain the same
+    const validationChecks = [
+      { condition: !survei.nama_survei, message: "Judul survei tidak boleh kosong" },
+      { condition: !survei.harga_survei || isNaN(survei.harga_survei), message: "Harga survei tidak valid" },
+      { condition: !survei.jumlah_responden || isNaN(survei.jumlah_responden), message: "Jumlah responden tidak valid" },
+      { condition: !survei.waktu_mulai_survei, message: "Tanggal mulai harus diisi" },
+      { condition: !survei.waktu_berakhir_survei, message: "Tanggal berakhir harus diisi" },
+      { condition: !survei.klien_id, message: "Pilih klien terlebih dahulu" },
+      { condition: !survei.ruang_lingkup, message: "Pilih ruang lingkup survei" },
+    ];
+
+    for (const check of validationChecks) {
+      if (check.condition) {
+        toast.error(check.message);
+        setLoading(false);
+        return;
+      }
     }
 
     try {
       const surveiData = {
         ...survei,
-        wilayah_survei: wilayahSurvei.length > 0 ? wilayahSurvei : survei.wilayah_survei,
+        // Send the complete wilayah_survei object array
+        wilayah_survei: wilayahSurvei,
       };
+
+      console.log("Sending data:", surveiData);
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}survei/update-survei/${id}/`, {
         method: "PATCH",
@@ -186,103 +210,131 @@ export default function EditSurvei() {
         },
         body: JSON.stringify(surveiData),
       });
+
       const result = await response.json();
-      if (result?.success) {
-        router.push("/survei");
+      console.log("Response:", result);
+
+      if (!response.ok) {
+        throw new Error(result.message || "Gagal memperbarui survei");
       }
+
+      toast.success("Survei berhasil diperbarui");
+      router.push("/survei");
     } catch (error) {
-      console.log("response", survei);
-      alert("Gagal menyimpan perubahan informasi survei");
+      console.error("Error updating survey:", error);
+      setError("Gagal memperbarui survei");
+      toast.error(error.message || "Gagal memperbarui survei");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <b className={styles.headingSurvei}>Edit Survei</b>
-      <div className={styles.containerSurvei}>
-        <b className={styles.textFieldTitleSurvei}>Judul Survei</b>
-        <input className={styles.textFieldSurvei} type="text" name="judulsurvei" value={survei.nama_survei || ""} onChange={(event) => setSurvei({ ...survei, nama_survei: event.target.value })} />
+    <div className={`${caudex.className} p-6`}>
+      <h1 className="text-4xl font-bold mb-6 text-primary-900">Edit Survei</h1>
 
-        <b className={styles.textFieldTitleSurvei}>Nama Klien</b>
-        <select className={styles.textFieldSurveiDropdown} value={survei.klien_id || ""} onChange={(event) => setSurvei({ ...survei, klien_id: event.target.value })}>
-          <option value="">Pilih Klien</option>
-          {klien.map((e) => (
-            <option key={e.id} value={e.id}>
-              {e.nama_klien}
-            </option>
-          ))}
-        </select>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        <b className={styles.textFieldTitleSurvei}>Ruang Lingkup Survei</b>
-        <div className={styles.radioGroupSurvei}>
-          {["Nasional", "Provinsi", "Kota"].map((scope) => (
-            <label key={scope}>
-              <input type="radio" name="ruanglingkup" value={scope} checked={survei.ruang_lingkup === scope} onChange={handleRuangLingkupChange} />
-              {scope}
-            </label>
-          ))}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Judul Survei</label>
+          <input type="text" value={survei.nama_survei || ""} onChange={(event) => setSurvei({ ...survei, nama_survei: event.target.value })} className="border rounded-md p-2" required />
         </div>
-        {survei.ruang_lingkup && (
-          <button type="button" className={styles.resetButtonSurvei} onClick={resetRuangLingkup}>
-            Reset Ruang Lingkup
-          </button>
-        )}
 
-        <b className={styles.textFieldTitleSurvei}>Daerah</b>
-        <ul className={styles.daerahList}>
-          {wilayahSurvei.map((daerah) => (
-            <li key={daerah.id}>
-              {daerah.type === "city" ? `${daerah.name} (${daerah.province})` : daerah.name}
-              <button style={{ marginLeft: "10px" }} type="button" onClick={() => removeDaerah(daerah.id)}>
-                Hapus
-              </button>
-            </li>
-          ))}
-          {/* If no regions added from dropdown, show current wilayah as read-only */}
-          {wilayahSurvei.length === 0 && survei.wilayah_survei && (
-            <li>
-              {survei.wilayah_survei}
-              <span style={{ color: "gray", marginLeft: "10px" }}>(Wilayah Saat Ini)</span>
-            </li>
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Nama Klien</label>
+          <select value={survei.klien_id || ""} onChange={(event) => setSurvei({ ...survei, klien_id: event.target.value })} className="border rounded-md p-2" required>
+            <option value="">Pilih Klien</option>
+            {klien.map((e) => (
+              <option key={e.id} value={e.id}>
+                {e.nama_klien}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Ruang Lingkup Survei</label>
+          <div className="flex space-x-4">
+            {["Nasional", "Provinsi", "Kota"].map((scope) => (
+              <label key={scope} className="inline-flex items-center">
+                <input type="radio" name="ruanglingkup" value={scope} checked={survei.ruang_lingkup === scope} onChange={handleRuangLingkupChange} />
+                <span className="ml-2">{scope}</span>
+              </label>
+            ))}
+          </div>
+          {survei.ruang_lingkup && (
+            <button type="button" onClick={resetRuangLingkup} className="mt-2 text-sm text-red-600 hover:text-red-700">
+              Reset Ruang Lingkup
+            </button>
           )}
-        </ul>
+        </div>
 
-        <select id="daerahSelect" className={styles.textFieldSurveiDropdown}>
-          <option value="">Pilih Daerah</option>
-          {daerahOptions.map((daerah) => (
-            <option key={daerah.id} value={daerah.id}>
-              {daerah.type === "city" ? `${daerah.name} (${daerah.province})` : daerah.name}
-            </option>
-          ))}
-        </select>
-        <PlusIcon className={styles.iconPlus} onClick={addDaerah} />
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Daerah</label>
+          <div className="flex items-center space-x-2">
+            <select id="daerahSelect" className="border rounded-md p-2 flex-1">
+              <option value="">Pilih Daerah</option>
+              {daerahOptions.map((daerah) => (
+                <option key={daerah.id} value={daerah.id}>
+                  {daerah.type === "city" ? `${daerah.name} (${daerah.province})` : daerah.name}
+                </option>
+              ))}
+            </select>
+            <button type="button" onClick={addDaerah} className="p-2">
+              <PlusIcon className="w-6 h-6" />
+            </button>
+          </div>
+          <ul className="mt-2 space-y-2">
+            {wilayahSurvei.map((daerah) => (
+              <li key={daerah.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-md">
+                <span>{daerah.type === "city" ? `${daerah.name} (${daerah.province})` : daerah.name}</span>
+                <button type="button" onClick={() => removeDaerah(daerah.id)} className="text-red-600 hover:text-red-700">
+                  Hapus
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <b className={styles.textFieldTitleSurvei}>Harga</b>
-        <input className={styles.textFieldSurvei} type="number" value={survei.harga_survei || ""} onChange={(event) => setSurvei({ ...survei, harga_survei: event.target.value })} />
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Harga</label>
+          <input type="number" value={survei.harga_survei || ""} onChange={(event) => setSurvei({ ...survei, harga_survei: event.target.value })} className="border rounded-md p-2" required />
+        </div>
 
-        <b className={styles.textFieldTitleSurvei}>Jumlah Responden</b>
-        <input className={styles.textFieldSurvei} type="number" value={survei.jumlah_responden || ""} onChange={(event) => setSurvei({ ...survei, jumlah_responden: event.target.value })} />
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Jumlah Responden</label>
+          <input type="number" value={survei.jumlah_responden || ""} onChange={(event) => setSurvei({ ...survei, jumlah_responden: event.target.value })} className="border rounded-md p-2" required />
+        </div>
 
-        <b className={styles.textFieldTitleSurvei}>Tanggal Mulai</b>
-        <input min={new Date().toISOString().split("T")[0]} className={styles.textFieldSurvei} type="date" value={survei.waktu_mulai_survei ? survei.waktu_mulai_survei.split("T")[0] : ""} onChange={(event) => setSurvei({ ...survei, waktu_mulai_survei: event.target.value })} />
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Tanggal Mulai</label>
+          <input type="date" min={new Date().toISOString().split("T")[0]} value={survei.waktu_mulai_survei ? survei.waktu_mulai_survei.split("T")[0] : ""} onChange={(event) => setSurvei({ ...survei, waktu_mulai_survei: event.target.value })} className="border rounded-md p-2" required />
+        </div>
 
-        <b className={styles.textFieldTitleSurvei}>Tanggal Berakhir</b>
-        <input min={new Date().toISOString().split("T")[0]} className={styles.textFieldSurvei} type="date" value={survei.waktu_berakhir_survei ? survei.waktu_berakhir_survei.split("T")[0] : ""} onChange={(event) => setSurvei({ ...survei, waktu_berakhir_survei: event.target.value })} />
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Tanggal Berakhir</label>
+          <input type="date" min={new Date().toISOString().split("T")[0]} value={survei.waktu_berakhir_survei ? survei.waktu_berakhir_survei.split("T")[0] : ""} onChange={(event) => setSurvei({ ...survei, waktu_berakhir_survei: event.target.value })} className="border rounded-md p-2" required />
+        </div>
 
-        <b className={styles.textFieldTitleSurvei}>Tipe Survei</b>
-        <select className={styles.textFieldSurveiDropdown} value={survei.tipe_survei || ""} onChange={(event) => setSurvei({ ...survei, tipe_survei: event.target.value })}>
-          <option value="Paper-based">Paper-based</option>
-          <option value="Digital">Digital</option>
-          <option value="Lainnya">Lainnya</option>
-        </select>
+        <div className="flex flex-col w-1/2 mb-4">
+          <label className="mb-1 font-semibold">Tipe Survei</label>
+          <select value={survei.tipe_survei || ""} onChange={(event) => setSurvei({ ...survei, tipe_survei: event.target.value })} className="border rounded-md p-2" required>
+            <option value="Paper-based">Paper-based</option>
+            <option value="Digital">Digital</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
 
-        <button onClick={handleSubmit} className={styles.primaryButtonSurvei}>
-          Simpan
-        </button>
-        <button onClick={handleBackToSurvei} className={styles.secondaryButtonSurvei}>
-          Batal
-        </button>
-      </div>
+        <div className="flex flex-col w-1/2 mt-6">
+          <Button className="mb-4" type="submit" variant="primary" disabled={loading}>
+            Simpan
+          </Button>
+          <Button onClick={handleBackToSurvei} variant="secondary">
+            Batal
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

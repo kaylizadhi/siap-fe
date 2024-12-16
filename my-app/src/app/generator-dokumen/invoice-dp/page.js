@@ -16,12 +16,9 @@ const InvoiceDP = () => {
       }
 
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_administrasi/`,
-          {
-            headers: { Authorization: `Token ${token}` },
-          }
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_administrasi/`, {
+          headers: { Authorization: `Token ${token}` },
+        });
         const data = await response.json();
 
         if (data.error || data.role !== "Administrasi") {
@@ -38,16 +35,7 @@ const InvoiceDP = () => {
 
   const handleExport = async () => {
     // Check if any required fields are empty
-    if (
-      !clientName ||
-      !surveyName ||
-      !respondentCount ||
-      !address ||
-      !amount ||
-      !paidPercentage ||
-      !nominalTertulis ||
-      !date
-    ) {
+    if (!clientName || !surveyName || !respondentCount || !address || !amount || !paidPercentage || !nominalTertulis || !date) {
       // Display a notification or alert to the user
       alert("Mohon mengisi semua yang ditandai dengan * sebelum mengekspor.");
       return; // Stop the export process if fields are not filled
@@ -67,16 +55,13 @@ const InvoiceDP = () => {
     console.log("Data to send:", data);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/generate_invoice_dp/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}dokumen_pendukung/generate_invoice_dp/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
       console.log("Response received:", response);
 
       if (!response.ok) {
@@ -149,59 +134,17 @@ const InvoiceDP = () => {
         <div className={styles.docType}>
           <label className={styles.label}>Jenis Dokumen</label>
           <div className={styles.radioGroup}>
-            <input
-              type="radio"
-              id="Proposal"
-              name="docType"
-              value="proposal"
-              checked={docType === "proposal"}
-              onChange={handleDocTypeChange}
-            />
+            <input type="radio" id="Proposal" name="docType" value="proposal" checked={docType === "proposal"} onChange={handleDocTypeChange} />
             <label htmlFor="proposal">Proposal</label>
-            <input
-              type="radio"
-              id="kontrak"
-              name="docType"
-              value="kontrak"
-              checked={docType === "kontrak"}
-              onChange={handleDocTypeChange}
-            />
+            <input type="radio" id="kontrak" name="docType" value="kontrak" checked={docType === "kontrak"} onChange={handleDocTypeChange} />
             <label htmlFor="kontrak">Kontrak</label>
-            <input
-              type="radio"
-              id="invoiceDP"
-              name="docType"
-              value="invoiceDP"
-              checked
-              onChange={handleDocTypeChange}
-            />
+            <input type="radio" id="invoiceDP" name="docType" value="invoiceDP" checked onChange={handleDocTypeChange} />
             <label htmlFor="invoiceDP">Invoice DP</label>
-            <input
-              type="radio"
-              id="invoiceFinal"
-              name="docType"
-              value="invoiceFinal"
-              checked={docType === "invoiceFinal"}
-              onChange={handleDocTypeChange}
-            />
+            <input type="radio" id="invoiceFinal" name="docType" value="invoiceFinal" checked={docType === "invoiceFinal"} onChange={handleDocTypeChange} />
             <label htmlFor="invoiceFinal">Invoice Final</label>
-            <input
-              type="radio"
-              id="kwitansiDP"
-              name="docType"
-              value="kwitansiDP"
-              checked={docType === "kwitansiDP"}
-              onChange={handleDocTypeChange}
-            />
+            <input type="radio" id="kwitansiDP" name="docType" value="kwitansiDP" checked={docType === "kwitansiDP"} onChange={handleDocTypeChange} />
             <label htmlFor="kwitansiDP">Kwitansi DP</label>
-            <input
-              type="radio"
-              id="kwitansiFinal"
-              name="docType"
-              value="kwitansiFinal"
-              checked={docType === "kwitansiFinal"}
-              onChange={handleDocTypeChange}
-            />
+            <input type="radio" id="kwitansiFinal" name="docType" value="kwitansiFinal" checked={docType === "kwitansiFinal"} onChange={handleDocTypeChange} />
             <label htmlFor="kwitansiFinal">Kwitansi Final</label>
           </div>
         </div>
@@ -210,115 +153,55 @@ const InvoiceDP = () => {
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.inputGroup}>
             <label htmlFor="clientName">Nama Klien*</label>
-            <input
-              type="text"
-              id="clientName"
-              placeholder="Masukkan nama klien"
-              value={clientName}
-              onChange={(e) => setClientName(e.target.value)}
-            />
+            <input type="text" id="clientName" placeholder="Masukkan nama klien" value={clientName} onChange={(e) => setClientName(e.target.value)} />
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="surveyName">Nama Survei*</label>
-            <input
-              type="text"
-              id="surveyName"
-              placeholder="Masukkan nama survei"
-              value={surveyName}
-              onChange={(e) => setSurveyName(e.target.value)}
-            />
+            <input type="text" id="surveyName" placeholder="Masukkan nama survei" value={surveyName} onChange={(e) => setSurveyName(e.target.value)} />
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="respondentCount">Jumlah Responden*</label>
-            <input
-              type="number"
-              id="respondentCount"
-              placeholder="Masukkan jumlah Responden"
-              value={respondentCount}
-              onChange={(e) => setRespondentCount(e.target.value)}
-            />
+            <input type="number" id="respondentCount" placeholder="Masukkan jumlah Responden" value={respondentCount} onChange={(e) => setRespondentCount(e.target.value)} />
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="address">Alamat*</label>
-            <input
-              type="text"
-              id="address"
-              placeholder="Masukkan alamat"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+            <input type="text" id="address" placeholder="Masukkan alamat" value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
           <div className={styles.inputRow}>
             <div className={styles.nominalContainer}>
               <label htmlFor="amount">Harga Total*</label>
               <div className={styles.nominalInput}>
                 <span>Rp</span>
-                <input
-                  type="number"
-                  id="amount"
-                  placeholder="Masukkan nominal harga"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
+                <input type="number" id="amount" placeholder="Masukkan nominal harga" value={amount} onChange={(e) => setAmount(e.target.value)} />
               </div>
             </div>
 
             <div className={styles.percentageContainer}>
               <label htmlFor="paidPercentage">Persentase Pembayaran*</label>
               <div className={styles.percentageInput}>
-                <input
-                  type="number"
-                  id="paidPercentage"
-                  placeholder="%"
-                  value={paidPercentage}
-                  onChange={(e) => setPaidPercentage(e.target.value)}
-                />
+                <input type="number" id="paidPercentage" placeholder="%" value={paidPercentage} onChange={(e) => setPaidPercentage(e.target.value)} />
                 <span>%</span>
               </div>
             </div>
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="nominalTertulis">Jumlah Pembayaran Tertulis*</label>
-            <input
-              type="text"
-              id="nominalTertulis"
-              placeholder="Masukkan nominal tertulis"
-              value={nominalTertulis}
-              onChange={(e) => setNominalTertulis(e.target.value)}
-            />
+            <input type="text" id="nominalTertulis" placeholder="Masukkan nominal tertulis" value={nominalTertulis} onChange={(e) => setNominalTertulis(e.target.value)} />
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="additionalInfo">Keterangan</label>
-            <textarea
-              id="additionalInfo"
-              placeholder="Tambah keterangan"
-              value={additionalInfo}
-              onChange={(e) => setAdditionalInfo(e.target.value)}
-            ></textarea>
+            <textarea id="additionalInfo" placeholder="Tambah keterangan" value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)}></textarea>
           </div>
           <div className={styles.datePicker}>
             <label>Tanggal Pembayaran*</label>
-            <input
-              type="date"
-              id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
+            <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} />
           </div>
 
           <div className={styles.buttonGroup}>
-            <button
-              type="button"
-              className={styles.cancelButton}
-              onClick={handleClearInputs}
-            >
+            <button type="button" className={styles.cancelButton} onClick={handleClearInputs}>
               Batal
             </button>
-            <button
-              type="button"
-              className={styles.exportButton}
-              onClick={(e) => handleExport(e)}
-            >
+            <button type="button" className={styles.exportButton} onClick={(e) => handleExport(e)}>
               <img src="/images/additem.svg" alt="Export Icon" />
               Export
             </button>
@@ -326,9 +209,7 @@ const InvoiceDP = () => {
         </form>
       </div>
 
-      <div className={styles.footer}>
-        @2024 optimasys | Contact optimasys.work@gmail.com
-      </div>
+      <div className={styles.footer}>@2024 optimasys | Contact optimasys.work@gmail.com</div>
     </div>
   );
 };

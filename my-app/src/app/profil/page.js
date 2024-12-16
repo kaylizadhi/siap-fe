@@ -3,6 +3,8 @@
 import styles from "../../../styles/profil.module.css";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Profil() {
   const router = useRouter();
@@ -26,6 +28,13 @@ export default function Profil() {
   const toggleUsernameEditable = () => setIsUsernameEditable(!isUsernameEditable);
   const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
   const toggleNewPasswordVisibility = () => setIsNewPasswordVisible(!isNewPasswordVisible);
+
+  // Function to disable all editable fields
+  const disableAllFields = () => {
+    setIsEmailEditable(false);
+    setIsNameEditable(false);
+    setIsUsernameEditable(false);
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -57,6 +66,7 @@ export default function Profil() {
         setFullName(`${data.first_name || ""} ${data.last_name || ""}`.trim());
         setRole(data.role);
       } catch (error) {
+        toast.error("Gagal memuat data profil");
         setError("Unable to fetch user data");
       }
     };
@@ -65,22 +75,25 @@ export default function Profil() {
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Remove the token
+    localStorage.removeItem("authToken");
     router.push("/login");
   };
 
-  const handleCancel = () => router.push("/dashboard");
+  const handleCancel = () => {
+    disableAllFields();
+    router.push("/dashboard");
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload on form submission
+    e.preventDefault();
     const names = fullName.split(" ");
-    const firstName = names[0] || ""; // First part as firstName
-    const lastName = names.slice(1).join(" ") || ""; // Remaining as lastName
+    const firstName = names[0] || "";
+    const lastName = names.slice(1).join(" ") || "";
 
     const token = localStorage.getItem("authToken");
 
     try {
-      // Update profile details (name, email, etc.)
+      // Update profile details
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}profil/`, {
         method: "PATCH",
         headers: {
@@ -96,7 +109,7 @@ export default function Profil() {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to update profile");
+        throw new Error("Gagal mengupdate profil");
       }
 
       // If both passwords are provided, update the password
@@ -115,15 +128,20 @@ export default function Profil() {
 
         if (!passwordRes.ok) {
           const passwordError = await passwordRes.json();
-          throw new Error(passwordError.error || "Failed to update password");
+          throw new Error(passwordError.error || "Password lama tidak sesuai");
         }
 
-        alert("Password changed successfully");
+        toast.success("Password berhasil diubah");
+        setOldPassword("");
+        setNewPassword("");
       } else {
-        alert("Profile updated successfully");
+        toast.success("Profil berhasil diperbarui");
       }
+
+      // Disable all editable fields after successful update
+      disableAllFields();
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -141,13 +159,7 @@ export default function Profil() {
             {/* Email field */}
             <div className={styles.fieldGroup}>
               <label>Email</label>
-              <input
-                type="email"
-                value={email} // Dynamically fetched email
-                onChange={(e) => setEmail(e.target.value)} // Update state on change
-                disabled={!isEmailEditable} // Disable if not editable
-                className={isEmailEditable ? "" : styles.disabledInput} // Apply styles
-              />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={!isEmailEditable} className={isEmailEditable ? "" : styles.disabledInput} />
               <span className={styles.icon} onClick={toggleEmailEditable}>
                 <img src="/images/Edit.svg" alt="Edit" />
               </span>
@@ -156,13 +168,7 @@ export default function Profil() {
             {/* Name field */}
             <div className={styles.fieldGroup}>
               <label>Nama</label>
-              <input
-                type="text"
-                value={fullName} // Use full name state
-                onChange={(e) => setFullName(e.target.value)} // Update full name as user types
-                disabled={!isNameEditable} // Disable if not editable
-                className={isNameEditable ? "" : styles.disabledInput} // Apply styles
-              />
+              <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} disabled={!isNameEditable} className={isNameEditable ? "" : styles.disabledInput} />
               <span className={styles.icon} onClick={toggleNameEditable}>
                 <img src="/images/Edit.svg" alt="Edit" />
               </span>
@@ -171,13 +177,7 @@ export default function Profil() {
             {/* Username field */}
             <div className={styles.fieldGroup}>
               <label>Username</label>
-              <input
-                type="text"
-                value={username} // Dynamically fetched username
-                onChange={(e) => setUsername(e.target.value)} // Update state on change
-                disabled={!isUsernameEditable} // Disable if not editable
-                className={isUsernameEditable ? "" : styles.disabledInput}
-              />
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} disabled={!isUsernameEditable} className={isUsernameEditable ? "" : styles.disabledInput} />
               <span className={styles.icon} onClick={toggleUsernameEditable}>
                 <img src="/images/Edit.svg" alt="Edit" />
               </span>
@@ -194,12 +194,7 @@ export default function Profil() {
               </div>
               <div className={styles.fieldGroup}>
                 <label>Password Baru</label>
-                <input
-                  type={isNewPasswordVisible ? "text" : "password"} // Toggle between password and text
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="********"
-                />
+                <input type={isNewPasswordVisible ? "text" : "password"} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="********" />
                 <span className={styles.icon} onClick={toggleNewPasswordVisibility}>
                   <img src="/images/eye-icon.png" alt="Toggle New Password Visibility" />
                 </span>

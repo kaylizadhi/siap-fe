@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "../../../styles/login.module.css";
 
 export default function Login() {
@@ -10,18 +11,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false); // State for login success
-  const [showNotification, setShowNotification] = useState(false);
-  const router = useRouter(); // Next.js router for navigation
+  const router = useRouter();
 
   useEffect(() => {
     const savedUsername = localStorage.getItem("rememberedUsername");
-    const savedRememberMe = localStorage.getItem("rememberMe") === "true"; // Retrieve the checkbox status
+    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
 
     if (savedRememberMe && savedUsername) {
-      setUsername(savedUsername); // Prefill the saved username
-      setRememberMe(true); // Set the checkbox to true
+      setUsername(savedUsername);
+      setRememberMe(true);
     }
   }, []);
 
@@ -29,10 +27,9 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
 
     try {
-      const res = await fetch(`https://considerate-trust-production.up.railway.app/api/login/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,10 +38,7 @@ export default function Login() {
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        setError(errorData.error);
-        setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 3000);
+        toast.error("Username atau password salah");
         return;
       }
 
@@ -67,23 +61,19 @@ export default function Login() {
         const roleData = await roleRes.json();
 
         if (roleRes.ok) {
-          setSuccess(true);
-          setShowNotification(true);
+          toast.success("Berhasil Login!");
           setTimeout(() => {
-            setShowNotification(false);
-            router.push(roleData.homepage); // Use homepage from the API response
-          }, 1000);
+            router.push(roleData.homepage);
+          }, 1500);
         } else {
           throw new Error("Role verification failed");
         }
       } catch (error) {
         console.error("Failed to verify role:", error);
-        router.push("/dashboard"); // Default redirect if role check fails
+        router.push("/dashboard");
       }
     } catch (error) {
-      setError("An unexpected error occurred");
-      setShowNotification(true);
-      setTimeout(() => setShowNotification(false), 3000);
+      toast.error("Username atau password salah");
     }
   };
 
@@ -111,11 +101,10 @@ export default function Login() {
             </button>
           </div>
 
-          {error && <p className="error">{error}</p>}
-
           <div className={styles.rememberForgot}>
             <label className={styles.label}>
-              <input className={styles.input} type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} /> Ingat Saya
+              <input className={styles.input} type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
+              Ingat Saya
             </label>
             <a onClick={handleLupaPassword} style={{ cursor: "pointer" }}>
               Lupa Password?
@@ -126,25 +115,6 @@ export default function Login() {
             Login
           </button>
         </form>
-
-        {/* Notification Pop-up */}
-        {showNotification && (
-          <div className={`${styles.notification} ${success ? styles.success : styles.failure}`}>
-            {success ? (
-              <div>
-                <img src="/success-icon.png" alt="Success Icon" className={styles.icon} />
-                <p>Berhasil Login!</p>
-                <button onClick={() => setShowNotification(false)}>OK</button>
-              </div>
-            ) : (
-              <div>
-                <img src="/error-icon.png" alt="Error Icon" className={styles.icon} />
-                <p>Username/Password Salah!</p>
-                <button onClick={() => setShowNotification(false)}>Coba lagi</button>
-              </div>
-            )}
-          </div>
-        )}
 
         <div className={styles.footer}>@2024 optimasys | Contact optimasys.work@gmail.com</div>
       </div>

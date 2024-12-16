@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Caudex } from "next/font/google";
 import { TrashIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const caudex = Caudex({
   weight: "700",
@@ -12,7 +14,7 @@ const caudex = Caudex({
 const styles = {
   tableContainerSurvei: "w-full text-center font-[Caudex] border-collapse border-spacing-0 border-separate border-spacing-y-2",
   buttonSurvei: "border-none bg-none cursor-pointer",
-  iconSurvei: "mt-1 w-8 h-8 cursor-pointer px-2 rounded-[20px] py-2",
+  iconSurvei: "mt-1 w-8 h-8 cursor-pointer px-2 rounded-[20px] py-2 text-red-600 hover:bg-red-100",
 };
 
 export default function DaftarAkun() {
@@ -26,19 +28,41 @@ export default function DaftarAkun() {
   const [currentAccountIndex, setCurrentAccountIndex] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch account data from backend
   useEffect(() => {
     const fetchAccounts = async () => {
+      setLoading(true);
       try {
+        const token = localStorage.getItem("authToken");
         const url = searchQuery ? `${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/api/searchAkun/?q=${encodeURIComponent(searchQuery)}` : `${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/api/daftarAkun/`;
-        const response = await fetch(url);
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Token ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch accounts");
+        }
+
         const data = await response.json();
         setAccounts(data);
         setTotalItems(data.length);
         setTotalPages(Math.ceil(data.length / accountsPerPage));
+        setError(null);
       } catch (error) {
         console.error("Error fetching accounts:", error);
+        setError("Failed to load accounts");
+        toast.error("Failed to load accounts", {
+          position: "bottom-right",
+          theme: "light",
+        });
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -51,8 +75,16 @@ export default function DaftarAkun() {
 
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}accounts/check_role_admin/`, {
-          headers: { Authorization: `Token ${token}` },
+          headers: {
+            Authorization: `Token ${token}`,
+            "Content-Type": "application/json",
+          },
         });
+
+        if (!response.ok) {
+          throw new Error("Failed to verify role");
+        }
+
         const data = await response.json();
 
         if (data.error || data.role !== "Admin Sistem") {
@@ -64,8 +96,8 @@ export default function DaftarAkun() {
       }
     };
 
-    fetchAccounts();
     verifyUser();
+    fetchAccounts();
   }, [searchQuery, router]);
 
   const handleDeleteClick = (index) => {
@@ -73,7 +105,60 @@ export default function DaftarAkun() {
     setShowDeleteModal(true);
   };
 
-  // Filter accounts based on search query
+  const handleDelete = async (index, accountId) => {
+    const accountIndex = index + indexOfFirstAccount;
+    setDeletingIndex(accountIndex);
+
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/${accountId}/delete/`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete account: ${response.statusText}`);
+      }
+
+      setShowDeleteModal(false);
+
+      // Update accounts list
+      setAccounts((prevAccounts) => {
+        const newAccounts = prevAccounts.filter((_, i) => i !== accountIndex);
+        setTotalItems(newAccounts.length);
+        setTotalPages(Math.ceil(newAccounts.length / accountsPerPage));
+        return newAccounts;
+      });
+
+      // Show success toast
+      toast.success("Akun berhasil dihapus", {
+        position: "bottom-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast.error("Gagal menghapus akun", {
+        position: "bottom-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
+    } finally {
+      setDeletingIndex(null);
+    }
+  };
+
   const filteredAccounts = accounts.filter((account) => account.username.toLowerCase().includes(searchQuery.toLowerCase()) || `${account.first_name} ${account.last_name}`.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const indexOfLastAccount = currentPage * accountsPerPage;
@@ -85,22 +170,21 @@ export default function DaftarAkun() {
     setCurrentPage(1);
   };
 
-  const handleDelete = async (index, accountId) => {
-    const accountIndex = index + indexOfFirstAccount;
-    setDeletingIndex(accountIndex);
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}daftarAkun/${accountId}/delete/`, {
-        method: "DELETE",
-      });
-      setShowDeleteModal(false);
-      const updatedAccounts = accounts.filter((_, i) => i !== accountIndex);
-      setAccounts(updatedAccounts);
-    } catch (error) {
-      console.error("Error deleting account:", error);
-    } finally {
-      setDeletingIndex(null);
-    }
-  };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-900"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-red-600">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className={`${caudex.className} p-6`}>
@@ -123,36 +207,38 @@ export default function DaftarAkun() {
       </div>
 
       {/* Table */}
-      <table className={styles.tableContainerSurvei}>
-        <thead>
-          <tr>
-            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[10%]">No</th>
-            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[20%]">Username</th>
-            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[25%]">Nama</th>
-            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[25%]">Email</th>
-            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[15%]">Role</th>
-            <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[5%]">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentAccounts.map((account, index) => (
-            <tr key={account.id} className={`outline-[1px] outline outline-[#bbc7cd] rounded-[28px] bg-white ${index + indexOfFirstAccount === deletingIndex ? "opacity-50" : ""}`}>
-              <td className="p-4 text-center text-sm text-[#1c1c1c]">{indexOfFirstAccount + index + 1}</td>
-              <td className="p-4 text-center text-sm text-[#1c1c1c]">{account.username}</td>
-              <td className="p-4 text-center text-sm text-[#1c1c1c]">{`${account.first_name} ${account.last_name}`}</td>
-              <td className="p-4 text-center text-sm text-[#1c1c1c]">{account.email}</td>
-              <td className="p-4 text-center text-sm text-[#1c1c1c]">{account.role}</td>
-              <td className="p-4">
-                <div className="flex justify-center">
-                  <button onClick={() => handleDeleteClick(index)} className={styles.buttonSurvei} title="Delete">
-                    <TrashIcon className={styles.iconSurvei} />
-                  </button>
-                </div>
-              </td>
+      <div className="overflow-x-auto">
+        <table className={styles.tableContainerSurvei}>
+          <thead>
+            <tr>
+              <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[10%]">No</th>
+              <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[20%]">Username</th>
+              <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[25%]">Nama</th>
+              <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[25%]">Email</th>
+              <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[15%]">Role</th>
+              <th className="text-center text-sm font-bold text-[#1c1c1c] p-4 w-[5%]">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentAccounts.map((account, index) => (
+              <tr key={account.id} className={`outline-[1px] outline outline-[#bbc7cd] rounded-[28px] bg-white ${index + indexOfFirstAccount === deletingIndex ? "opacity-50" : ""}`}>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{indexOfFirstAccount + index + 1}</td>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{account.username}</td>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{`${account.first_name} ${account.last_name}`}</td>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{account.email}</td>
+                <td className="p-4 text-center text-sm text-[#1c1c1c]">{account.role}</td>
+                <td className="p-4">
+                  <div className="flex justify-center">
+                    <button onClick={() => handleDeleteClick(index)} className={styles.buttonSurvei} title="Delete" disabled={deletingIndex !== null}>
+                      <TrashIcon className={styles.iconSurvei} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Pagination */}
       {totalPages > 1 && (
@@ -179,7 +265,15 @@ export default function DaftarAkun() {
               <button onClick={() => setShowDeleteModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                 Batal
               </button>
-              <button onClick={() => handleDelete(currentAccountIndex, accounts[currentAccountIndex].id)} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+              <button
+                onClick={() => {
+                  const account = accounts[currentAccountIndex];
+                  if (account) {
+                    handleDelete(currentAccountIndex, account.id);
+                  }
+                }}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
                 Hapus
               </button>
             </div>

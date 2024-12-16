@@ -5,6 +5,8 @@ import { Caudex } from "next/font/google";
 import { Eye, Pencil, Trash2, Search } from "lucide-react";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Button from "components/Button";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const caudex = Caudex({
   weight: "700",
@@ -84,11 +86,13 @@ export default function Index() {
         if (response.ok) {
           setSurvei((prevSurvei) => prevSurvei.filter((e) => e.id !== id));
           setFilteredSurvei((prevSurvei) => prevSurvei.filter((e) => e.id !== id));
+          toast.success("Survei berhasil dihapus");
         } else {
-          console.error("Gagal menghapus survei");
+          toast.error("Gagal menghapus survei");
         }
       } catch (error) {
         console.error("Error muncul ketika menghapus survei", error);
+        toast.error("Terjadi kesalahan saat menghapus survei");
       }
     }
   };
